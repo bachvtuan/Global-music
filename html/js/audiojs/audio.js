@@ -636,7 +636,12 @@
     },
     playPause: function() {
       if (this.playing) this.pause();
-      else this.play();
+      else{
+        this.play();
+        if ( this.settings.callbackPlay ){
+          this.settings.callbackPlay();
+        }
+      }
     },
     play: function() {
       var ios = (/(ipod|iphone|ipad)/i).test(navigator.userAgent);

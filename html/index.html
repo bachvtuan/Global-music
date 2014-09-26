@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<!--http://daneden.github.io/animate.css/-->
 <head>
   <title>Good job</title>
   <link rel="stylesheet"  href="css/bootstrap.min.css"></link>
@@ -21,7 +22,7 @@
   <div id="wrapper">
     <div id="header" class="row">
       <div class="col-md-2">
-        <a id="logo" ><img src="../images/logo.png"/></a>
+        <a id="logo" ><img class="flip" src="../images/radio.png"/></a>
       </div>
       <div class="col-md-4">
         <input type="search" class="search-box form-control" placeHolder="Tên album"  />
@@ -130,7 +131,7 @@
     <div class="player-zone">
       <img class="cover" src="images/album.png" />
       <p class="title">Liên khúc sao không thấy anh về, Thắp nén hương yêu </p>
-      <audio src="http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY1JTJGMyUyRjUzM2NiODdlNDQwYzIwNGU2MzcwOTc0YThmNzI5MzBmLm1wMyU3QzI" >
+      <audio src="http://data12.chiasenhac.com/downloads/1318/5/1317988-8c2e338c/320/Phai%20Duyen%20Hay%20No%20-%20Hamlet%20Truong%20[MP3%20320kbps].mp3" >
       </audio>
       <div class="volume-tune">
         <p>Am luong</p>
@@ -150,14 +151,22 @@
     $(document).ready(function(){
       var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 
-      var audiojs_setting = {callbackError:function(error){
-        console.log(error);
-        console.clear();
-        var msg = alertify.message(error, 0);
-        $('body').one('click', function(){
-          msg.dismiss();
-        });
-      }};
+      var audiojs_setting = {
+        callbackError:function(error){
+            console.log(error);
+            console.clear();
+            var msg = alertify.message(error, 0);
+            $('body').one('click', function(){
+              msg.dismiss();
+          });
+        },
+        callbackPlay:function(){
+          console.log("callbackPlay");
+          $('#logo img').addClass('animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            $(this).removeClass('animated');
+          });
+        }
+      };
 
       if ( !is_chrome){
         audiojs_setting = {useFlash:true};
