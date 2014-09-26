@@ -6,7 +6,6 @@
   <link rel="stylesheet"  href="bootflat/css/bootflat.css"></link>
   <link rel="stylesheet"  href="css/font-awesome-4.2.0/css/font-awesome.css"></link>
   <link rel="stylesheet"  href="css/style.css"></link>
-  
 
   <script src="js/jquery-1.11.0.min.js"></script>
   <script src="js/bootstrap3/bootstrap.js"></script>
@@ -106,19 +105,19 @@
         <div class="wrap-song-list">
           <h4>Đang nghe</h4>
           <div class="song-list">
-            <ul>
-              <li><a>Noi tinh yeu bat dau</a></li>
-              <li><a>Thuong ve mien trung</a></li>
-              <li><a>Liên khúc sao không thấy anh về, Thắp nén hương yêu </a></li>
-              <li class="playing"><a>Quang nam thuong nho</a></li>
-              <li><a>Noi tinh yeu bat dau</a></li>
-              <li><a>Thuong ve mien trung</a></li>
-              <li><a>Lien khuc sao khong thay anh ve</a></li>
-              <li><a>Quang nam thuong nho</a></li>
-              <li><a>Noi tinh yeu bat dau</a></li>
-              <li><a>Thuong ve mien trung</a></li>
-              <li><a>Lien khuc sao khong thay anh ve</a></li>
-              <li><a>Quang nam thuong nho</a></li>
+            <ul  type="1">
+              <li>1. <a>Noi tinh yeu bat dau</a></li>
+              <li>2. <a>Thuong ve mien trung</a></li>
+              <li>3. <a>Liên khúc sao không thấy anh về, Thắp nén hương yêu </a></li>
+              <li class="playing">4. <a>Quang nam thuong nho</a></li>
+              <li>5. <a>Noi tinh yeu bat dau</a></li>
+              <li>6. <a>Thuong ve mien trung</a></li>
+              <li>7. <a>Lien khuc sao khong thay anh ve</a></li>
+              <li>8. <a>Quang nam thuong nho</a></li>
+              <li>9. <a>Noi tinh yeu bat dau</a></li>
+              <li>10. <a>Thuong ve mien trung</a></li>
+              <li>11. <a>Lien khuc sao khong thay anh ve</a></li>
+              <li>12. <a>Quang nam thuong nho</a></li>
             </ul>
           </div>
         </div>
@@ -128,7 +127,7 @@
     <div class="player-zone">
       <img class="cover" src="images/album.png" />
       <p class="title">Liên khúc sao không thấy anh về, Thắp nén hương yêu </p>
-      <audio src="http://data12.chiasenhac.com/downloads/1318/5/1317988-8c2e338c/320/Phai%20Duyen%20Hay%20No%20-%20Hamlet%20Truong%20[MP3%20320kbps].mp3" preload="auto" >
+      <audio src="http://data.chiasenhac.com/stream/1368/5/1367711-48d78a92/128/Tinh%20La%20Chi%20-%20Nguyen%20Phi%20Hung.mp3.csn" preload="auto" >
       </audio>
 
       <i id="current-list" class="fa fa-th-list"></i>
@@ -139,6 +138,7 @@
   <script>
     $(document).ready(function(){
       var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+
       var audiojs_setting = {};
 
       if ( !is_chrome){
@@ -153,6 +153,17 @@
       audiojs.events.ready(function() {
         var as = audiojs.createAll(audiojs_setting);
         as[0].play();
+        setTimeout(function(){
+          //Should auto play afer 2 seconds
+          console.log("come here");
+          console.log(as[0].element.paused);
+          if ( as[0].element.paused ){
+            console.log("let play");
+            as[0].play();
+          }
+          
+        },3000);
+        window.last = as[0];
       });
     });
   </script>
