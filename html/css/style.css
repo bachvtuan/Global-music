@@ -7,7 +7,7 @@
   background-color: #F5F5F5; }
 
 *::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
   background-color: #F5F5F5; }
 
 *::-webkit-scrollbar-thumb {
@@ -56,7 +56,7 @@ h3 {
   width: 950px;
   height: 620px;
   background: #fbf9f8;
-  margin: 30px auto;
+  margin: 30px auto 0px auto;
   padding: 35px;
   /* end .player-zone */ }
   #wrapper #header {
@@ -132,13 +132,17 @@ h3 {
         color: #434343; }
   #wrapper .wrap-song-list h4 {
     margin: 0px 0px 10px 0px;
-    color: #7b7b7b; }
+    color: #7b7b7b;
+    font-weight: normal; }
   #wrapper .wrap-song-list .song-list {
     height: 380px;
     padding-right: 10px;
     overflow: auto; }
     #wrapper .wrap-song-list .song-list ul li {
       padding: 6px 0px; }
+      #wrapper .wrap-song-list .song-list ul li span {
+        min-width: 20px;
+        display: inline-block; }
       #wrapper .wrap-song-list .song-list ul li.playing a {
         color: #008fd5; }
       #wrapper .wrap-song-list .song-list ul li a {
@@ -150,8 +154,8 @@ h3 {
     /* override audiojs */
     /*end .audio-js */ }
     #wrapper .player-zone img.cover {
-      width: 80px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
       float: left;
       margin: 0px 20px 0px 0px; }
     #wrapper .player-zone p.title {
@@ -165,42 +169,12 @@ h3 {
         font: normal normal normal 14px/1 FontAwesome;
         position: absolute;
         right: 50px;
-        top: 25px;
+        top: 20px;
         width: 25px;
         height: 30px;
         padding: 0px;
         margin: 0px;
-        overflow: hidden;
-        /*       .play{
-                &:before{
-                  content:"\f04b";
-                  font-size: 20px;
-                  &:hover{
-                    color: $blue;
-                  }
-                }      
-              }
-              .pause{
-                &:before{
-                  content:"\f04c";
-                  font-size: 20px;
-                  &:hover{
-                    color: $blue;
-                  }
-                }      
-              }
-              .loading{
-                &:before{
-                  content:"\f1ce";
-                  font-size: 20px;
-                }
-              }
-              .error{
-                &:before{
-                  content:"\f00d";
-                  font-size: 20px;
-                }
-              } */ }
+        overflow: hidden; }
         #wrapper .player-zone .audiojs .play-pause p {
           font-size: 20px; }
           #wrapper .player-zone .audiojs .play-pause p:hover i {
@@ -215,7 +189,7 @@ h3 {
         bottom: 0px; }
       #wrapper .player-zone .audiojs .scrubber {
         position: relative;
-        width: 450px;
+        width: 420px;
         height: 14px;
         background: #7b7b7b; }
       #wrapper .player-zone .audiojs .progress {
@@ -226,7 +200,9 @@ h3 {
         width: 0px;
         background: #008fd5;
         z-index: 1;
-        border-radius: 0px; }
+        border-radius: 0px;
+        margin: 0px;
+        cursor: pointer; }
       #wrapper .player-zone .audiojs .loaded {
         position: absolute;
         top: 0px;
@@ -239,11 +215,27 @@ h3 {
         font-weight: normal; }
         #wrapper .player-zone .audiojs strong.duration {
           position: absolute;
-          left: 560px;
+          right: 320px;
           top: 27px; }
+    #wrapper .player-zone .volume-tune {
+      position: absolute;
+      right: 200px;
+      top: 0px; }
+      #wrapper .player-zone .volume-tune p {
+        color: #434343;
+        font-size: 13pt; }
+      #wrapper .player-zone .volume-tune .wrap-range {
+        cursor: pointer;
+        height: 14px;
+        background: #7b7b7b;
+        width: 100px;
+        float: left; }
+        #wrapper .player-zone .volume-tune .wrap-range .range {
+          background: #008fd5;
+          height: 100%; }
     #wrapper .player-zone i#next-song, #wrapper .player-zone i#prev-song, #wrapper .player-zone i#current-list {
       position: absolute;
-      top: 29px;
+      top: 25px;
       right: 10px;
       color: #7b7b7b;
       font-size: 20px;
@@ -254,3 +246,9 @@ h3 {
       right: 100px; }
     #wrapper .player-zone i#current-list {
       right: 150px; }
+
+.alertify-notifier.ajs-right .ajs-message {
+  word-wrap: break-word; }
+  .alertify-notifier.ajs-right .ajs-message a {
+    color: #008fd5;
+    text-shadow: none; }

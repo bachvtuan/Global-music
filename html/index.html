@@ -4,12 +4,15 @@
   <title>Good job</title>
   <link rel="stylesheet"  href="css/bootstrap.min.css"></link>
   <link rel="stylesheet"  href="bootflat/css/bootflat.css"></link>
+  <link rel="stylesheet"  href="css/alertify/alertify.min.css"></link>
+  <link rel="stylesheet"  href="css/alertify/themes/default.min.css"></link>
   <link rel="stylesheet"  href="css/font-awesome-4.2.0/css/font-awesome.css"></link>
   <link rel="stylesheet"  href="css/style.css"></link>
 
   <script src="js/jquery-1.11.0.min.js"></script>
   <script src="js/bootstrap3/bootstrap.js"></script>
   <script src="js/audiojs/audio.js"></script>
+  <script src="js/alertifyjs/alertify.min.js"></script>
   
   <script src="js/jquery.nicescroll.min.js"></script>
 
@@ -106,18 +109,18 @@
           <h4>Đang nghe</h4>
           <div class="song-list">
             <ul  type="1">
-              <li>1. <a>Noi tinh yeu bat dau</a></li>
-              <li>2. <a>Thuong ve mien trung</a></li>
-              <li>3. <a>Liên khúc sao không thấy anh về, Thắp nén hương yêu </a></li>
-              <li class="playing">4. <a>Quang nam thuong nho</a></li>
-              <li>5. <a>Noi tinh yeu bat dau</a></li>
-              <li>6. <a>Thuong ve mien trung</a></li>
-              <li>7. <a>Lien khuc sao khong thay anh ve</a></li>
-              <li>8. <a>Quang nam thuong nho</a></li>
-              <li>9. <a>Noi tinh yeu bat dau</a></li>
-              <li>10. <a>Thuong ve mien trung</a></li>
-              <li>11. <a>Lien khuc sao khong thay anh ve</a></li>
-              <li>12. <a>Quang nam thuong nho</a></li>
+              <li><span>1.</span> <a>Noi tinh yeu bat dau</a></li>
+              <li><span>2.</span> <a>Thuong ve mien trung</a></li>
+              <li><span>3.</span> <a>Liên khúc sao không thấy anh về, Thắp nén hương yêu </a></li>
+              <li class="playing"><span>4.</span> <a>Quang nam thuong nho</a></li>
+              <li><span>5.</span> <a>Noi tinh yeu bat dau</a></li>
+              <li><span>6.</span> <a>Thuong ve mien trung</a></li>
+              <li><span>7.</span> <a>Lien khuc sao khong thay anh ve</a></li>
+              <li><span>8.</span> <a>Quang nam thuong nho</a></li>
+              <li><span>9.</span> <a>Noi tinh yeu bat dau</a></li>
+              <li><span>10.</span> <a>Thuong ve mien trung</a></li>
+              <li><span>11.</span> <a>Lien khuc sao khong thay anh ve</a></li>
+              <li><span>12.</span> <a>Quang nam thuong nho</a></li>
             </ul>
           </div>
         </div>
@@ -127,8 +130,14 @@
     <div class="player-zone">
       <img class="cover" src="images/album.png" />
       <p class="title">Liên khúc sao không thấy anh về, Thắp nén hương yêu </p>
-      <audio src="http://data.chiasenhac.com/stream/1368/5/1367711-48d78a92/128/Tinh%20La%20Chi%20-%20Nguyen%20Phi%20Hung.mp3.csn" preload="auto" >
+      <audio src="http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY1JTJGMyUyRjUzM2NiODdlNDQwYzIwNGU2MzcwOTc0YThmNzI5MzBmLm1wMyU3QzI" >
       </audio>
+      <div class="volume-tune">
+        <p>Am luong</p>
+        <div class="wrap-range" >
+          <div class="range"></div>
+        </div>
+      </div>
 
       <i id="current-list" class="fa fa-th-list"></i>
       <i id="prev-song" class="fa fa-step-backward"></i>
@@ -136,10 +145,19 @@
     </div>
   </div>
   <script>
+    var current_audio;
+    var current_volume = 0.8;
     $(document).ready(function(){
       var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
 
-      var audiojs_setting = {};
+      var audiojs_setting = {callbackError:function(error){
+        console.log(error);
+        console.clear();
+        var msg = alertify.message(error, 0);
+        $('body').one('click', function(){
+          msg.dismiss();
+        });
+      }};
 
       if ( !is_chrome){
         audiojs_setting = {useFlash:true};
@@ -149,21 +167,25 @@
           $('h4').tooltip()
         },400);        
       }
+      $('.wrap-range .range').width( current_volume * $('.wrap-range').width() );
+      $('.wrap-range').click(function(e){
+        
+        var parentOffset = $(this).offset(); 
+        var relX = e.pageX - parentOffset.left;
+      
+        console.log(relX);
+        console.log($(this));
+        var percent = relX/ $(this).width();
+        console.log(percent);
+        $(this).find('.range').width( relX );
+        current_audio.setVolume(percent);
+        alertify.message('Am luong hien tai la ' + Math.round( percent * 100 ) + '%' );
+      });
 
       audiojs.events.ready(function() {
         var as = audiojs.createAll(audiojs_setting);
         as[0].play();
-        setTimeout(function(){
-          //Should auto play afer 2 seconds
-          console.log("come here");
-          console.log(as[0].element.paused);
-          if ( as[0].element.paused ){
-            console.log("let play");
-            as[0].play();
-          }
-          
-        },3000);
-        window.last = as[0];
+        current_audio = as[0];
       });
     });
   </script>

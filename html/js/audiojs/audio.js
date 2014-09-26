@@ -60,7 +60,7 @@
           <div class="play-pause"> \
             <p class="play"><i class="fa fa-play"></i></p> \
             <p class="pause"><i class="fa fa-pause"></i></p> \
-            <p class="loading"><i class="fa fa-circle-o"></i></p> \
+            <p class="loading"><i class="fa fa-circle-o-notch fa-spin"></i></p> \
             <p class="error"><i class="fa fa-frown-o"></i></p> \
           </div> \
           <div class="scrubber"> \
@@ -113,19 +113,22 @@
       trackEnded: function(e) {},
       flashError: function() {
         var player = this.settings.createPlayer,
-            errorMessage = getByClass(player.errorMessageClass, this.wrapper),
+            //errorMessage = getByClass(player.errorMessageClass, this.wrapper),
             html = 'Missing <a href="http://get.adobe.com/flashplayer/">flash player</a> plugin.';
         if (this.mp3) html += ' <a href="'+this.mp3+'">Download audio file</a>.';
         container[audiojs].helpers.removeClass(this.wrapper, player.loadingClass);
         container[audiojs].helpers.addClass(this.wrapper, player.errorClass);
-        errorMessage.innerHTML = html;
+        //errorMessage.innerHTML = html;
+        this.settings.callbackError(html);
       },
       loadError: function(e) {
-        var player = this.settings.createPlayer,
-            errorMessage = getByClass(player.errorMessageClass, this.wrapper);
+        var player = this.settings.createPlayer;
+            //errorMessage = getByClass(player.errorMessageClass, this.wrapper);
         container[audiojs].helpers.removeClass(this.wrapper, player.loadingClass);
         container[audiojs].helpers.addClass(this.wrapper, player.errorClass);
-        errorMessage.innerHTML = 'Error loading: "'+this.mp3+'"';
+        //errorMessage.innerHTML = 'Error loading: "'+this.mp3+'"';
+        var link = "<a href='"+this.mp3+"' target='_blank'>"+this.mp3+"</a>";
+        this.settings.callbackError('Error loading: '+ link);
       },
       init: function() {
         var player = this.settings.createPlayer;
@@ -282,7 +285,10 @@
       });
 
       container[audiojs].events.addListener(scrubber, 'click', function(e) {
+        console.log("tai sao");
         var relativeLeft = e.clientX - leftPos(this);
+        console.log( relativeLeft );
+        console.log( relativeLeft / scrubber.offsetWidth );
         audio.skipTo(relativeLeft / scrubber.offsetWidth);
       });
 
@@ -324,6 +330,7 @@
         audio.settings.loadProgress.apply(audio, [percent]);
       }
       audio['skipTo'] = function(percent) {
+        
         if (percent > audio.loadedPercent) return;
         audio.updatePlayhead.call(audio, [percent])
         audio.element.skipTo(percent);

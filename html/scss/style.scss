@@ -31,7 +31,7 @@ $horizontal_height:400px;
 
 *::-webkit-scrollbar
 {
-  width: 10px;
+  width: 5px;
   background-color: #F5F5F5;
 }
 
@@ -84,7 +84,7 @@ h3{
   width: 950px;
   height:620px;
   background:#fbf9f8;
-  margin: 30px auto;
+  margin: 30px auto 0px auto;
   padding: 35px;
   #header{
     margin-bottom: 30px;
@@ -184,6 +184,7 @@ h3{
     h4{
       margin:0px 0px 10px 0px;
       color: $lighter-gray;
+      font-weight: normal;
     }
     .song-list{
       height:380px;
@@ -193,6 +194,10 @@ h3{
       ul{
         li{
             padding:6px 0px;
+            span{
+              min-width: 20px;
+              display: inline-block;
+            }
             &.playing{
               a{
                 color: $blue;
@@ -212,8 +217,8 @@ h3{
     position:relative;
     
     img.cover{
-      width: 80px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
       float: left;
       margin:0px 20px 0px 0px;
     }
@@ -234,7 +239,7 @@ h3{
         font:normal normal normal 14px/1 FontAwesome;
         position:absolute;
         right: 50px;
-        top: 25px;
+        top: 20px;
         width: 25px;
         height: 30px;
         padding: 0px;
@@ -250,38 +255,6 @@ h3{
             
           }
         }
-
-  /*       .play{
-          &:before{
-            content:"\f04b";
-            font-size: 20px;
-            &:hover{
-              color: $blue;
-            }
-          }      
-        }
-        .pause{
-          &:before{
-            content:"\f04c";
-            font-size: 20px;
-            &:hover{
-              color: $blue;
-            }
-          }      
-        }
-        .loading{
-          &:before{
-            content:"\f1ce";
-            font-size: 20px;
-          }
-        }
-        .error{
-          &:before{
-            content:"\f00d";
-            font-size: 20px;
-          }
-        } */
-        
       }
 
       .error-message {
@@ -296,7 +269,7 @@ h3{
 
       .scrubber {
          position: relative;
-         width: 450px; 
+         width: 420px; 
          height: 14px;
          background:$lighter-gray;
       }
@@ -310,6 +283,8 @@ h3{
          background:$blue; 
          z-index: 1; 
          border-radius:0px;
+         margin: 0px;
+         cursor: pointer;
       }
       .loaded {
         position: absolute;
@@ -324,22 +299,44 @@ h3{
 
       strong{
         font-weight: normal;
-        &.played{
-        }
+
         &.duration{
-          position: absolute;
-          left: 560px;
+          position:absolute;
+          right: 320px;
           top: 27px;
-        }    
+        }
+
       }
 
       
     }
     /*end .audio-js */
 
+    .volume-tune{
+      position: absolute;
+      right: 200px;
+      top: 0px;
+      p{
+        color: $gray;
+        font-size: 13pt;
+      }
+      .wrap-range{
+        cursor: pointer;
+        height:14px;
+        background:$lighter-gray;
+        width: 100px;
+        float: left;
+        .range{
+          background:$blue;
+          height: 100%;
+        }        
+      }
+
+    }
+
     i#next-song, i#prev-song, i#current-list{
       position:absolute;
-      top:29px;
+      top:25px;
       right: 10px;
       color: $lighter-gray;
       font-size: 20px;
@@ -362,4 +359,11 @@ h3{
 
   }
   /* end .player-zone */
+}
+.alertify-notifier.ajs-right .ajs-message{
+  word-wrap: break-word;
+  a{
+    color: $blue;
+    text-shadow: none;
+  }
 }
