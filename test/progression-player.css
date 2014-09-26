@@ -1,0 +1,899 @@
+/*
+
+Product Name: Audio + Video Player
+Product URI: http://progressionstudios.com/
+Description: A video and audio player
+Version: 1.2
+License: GNU General Public License version 3.0
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Author: Progression Studios
+Author URI: http://progressionstudios.com/themeforest
+*/
+
+/*  Table of Contents 
+01. Media Element Player (DO NOT EDIT)
+02. Easy Customization
+03. Responsive Styles
+04. Font Icons + CSS Transitions
+05. Main Styles
+	A. Main Container
+	B. Play/Pause Button
+	C. Progress Bar
+	D. Handle and Timer
+	E. Time (Current / Duration)
+	F. Mute/Volume
+	G. FullScreen
+	H. Video Play Button
+06. Playlist Styles
+07. Small Player Size
+	A. Player Height
+	B. Button Sizes
+08. Medium Player Size
+	A. Player Height
+	B. Button Sizes
+09. Live Preview Styles
+*/
+
+/*
+=============================================== 01. Media Element Player (DO NOT EDIT) ===============================================
+*/
+.mejs-container{position:relative;background:#000;font-family:Helvetica,Arial;text-align:left;vertical-align:top;text-indent:0;}.me-plugin{position:absolute;}.mejs-embed,.mejs-embed body{width:100%;height:100%;margin:0;padding:0;background:#000;overflow:hidden;}
+.mejs-container-fullscreen{position:fixed;left:0;top:0;right:0;bottom:0;overflow:hidden;z-index:1000;}.mejs-container-fullscreen .mejs-mediaelement,.mejs-container-fullscreen video{width:100%;height:100%;}.mejs-clear{clear:both;}.mejs-background{position:absolute;top:0;left:0;}.mejs-mediaelement{position:absolute;top:0;left:0;width:100%;height:100%;}
+.mejs-poster{position:absolute;top:0;left:0;background-size:contain;background-position:50% 50%;background-repeat:no-repeat;}:root .mejs-poster img{display:none;}.mejs-poster img{border:0;padding:0;border:0;}.mejs-overlay{position:absolute;top:0;left:0;}.mejs-overlay-play{cursor:pointer;}
+.mejs-overlay-button{position:absolute;top:50%;left:50%;width:100px;height:100px;margin:-50px 0 0 -50px;background:url(../build/bigplay.svg) no-repeat;}.no-svg .mejs-overlay-button{background-image:url(../build/bigplay.png);}.mejs-overlay:hover .mejs-overlay-button{background-position:0 -100px;}
+.mejs-overlay-loading{position:absolute;top:50%;left:50%;width:80px;height:80px;margin:-40px 0 0 -40px;background:#333;background:url(../build/background.png);background:rgba(0,0,0,0.9);background:-webkit-gradient(linear,0% 0,0% 100%,from(rgba(50,50,50,0.9)),to(rgba(0,0,0,0.9)));background:-webkit-linear-gradient(top,rgba(50,50,50,0.9),rgba(0,0,0,0.9));background:-moz-linear-gradient(top,rgba(50,50,50,0.9),rgba(0,0,0,0.9));background:-o-linear-gradient(top,rgba(50,50,50,0.9),rgba(0,0,0,0.9));background:-ms-linear-gradient(top,rgba(50,50,50,0.9),rgba(0,0,0,0.9));background:linear-gradient(rgba(50,50,50,0.9),rgba(0,0,0,0.9));}.mejs-overlay-loading span{display:block;width:80px;height:80px;background:transparent url(../build/loading.gif) 50% 50% no-repeat;}
+.mejs-container .mejs-controls{position:absolute;list-style-type:none;margin:0;padding:0;bottom:0;left:0;background:url(../build/background.png);background:rgba(0,0,0,0.7);background:-webkit-gradient(linear,0% 0,0% 100%,from(rgba(50,50,50,0.7)),to(rgba(0,0,0,0.7)));background:-webkit-linear-gradient(top,rgba(50,50,50,0.7),rgba(0,0,0,0.7));background:-moz-linear-gradient(top,rgba(50,50,50,0.7),rgba(0,0,0,0.7));background:-o-linear-gradient(top,rgba(50,50,50,0.7),rgba(0,0,0,0.7));background:-ms-linear-gradient(top,rgba(50,50,50,0.7),rgba(0,0,0,0.7));background:linear-gradient(rgba(50,50,50,0.7),rgba(0,0,0,0.7));height:30px;width:100%;}
+.mejs-container .mejs-controls div{list-style-type:none;background-image:none;display:block;float:left;margin:0;padding:0;width:26px;height:26px;font-size:11px;line-height:11px;font-family:Helvetica,Arial;border:0;}
+.mejs-controls .mejs-button button{cursor:pointer;display:block;font-size:0;line-height:0;text-decoration:none;margin:7px 5px;padding:0;position:absolute;height:16px;width:16px;border:0;background:transparent url(../build/controls.svg) no-repeat;}
+.no-svg .mejs-controls .mejs-button button{background-image:url(../build/controls.png);}.mejs-controls .mejs-button button:focus{outline:solid 1px yellow;}.mejs-container .mejs-controls .mejs-time{color:#fff;display:block;height:17px;width:auto;padding:8px 3px 0 3px;overflow:hidden;text-align:center;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;}.mejs-container .mejs-controls .mejs-time span{color:#fff;font-size:11px;line-height:12px;display:block;float:left;margin:1px 2px 0 0;width:auto;}.mejs-controls .mejs-play button{background-position:0 0;}.mejs-controls .mejs-pause button{background-position:0 -16px;}.mejs-controls .mejs-stop button{background-position:-112px 0;}.mejs-controls div.mejs-time-rail{width:200px;padding-top:5px;}.mejs-controls .mejs-time-rail span{display:block;position:absolute;width:180px;height:10px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;cursor:pointer;}
+.mejs-controls .mejs-time-rail .mejs-time-total{margin:5px;background:#333;background:rgba(50,50,50,0.8);background:-webkit-gradient(linear,0% 0,0% 100%,from(rgba(30,30,30,0.8)),to(rgba(60,60,60,0.8)));background:-webkit-linear-gradient(top,rgba(30,30,30,0.8),rgba(60,60,60,0.8));background:-moz-linear-gradient(top,rgba(30,30,30,0.8),rgba(60,60,60,0.8));background:-o-linear-gradient(top,rgba(30,30,30,0.8),rgba(60,60,60,0.8));background:-ms-linear-gradient(top,rgba(30,30,30,0.8),rgba(60,60,60,0.8));background:linear-gradient(rgba(30,30,30,0.8),rgba(60,60,60,0.8));}.mejs-controls .mejs-time-rail .mejs-time-buffering{width:100%;background-image:-o-linear-gradient(-45deg,rgba(255,255,255,0.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0.15) 75%,transparent 75%,transparent);background-image:-webkit-gradient(linear,0 100%,100% 0,color-stop(0.25,rgba(255,255,255,0.15)),color-stop(0.25,transparent),color-stop(0.5,transparent),color-stop(0.5,rgba(255,255,255,0.15)),color-stop(0.75,rgba(255,255,255,0.15)),color-stop(0.75,transparent),to(transparent));background-image:-webkit-linear-gradient(-45deg,rgba(255,255,255,0.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0.15) 75%,transparent 75%,transparent);background-image:-moz-linear-gradient(-45deg,rgba(255,255,255,0.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0.15) 75%,transparent 75%,transparent);background-image:-ms-linear-gradient(-45deg,rgba(255,255,255,0.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0.15) 75%,transparent 75%,transparent);background-image:linear-gradient(-45deg,rgba(255,255,255,0.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0.15) 75%,transparent 75%,transparent);-webkit-background-size:15px 15px;-moz-background-size:15px 15px;-o-background-size:15px 15px;background-size:15px 15px;-webkit-animation:buffering-stripes 2s linear infinite;-moz-animation:buffering-stripes 2s linear infinite;-ms-animation:buffering-stripes 2s linear infinite;-o-animation:buffering-stripes 2s linear infinite;animation:buffering-stripes 2s linear infinite;}@-webkit-keyframes buffering-stripes{from{background-position:0 0;}to{background-position:30px 0;}}@-moz-keyframes buffering-stripes{from{background-position:0 0;}to{background-position:30px 0;}}@-ms-keyframes buffering-stripes{from{background-position:0 0;}to{background-position:30px 0;}}@-o-keyframes buffering-stripes{from{background-position:0 0;}to{background-position:30px 0;}}@keyframes buffering-stripes{from{background-position:0 0;}to{background-position:30px 0;}}
+.mejs-controls .mejs-time-rail .mejs-time-loaded{background:#3caac8;background:rgba(60,170,200,0.8);background:-webkit-gradient(linear,0% 0,0% 100%,from(rgba(44,124,145,0.8)),to(rgba(78,183,212,0.8)));background:-webkit-linear-gradient(top,rgba(44,124,145,0.8),rgba(78,183,212,0.8));background:-moz-linear-gradient(top,rgba(44,124,145,0.8),rgba(78,183,212,0.8));background:-o-linear-gradient(top,rgba(44,124,145,0.8),rgba(78,183,212,0.8));background:-ms-linear-gradient(top,rgba(44,124,145,0.8),rgba(78,183,212,0.8));background:linear-gradient(rgba(44,124,145,0.8),rgba(78,183,212,0.8));width:0;}.mejs-controls .mejs-time-rail .mejs-time-current{background:#fff;background:rgba(255,255,255,0.8);background:-webkit-gradient(linear,0% 0,0% 100%,from(rgba(255,255,255,0.9)),to(rgba(200,200,200,0.8)));background:-webkit-linear-gradient(top,rgba(255,255,255,0.9),rgba(200,200,200,0.8));background:-moz-linear-gradient(top,rgba(255,255,255,0.9),rgba(200,200,200,0.8));background:-o-linear-gradient(top,rgba(255,255,255,0.9),rgba(200,200,200,0.8));background:-ms-linear-gradient(top,rgba(255,255,255,0.9),rgba(200,200,200,0.8));background:linear-gradient(rgba(255,255,255,0.9),rgba(200,200,200,0.8));width:0;}.mejs-controls .mejs-time-rail .mejs-time-handle{display:none;position:absolute;margin:0;width:10px;background:#fff;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;cursor:pointer;border:solid 2px #333;top:-2px;text-align:center;}.mejs-controls .mejs-time-rail .mejs-time-float{position:absolute;display:none;background:#eee;width:36px;height:17px;border:solid 1px #333;top:-26px;margin-left:-18px;text-align:center;color:#111;}.mejs-controls .mejs-time-rail .mejs-time-float-current{margin:2px;width:30px;display:block;text-align:center;left:0;}.mejs-controls .mejs-time-rail .mejs-time-float-corner{position:absolute;display:block;width:0;height:0;line-height:0;border:solid 5px #eee;border-color:#eee transparent transparent transparent;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;top:15px;left:13px;}
+.mejs-long-video .mejs-controls .mejs-time-rail .mejs-time-float{width:48px;}.mejs-long-video .mejs-controls .mejs-time-rail .mejs-time-float-current{width:44px;}.mejs-long-video .mejs-controls .mejs-time-rail .mejs-time-float-corner{left:18px;}.mejs-controls .mejs-fullscreen-button button{background-position:-32px 0;}.mejs-controls .mejs-unfullscreen button{background-position:-32px -16px;}.mejs-controls .mejs-mute button{background-position:-16px -16px;}.mejs-controls .mejs-unmute button{background-position:-16px 0;}.mejs-controls .mejs-volume-button{position:relative;}.mejs-controls .mejs-volume-button .mejs-volume-slider{display:none;height:115px;width:25px;background:url(../build/background.png);background:rgba(50,50,50,0.7);-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;top:-115px;left:0;z-index:1;position:absolute;margin:0;}.mejs-controls .mejs-volume-button:hover{-webkit-border-radius:0 0 4px 4px;-moz-border-radius:0 0 4px 4px;border-radius:0 0 4px 4px;}.mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-total{position:absolute;left:11px;top:8px;width:2px;height:100px;background:#ddd;background:rgba(255,255,255,0.5);margin:0;}.mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-current{position:absolute;left:11px;top:8px;width:2px;height:100px;background:#ddd;background:rgba(255,255,255,0.9);margin:0;}.mejs-controls .mejs-volume-button .mejs-volume-slider .mejs-volume-handle{position:absolute;left:4px;top:-3px;width:16px;height:6px;background:#ddd;background:rgba(255,255,255,0.9);cursor:N-resize;-webkit-border-radius:1px;-moz-border-radius:1px;border-radius:1px;margin:0;}.mejs-controls div.mejs-horizontal-volume-slider{height:26px;width:60px;position:relative;}.mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-total{position:absolute;left:0;top:11px;width:50px;height:8px;margin:0;padding:0;font-size:1px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;background:#333;background:rgba(50,50,50,0.8);background:-webkit-gradient(linear,0% 0,0% 100%,from(rgba(30,30,30,0.8)),to(rgba(60,60,60,0.8)));background:-webkit-linear-gradient(top,rgba(30,30,30,0.8),rgba(60,60,60,0.8));background:-moz-linear-gradient(top,rgba(30,30,30,0.8),rgba(60,60,60,0.8));background:-o-linear-gradient(top,rgba(30,30,30,0.8),rgba(60,60,60,0.8));background:-ms-linear-gradient(top,rgba(30,30,30,0.8),rgba(60,60,60,0.8));background:linear-gradient(rgba(30,30,30,0.8),rgba(60,60,60,0.8));}.mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-current{position:absolute;left:0;top:11px;width:50px;height:8px;margin:0;padding:0;font-size:1px;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px;background:#fff;background:rgba(255,255,255,0.8);background:-webkit-gradient(linear,0% 0,0% 100%,from(rgba(255,255,255,0.9)),to(rgba(200,200,200,0.8)));background:-webkit-linear-gradient(top,rgba(255,255,255,0.9),rgba(200,200,200,0.8));background:-moz-linear-gradient(top,rgba(255,255,255,0.9),rgba(200,200,200,0.8));background:-o-linear-gradient(top,rgba(255,255,255,0.9),rgba(200,200,200,0.8));background:-ms-linear-gradient(top,rgba(255,255,255,0.9),rgba(200,200,200,0.8));background:linear-gradient(rgba(255,255,255,0.9),rgba(200,200,200,0.8));}.mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-handle{display:none;}.mejs-controls .mejs-captions-button{position:relative;}.mejs-controls .mejs-captions-button button{background-position:-48px 0;}.mejs-controls .mejs-captions-button .mejs-captions-selector{visibility:hidden;position:absolute;bottom:26px;right:-10px;width:130px;height:100px;background:url(../build/background.png);background:rgba(50,50,50,0.7);border:solid 1px transparent;padding:10px;overflow:hidden;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;}.mejs-controls .mejs-captions-button .mejs-captions-selector ul{margin:0;padding:0;display:block;list-style-type:none!important;overflow:hidden;}.mejs-controls .mejs-captions-button .mejs-captions-selector ul li{margin:0 0 6px 0;padding:0;list-style-type:none!important;display:block;color:#fff;overflow:hidden;}.mejs-controls .mejs-captions-button .mejs-captions-selector ul li input{clear:both;float:left;margin:3px 3px 0 5px;}.mejs-controls .mejs-captions-button .mejs-captions-selector ul li label{width:100px;float:left;padding:4px 0 0 0;line-height:15px;font-family:helvetica,arial;font-size:10px;}.mejs-controls .mejs-captions-button .mejs-captions-translations{font-size:10px;margin:0 0 5px 0;}.mejs-chapters{position:absolute;top:0;left:0;-xborder-right:solid 1px #fff;width:10000px;z-index:1;}.mejs-chapters .mejs-chapter{position:absolute;float:left;background:#222;background:rgba(0,0,0,0.7);background:-webkit-gradient(linear,0% 0,0% 100%,from(rgba(50,50,50,0.7)),to(rgba(0,0,0,0.7)));background:-webkit-linear-gradient(top,rgba(50,50,50,0.7),rgba(0,0,0,0.7));background:-moz-linear-gradient(top,rgba(50,50,50,0.7),rgba(0,0,0,0.7));background:-o-linear-gradient(top,rgba(50,50,50,0.7),rgba(0,0,0,0.7));background:-ms-linear-gradient(top,rgba(50,50,50,0.7),rgba(0,0,0,0.7));background:linear-gradient(rgba(50,50,50,0.7),rgba(0,0,0,0.7));filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0,startColorstr=#323232,endColorstr=#000000);overflow:hidden;border:0;}.mejs-chapters .mejs-chapter .mejs-chapter-block{font-size:11px;color:#fff;padding:5px;display:block;border-right:solid 1px #333;border-bottom:solid 1px #333;cursor:pointer;}.mejs-chapters .mejs-chapter .mejs-chapter-block-last{border-right:none;}.mejs-chapters .mejs-chapter .mejs-chapter-block:hover{background:#666;background:rgba(102,102,102,0.7);background:-webkit-gradient(linear,0% 0,0% 100%,from(rgba(102,102,102,0.7)),to(rgba(50,50,50,0.6)));background:-webkit-linear-gradient(top,rgba(102,102,102,0.7),rgba(50,50,50,0.6));background:-moz-linear-gradient(top,rgba(102,102,102,0.7),rgba(50,50,50,0.6));background:-o-linear-gradient(top,rgba(102,102,102,0.7),rgba(50,50,50,0.6));background:-ms-linear-gradient(top,rgba(102,102,102,0.7),rgba(50,50,50,0.6));background:linear-gradient(rgba(102,102,102,0.7),rgba(50,50,50,0.6));filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0,startColorstr=#666666,endColorstr=#323232);}.mejs-chapters .mejs-chapter .mejs-chapter-block .ch-title{font-size:12px;font-weight:bold;display:block;white-space:nowrap;text-overflow:ellipsis;margin:0 0 3px 0;line-height:12px;}.mejs-chapters .mejs-chapter .mejs-chapter-block .ch-timespan{font-size:12px;line-height:12px;margin:3px 0 4px 0;display:block;white-space:nowrap;text-overflow:ellipsis;}.mejs-captions-layer{position:absolute;bottom:0;left:0;text-align:center;line-height:22px;font-size:12px;color:#fff;}.mejs-captions-layer a{color:#fff;text-decoration:underline;}.mejs-captions-layer[lang=ar]{font-size:20px;font-weight:normal;}.mejs-captions-position{position:absolute;width:100%;bottom:15px;left:0;}.mejs-captions-position-hover{bottom:45px;}.mejs-captions-text{padding:3px 5px;background:url(../build/background.png);background:rgba(20,20,20,0.8);}.me-cannotplay a{color:#fff;font-weight:bold;}.me-cannotplay span{padding:15px;display:block;}.mejs-controls .mejs-loop-off button{background-position:-64px -16px;}.mejs-controls .mejs-loop-on button{background-position:-64px 0;}.mejs-controls .mejs-backlight-off button{background-position:-80px -16px;}.mejs-controls .mejs-backlight-on button{background-position:-80px 0;}.mejs-controls .mejs-picturecontrols-button{background-position:-96px 0;}.mejs-contextmenu{position:absolute;width:150px;padding:10px;border-radius:4px;top:0;left:0;background:#fff;border:solid 1px #999;z-index:1001;}.mejs-contextmenu .mejs-contextmenu-separator{height:1px;font-size:0;margin:5px 6px;background:#333;}.mejs-contextmenu .mejs-contextmenu-item{font-family:Helvetica,Arial;font-size:12px;padding:4px 6px;cursor:pointer;color:#333;}.mejs-contextmenu .mejs-contextmenu-item:hover{background:#2C7C91;color:#fff;}.mejs-controls .mejs-sourcechooser-button{position:relative;}.mejs-controls .mejs-sourcechooser-button button{background-position:-128px 0;}.mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector{visibility:hidden;position:absolute;bottom:26px;right:-10px;width:130px;height:100px;background:url(../build/background.png);background:rgba(50,50,50,0.7);border:solid 1px transparent;padding:10px;overflow:hidden;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;}.mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul{margin:0;padding:0;display:block;list-style-type:none!important;overflow:hidden;}.mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li{margin:0 0 6px 0;padding:0;list-style-type:none!important;display:block;color:#fff;overflow:hidden;}.mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li input{clear:both;float:left;margin:3px 3px 0 5px;}.mejs-controls .mejs-sourcechooser-button .mejs-sourcechooser-selector ul li label{width:100px;float:left;padding:4px 0 0 0;line-height:15px;font-family:helvetica,arial;font-size:10px;}.mejs-postroll-layer{position:absolute;bottom:0;left:0;width:100%;height:100%;background:url(../build/background.png);background:rgba(50,50,50,0.7);z-index:1000;overflow:hidden;}.mejs-postroll-layer-content{width:100%;height:100%;}.mejs-postroll-close{position:absolute;right:0;top:0;background:url(../build/background.png);background:rgba(50,50,50,0.7);color:#fff;padding:4px;z-index:100;cursor:pointer;}
+
+/*
+=============================================== 02. Easy Customization ===============================================
+*/
+.responsive-wrapper {max-width:550px;} /* Responsive Player Maximum Width */
+.active-progression {padding-bottom:0px !important;  }
+.progression-single-title {
+	max-width:100%;   margin:0 1px;
+	padding:5px 15px; 
+	color:#666666; 
+	font-size:11px; 
+	background:#f8f8f8; 
+	border-left:1px solid #b5b5b5; 
+	border-bottom:1px solid #b5b5b5; 
+	border-right:1px solid #b5b5b5;
+}
+
+
+/*
+=============================================== 03. Responsive Styles ===============================================
+*/
+.responsive-wrapper video, .responsive-wrapper audio {max-width:100% !important; width:100% !important; }
+.responsive-wrapper {height: auto !important;}
+.responsive-wrapper.responsive-audio .mejs-container.progression-skin {height:40px !important;}
+
+
+/* -- This Code Removes Audio Controls on Mobile/Tablet  -- */
+@media only screen and (max-width: 959px) {
+.progression-skin .mejs-controls .mejs-unmute, .progression-skin .mejs-controls .mejs-mute,
+.progression-skin .mejs-controls .mejs-horizontal-volume-slider  {display:none !important;}
+.progression-skin .mejs-inner .mejs-controls .mejs-time.mejs-duration-container {margin-right:0px !important; border-right:0px !important;}
+
+}
+
+
+/*
+=============================================== 04. Font Icons + CSS Transitions ===============================================
+*/
+/* FONT AWESOME ICONs */
+.progression-skin .mejs-playlist li.current:before, 
+.mejs-controls .mejs-prevtrack button, .mejs-controls .mejs-nexttrack button,
+.progression-skin .mejs-controls .mejs-show-playlist button, .progression-skin  .mejs-controls .mejs-hide-playlist button,
+.progression-skin .mejs-overlay-button, .progression-skin .mejs-overlay:hover .mejs-overlay-button,
+.progression-skin .mejs-controls .mejs-fullscreen-button button, .progression-skin .mejs-controls .mejs-unfullscreen button, .progression-skin .mejs-controls .mejs-playpause-button button, .progression-skin .mejs-controls .mejs-mute button, .progression-skin .mejs-controls .mejs-unmute button  {
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+	text-decoration: inherit;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* CSS TRANSITIONS */
+.progression-skin .mejs-controls button, .progression-skin .mejs-playlist li, .progression-skin .mejs-overlay-button, ul#prog-page-navigation li a {
+	-webkit-transition-duration: 200ms;
+	-webkit-transition-property: background, color;
+	-webkit-transition-timing-function: ease-in-out;
+	-moz-transition-duration: 200ms;
+	-moz-transition-property: background, color;
+	-moz-transition-timing-function: ease-in-out;
+	-o-transition-duration: 200ms;
+	-o-transition-property: background, color;
+	-o-transition-timing-function: ease-in-out;
+	transition-duration: 200ms;
+	transition-property: background, color;
+}
+
+/*
+=============================================== 05. Main Styles ===============================================
+*/
+/* -------------------- A. Main Container  -------------------- */
+.progression-skin.mejs-video .mejs-controls {bottom:-1px ;}
+.mejs-mediaelement {border-top:1px solid #b5b5b5;}
+.progression-skin .mejs-controls .mejs-playpause-button, .progression-skin .mejs-controls .mejs-prevtrack-button {border-left:1px solid #b5b5b5;}
+.mejs-container.progression-skin { background: #000000; }
+.progression-skin button:focus {outline:none !important;}
+
+body .progression-skin .mejs-inner .mejs-controls .mejs-duration-container { padding: 13px 10px 10px 2px;}
+body .progression-small .progression-skin .mejs-inner .mejs-controls .mejs-duration-container { padding-bottom:0px;}
+
+.progression-playlist.progression-skin .mejs-controls .mejs-playpause-button {border-left:none;}
+.progression-playlist.mejs-container.progression-skin .mejs-controls {
+	border-bottom:none;
+}
+.mejs-container.progression-skin .mejs-controls {
+	height:40px;
+	background-color:#ffffff;
+	border-top:1px solid #b5b5b5;
+	border-bottom:1px solid #b5b5b5;
+	border-right:1px solid #b5b5b5;
+	background-image:none;
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#eeeeee), to(#FFFFFF));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #eeeeee, #FFFFFF);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #eeeeee, #FFFFFF);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #eeeeee, #FFFFFF); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #eeeeee, #FFFFFF); /* Opera 11.10+ */
+	background-image: linear-gradient(bottom, #eeeeee 0%, #FFFFFF 100%);
+	
+}
+
+
+
+/* Main Button Color */
+.progression-skin .mejs-controls button {color:#868686;}
+
+/* Main Button Hover Color */
+.progression-skin .mejs-controls button:hover {
+	color:#555555;
+}
+
+
+/* -------------------- B. Play/Pause Button  -------------------- */
+.progression-skin .mejs-controls .mejs-playpause-button:hover {
+	background: #f3f3f3;
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#ffffff), to(#f0f0f0));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #ffffff, #f0f0f0);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #ffffff, #f0f0f0);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #ffffff, #f0f0f0); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #ffffff, #f0f0f0); /* Opera 11.10+ */
+	background-image: linear-gradient(bottom, #ffffff 0%, #f0f0f0 100%);
+}
+
+.progression-skin .mejs-controls .mejs-playpause-button  {
+	margin-right:5px;
+	height:40px;
+	width:40px;
+	outline:none;
+	border-right:1px solid #b5b5b5;
+}
+
+.progression-playlist.progression-skin .mejs-controls .mejs-playpause-button  {
+	margin-right:0px;
+}
+.progression-skin .mejs-controls .mejs-playpause-button  button {
+	width: 40px;
+	height: 40px;
+	margin: 0;
+	padding: 0;
+	outline:none;
+	background-image:none;
+}
+
+.progression-skin .mejs-controls .mejs-playpause-button  button:before {
+	font-size:17px;
+	content: "\f04b";
+	line-height:40px;
+	text-decoration: inherit;
+	display: inline-block;
+} 
+
+
+/* -------------------- C. Progress Bar  -------------------- */
+.progression-skin .mejs-controls .mejs-pause button:before  {
+	content: "\f04c";
+	font-size:15px;
+	position:relative;
+}
+
+.progression-skin .mejs-controls div.mejs-time-rail {
+	padding-top:10px;
+}
+
+.progression-skin .mejs-controls .mejs-time-rail span {
+	height:10px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+.progression-skin .mejs-controls .mejs-time-rail .mejs-time-total {
+	background:#d5d5d5;
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#d5d5d5), to(#c6c6c6));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #d5d5d5, #c6c6c6);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #d5d5d5, #c6c6c6);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #d5d5d5, #c6c6c6); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #d5d5d5, #c6c6c6); /* Opera 11.10+ */
+	background-image: linear-gradient(bottom, #d5d5d5 0%, #c6c6c6 100%);
+	
+	-webkit-box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
+	box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.15);
+	
+}
+.progression-skin .mejs-controls .mejs-time-rail .mejs-time-loaded { 
+	-webkit-box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+	background:#aaaaaa;
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#c6c6c6), to(#aaaaaa));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #c6c6c6, #aaaaaa);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #c6c6c6, #aaaaaa);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #c6c6c6, #aaaaaa); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #c6c6c6, #aaaaaa); /* Opera 11.10+ */
+	background-image: linear-gradient(bottom, #c6c6c6 0%, #aaaaaa 100%);
+}
+
+.progression-skin .mejs-controls .mejs-time-rail .mejs-time-current {
+	-webkit-box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+	background:#666666;	
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#666666), to(#444444));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #666666, #444444);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #666666, #444444);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #666666, #444444); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #666666, #444444); /* Opera 11.10+ */
+	background-image: linear-gradient(bottom, #666666 0%, #444444 100%);
+
+}
+
+
+
+/* -------------------- D. Handle and Timer  -------------------- */
+
+.progression-skin .mejs-controls .mejs-time-rail .mejs-time-handle  {
+	display: block; margin: 0; padding:0px; border: 0;
+	width: 6px;
+	height: 6px;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	top:-3px;
+	left:-8px;
+	
+	-webkit-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.25);
+	box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.25);
+	border:5px solid #eaeaea;
+	background: #adadad;	
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#9c9c9c), to(#adadad));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #9c9c9c, #adadad);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #9c9c9c, #adadad);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #9c9c9c, #adadad); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #9c9c9c, #adadad); /* Opera 11.10+ */
+	background-image: linear-gradient(bottom, #9c9c9c 0%, #adadad 100%);
+}
+
+.progression-skin .mejs-controls .mejs-time-rail .mejs-time-float {
+	width: 38px;
+	height: 17px;
+	top: -28px;
+	margin-left: -19px !important;
+	background: #909090;
+	border-color:#909090;
+	background: rgba(0, 0, 0, 0.5); 
+	color:#ffffff;
+	
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.progression-skin .mejs-controls .mejs-time-rail .mejs-time-float-current {
+	margin:3px 4px 4px 4px;
+	font-size:10px;
+}
+
+.progression-skin .mejs-controls .mejs-time-rail .mejs-time-float-corner {
+	top: 17px;
+	border: solid 5px #909090;
+	border-color: #909090 transparent transparent transparent;
+}
+
+
+
+/* -------------------- E. Time (Current / Duration)  -------------------- */
+.progression-skin .mejs-inner .mejs-controls .mejs-time {
+	padding: 13px 2px 0px 2px;
+	margin-left:5px;
+	margin-right:8px;
+}
+
+.progression-skin .mejs-inner .mejs-controls .mejs-duration-container {
+	border-right:1px solid #b5b5b5;
+	margin-left:5px;
+	margin-right:8px;
+}
+
+.progression-playlist-height .progression-skin .mejs-inner .mejs-controls .mejs-time.mejs-currenttime-container { 
+	margin-right:-2px;
+	padding-right:0px;
+	padding-left:8px;
+}
+
+.progression-skin .mejs-inner .mejs-controls .mejs-time span {
+	
+}
+
+.progression-skin .mejs-inner .mejs-time .mejs-currenttime, .progression-skin .mejs-inner .mejs-time  .mejs-duration {
+	color:#aaa ;
+}
+
+
+/* -------------------- F. Mute/Volume  -------------------- */
+.progression-skin .mejs-controls .mejs-volume-button .mejs-volume-slider {
+	left:-3px;
+}
+
+
+.progression-audio-player .mejs-controls .mejs-mute button:hover {background:none !important;}
+.progression-skin .mejs-controls .mejs-mute button {
+	background:none;
+	width: 34px;
+	height: 40px;
+	margin: 0 0 0 -8px;
+	outline:none;
+	background-image:none;
+}
+
+.progression-skin .mejs-controls .mejs-mute button:hover {
+	background: #ffffff;
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#ffffff), to(#f0f0f0));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #ffffff, #f0f0f0);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #ffffff, #f0f0f0);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #ffffff, #f0f0f0); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #ffffff, #f0f0f0); /* Opera 11.10+ */
+	background-image: linear-gradient(bottom, #ffffff 0%, #f0f0f0 100%);
+}
+
+
+.progression-skin .mejs-controls .mejs-unmute button {
+	background:none;
+	width: 20px;
+	height: 40px;
+	margin: 0 ;
+	padding:0;
+	outline:none;
+	background-image:none;
+}
+
+.progression-skin .mejs-controls .mejs-mute button:before {
+	position:relative;
+	left:1px;
+	font-size:18px;
+	content: "\f028";
+	line-height:40px;
+	text-decoration: inherit;
+	display: inline-block;
+}
+
+.progression-skin .mejs-controls .mejs-unmute button:before {
+	font-size:18px;
+	content: "\f026";
+	line-height:40px;
+	text-decoration: inherit;
+	display: inline-block;
+	position:relative;
+	left:-4px;
+}
+
+
+.progression-skin .mejs-controls div.mejs-horizontal-volume-slider {
+	margin-top:5px;
+}
+
+
+.progression-skin .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-total {
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+	background:#aaaaaa;
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#c6c6c6), to(#aaaaaa));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #c6c6c6, #aaaaaa);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #c6c6c6, #aaaaaa);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #c6c6c6, #aaaaaa); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #c6c6c6, #aaaaaa); /* Opera 11.10+ */
+	background-image: linear-gradient(bottom, #c6c6c6 0%, #aaaaaa 100%);
+}
+
+.progression-skin .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-current {
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	
+	-webkit-box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+	background:#666666;
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#666666), to(#444444));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #666666, #444444);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #666666, #444444);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #666666, #444444); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #666666, #444444); /* Opera 11.10+ */
+	background-image: linear-gradient(bottom, #666666 0%, #444444 100%);
+}
+
+body .progression-skin .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-handle {
+	display: block;
+	position: absolute;
+	width: 5px;
+	height:5px;
+	margin-left:-6px;
+	top:8px;
+	background: #adadad;	
+	
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#9c9c9c), to(#adadad));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #9c9c9c, #adadad);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #9c9c9c, #adadad);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #9c9c9c, #adadad); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #9c9c9c, #adadad); /* Opera 11.10+ */	
+	background-image: linear-gradient(bottom, #9c9c9c 0%, #adadad 100%);
+
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	cursor: pointer;
+	-webkit-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.25);
+	box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.25);
+	border:4px solid #eaeaea;
+	text-align: center;
+}
+
+
+/* -------------------- G. FullScreen  -------------------- */
+.progression-skin .mejs-controls .mejs-fullscreen-button {
+	height:40px;
+	width:30px;
+	margin:0px;
+	padding:0px;
+	border-left:1px solid #b5b5b5;
+	
+}
+.progression-skin .mejs-controls .mejs-fullscreen-button:hover {
+	background: #ffffff;
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#ffffff), to(#f0f0f0));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #ffffff, #f0f0f0);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #ffffff, #f0f0f0);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #ffffff, #f0f0f0); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #ffffff, #f0f0f0); /* Opera 11.10+ */
+	background-image: linear-gradient(bottom, #ffffff 0%, #f0f0f0 100%);
+}
+
+.progression-skin .mejs-controls .mejs-fullscreen-button button {
+	background-image:none;
+	height:40px;
+	margin-top:0px;
+}
+
+.progression-skin .mejs-controls .mejs-fullscreen-button button:before {
+	position:relative;
+	left:3px;
+	font-size:12px;
+	content: "\f0b2";
+	text-decoration: inherit;
+	display: inline-block;
+}
+
+.progression-skin .mejs-controls .mejs-unfullscreen button {
+	background-image:none;
+}
+
+
+.progression-skin .mejs-controls .mejs-unfullscreen button:before {
+	position:relative;
+	left:3px;
+	font-size:12px;
+	content: "\f0b2";
+	text-decoration: inherit;
+	display: inline-block;
+}
+
+/* -------------------- H. Video Play Button  -------------------- */
+.youtube-wrapper .mejs-overlay-button {display:none !important;}
+
+.progression-skin .mejs-overlay-button {
+	background:none;
+	background:#000000;
+	background: rgba(0, 0, 0, 0.75);
+	width: 60px;
+	height: 60px;
+	margin: -30px 0 0 -30px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+.progression-skin .mejs-overlay-button:before {
+	color:#ffffff;
+	font-size:30px;
+	content: "\f04b";
+	text-decoration: inherit;
+	display: inline-block;
+	left:20px;
+	top:15px;
+	position:relative;
+}
+
+.progression-skin .mejs-overlay:hover .mejs-overlay-button {
+	background:none;
+	background:#000000;
+	background: rgba(0, 0, 0, 0.95);
+}
+
+
+
+/*
+=============================================== 06. Playlist Styles ===============================================
+*/
+
+.progression-playlist.progression-skin .mejs-controls .mejs-time-rail {
+	margin-left:15px;
+}
+
+/* Start: Show/Hide Playlist*/
+.progression-skin .mejs-controls .mejs-show-playlist, .progression-skin  .mejs-controls .mejs-hide-playlist {
+	border-left:1px solid #b5b5b5;
+	margin:0px !important;
+	padding:0px !important;
+	height:40px;
+	width:36px;
+	margin-right:5px;
+}
+
+.progression-skin .mejs-controls .mejs-hide-playlist {
+	opacity:0.8;
+	background: #ffffff;
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#ffffff), to(#f0f0f0));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #ffffff, #f0f0f0);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #ffffff, #f0f0f0);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #ffffff, #f0f0f0); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #ffffff, #f0f0f0); /* Opera 11.10+ */
+	background-image: linear-gradient(bottom, #ffffff 0%, #f0f0f0 100%);
+
+}
+
+.progression-skin .mejs-controls .mejs-show-playlist button {
+	width:36px;
+	height:40px;
+	margin:0px; padding:0px;
+	background:none;
+}
+.progression-skin  .mejs-controls .mejs-hide-playlist button {
+	width:36px;
+	height:40px;
+	margin:0px; padding:0px;
+	background:none;
+}
+
+.progression-skin .mejs-controls .mejs-hide-playlist button:before, .progression-skin .mejs-controls .mejs-show-playlist button:before {
+	font-size:15px;
+	content: "\f0ca";
+	text-decoration: inherit;
+	display: inline-block;
+}
+
+/* End: Show/Hide Playlist */
+
+/* Start: Previous */
+.progression-skin .mejs-controls .mejs-nexttrack, .progression-skin .mejs-controls .mejs-prevtrack {
+	width:36px;
+	height:40px;
+	margin:0px;
+	padding:0px;
+}
+.progression-skin .mejs-controls .mejs-prevtrack button, .progression-skin .mejs-controls .mejs-nexttrack button {
+	width:36px;
+	height:40px;
+	margin:0px;
+	padding:0px;
+	border-right:1px solid #b5b5b5;
+}
+
+
+.progression-skin .mejs-controls .mejs-nexttrack:hover, .progression-skin .mejs-controls .mejs-prevtrack:hover, .progression-skin .mejs-controls .mejs-show-playlist:hover, .progression-skin  .mejs-controls .mejs-hide-playlist:hover {
+	background: #ffffff;
+	background-image: -webkit-gradient(linear, bottom, 0% 0%, 0% 100%, from(#ffffff), to(#f0f0f0));  /* Safari 4+, Chrome 1-9 */
+	background-image: -webkit-linear-gradient(bottom, #ffffff, #f0f0f0);   /* Safari 5.1+, Mobile Safari, Chrome 10+ */
+	background-image: -moz-linear-gradient(bottom, #ffffff, #f0f0f0);  /* Firefox 3.6+ */
+	background-image: -ms-linear-gradient(bottom, #ffffff, #f0f0f0); /* IE 10+ */
+	background-image: -o-linear-gradient(bottom, #ffffff, #f0f0f0); /* Opera 11.10+ */
+	background-image: linear-gradient(bottom, #ffffff 0%, #f0f0f0 100%);
+}
+
+
+.progression-skin .mejs-controls .mejs-prevtrack button {	
+	background:none; 
+}
+.progression-skin .mejs-controls .mejs-prevtrack button:before {
+	font-size:13px;
+	content: "\f04a";
+	text-decoration: inherit;
+	display: inline-block;
+	position:relative;
+}
+
+/* End: Previous */
+
+/* Start: Next */
+.progression-skin .mejs-controls .mejs-nexttrack button { background:none; }
+
+.progression-skin .mejs-controls .mejs-nexttrack button:before {
+	font-size:13px;
+	content: "\f04e";
+	text-decoration: inherit;
+	display: inline-block;
+	position:relative;
+}
+
+/* End: Next */
+
+
+/*Start: Playlist*/
+
+.progression-skin .mejs-playlist, .progression-skin .mejs-playlist ul {
+	position: absolute; left: 0;
+	background: #ffffff;
+}
+.progression-skin .mejs-playlist ul {
+	max-height: 174px !important;
+	width:100%;
+	overflow-y: auto;
+	list-style:none;
+	margin: 0px;
+	padding:0px;
+	border-bottom:1px solid #b5b5b5;
+	border-top:1px solid #b5b5b5;
+	-webkit-box-shadow: inset 0px 2px 2px 0px rgba(0, 0, 0, 0.15);
+	box-shadow: inset 0px 2px 2px 0px rgba(0, 0, 0, 0.15);
+}
+.progression-skin .mejs-playlist li {
+	margin:0px;
+	padding:10px 20px;
+	color: #777777;
+	border-left:1px solid #b5b5b5;
+	border-right:1px solid #b5b5b5;
+	font-size: 12px;
+	line-height:14px;
+ 	cursor: pointer;
+	display:block;
+	border-bottom:1px solid #b5b5b5;
+}
+
+.progression-skin .mejs-playlist li:last-child {
+	border-bottom:none;
+}
+
+.progression-skin .mejs-playlist li:hover {
+	background-color: rgba(0, 0, 0, 0.06);
+}
+
+.progression-skin .mejs-playlist li.current {
+	color:#ffffff;
+	background:#bbbbbb;
+	background: rgba(0, 0, 0, 0.35);
+}
+
+
+/*End: Playlist*/
+
+
+
+/*
+=============================================== 07. Small Player Size ===============================================
+*/
+/* -------------------- A. Player Height  -------------------- */
+body .progression-small .responsive-wrapper.responsive-audio .mejs-container.progression-skin {
+	height:30px !important;
+}
+
+body .progression-small .progression-skin .mejs-controls .mejs-mute button, body .progression-small .progression-skin .mejs-controls .mejs-nexttrack, body .progression-small .progression-skin .mejs-controls .mejs-prevtrack, body .progression-small .progression-skin .mejs-controls .mejs-prevtrack button, body .progression-small .progression-skin .mejs-controls .mejs-nexttrack button,
+body .progression-small .progression-skin  .mejs-controls .mejs-hide-playlist button body .progression-small .progression-skin .mejs-controls .mejs-show-playlist button, body .progression-small .progression-skin .mejs-controls .mejs-show-playlist, body .progression-small .progression-skin  .mejs-controls .mejs-hide-playlist, body .progression-small .progression-skin .mejs-controls .mejs-fullscreen-button button, body .progression-small .progression-skin .mejs-controls .mejs-fullscreen-button, body .progression-small .progression-skin .mejs-controls .mejs-unmute button, body .progression-small .mejs-container.progression-skin .mejs-controls {
+	height:30px;
+}
+
+body .progression-small .progression-skin .mejs-controls .mejs-playpause-button  button, body .progression-small .progression-skin .mejs-controls .mejs-playpause-button  {
+	height:30px;
+	width:30px;
+}
+
+body .progression-small .progression-skin .mejs-controls .mejs-prevtrack button, body .progression-small .progression-skin .mejs-controls .mejs-nexttrack button,  body .progression-small .progression-skin .mejs-controls .mejs-hide-playlist button:before, body .progression-small .progression-skin .mejs-controls .mejs-show-playlist button:before , body .progression-small .progression-skin .mejs-controls .mejs-unmute button:before, body .progression-small .progression-skin .mejs-controls .mejs-mute button:before, body .progression-small .progression-skin .mejs-controls .mejs-playpause-button  button:before, body .progression-small .progression-skin .mejs-controls .mejs-mute button {
+	line-height:30px;
+} 
+
+body .progression-small .progression-skin .mejs-controls .mejs-hide-playlist button:before, body .progression-small .progression-skin .mejs-controls .mejs-show-playlist button:before {
+	margin-top:-5px; /* Fix for Hide/Show Playlist Button */
+}
+
+body .progression-small .progression-skin .mejs-inner .mejs-controls .mejs-time {
+	height: 22px; /* Needs to add to total height */
+	padding-top:8px; /* Needs to add to total height */
+}
+
+/* Re-position Progress Bar */
+body .progression-small .progression-skin .mejs-controls div.mejs-time-rail {
+	padding-top:5px;
+}
+
+body .progression-small .progression-skin.progression-fancy .mejs-controls div.mejs-time-rail {
+	padding-top:6px; /* -- Fancy Skin Adjustments  -- */
+}
+
+/* Re-position Volume Slider */
+body .progression-small .progression-skin .mejs-controls div.mejs-horizontal-volume-slider, body .progression-small .progression-skin.progression-fancy .mejs-controls div.mejs-horizontal-volume-slider {
+	margin-top:0px; 
+}
+
+
+/* PlayList Sizes */
+body .progression-small .progression-skin .mejs-playlist li {
+	padding:8px 16px;
+	font-size: 11px;
+	line-height:13px;
+}
+
+
+/* -------------------- B. Button Sizes  -------------------- */
+
+/* Play + Pause Buttons */
+body .progression-small .progression-skin .mejs-controls .mejs-playpause-button  button:before {
+	font-size:14px;
+}
+body .progression-small .progression-skin .mejs-controls .mejs-pause button:before  {
+	font-size:12px;
+}
+
+/* Mute Buttons */
+body .progression-small .progression-skin .mejs-controls .mejs-mute button:before, body .progression-small .progression-skin .mejs-controls .mejs-unmute button:before  {
+	font-size:16px;
+}
+
+/* Full Screen Button */
+body .progression-small .progression-skin .mejs-controls .mejs-fullscreen-button button:before, body .progression-small .progression-skin .mejs-controls .mejs-unfullscreen button:before {
+	font-size:12px;
+}
+
+/* Playlist Button */
+body .progression-small .progression-skin .mejs-controls .mejs-hide-playlist button:before, body .progression-small .progression-skin .mejs-controls .mejs-show-playlist button:before {
+	font-size:15px;
+}	
+
+/* Next/Previous Track Button */
+body .progression-small .progression-skin .mejs-controls .mejs-prevtrack button:before, body .progression-small .progression-skin .mejs-controls .mejs-nexttrack button:before {
+	font-size:13px;
+}
+
+
+
+
+/*
+=============================================== 08. Medium Player Size ===============================================
+*/
+/* -------------------- A. Player Height  -------------------- */
+body .progression-large .responsive-wrapper.responsive-audio .mejs-container.progression-skin {
+	height:40px !important;
+}
+
+body .progression-large .progression-skin .mejs-controls .mejs-mute button, body .progression-large .progression-skin .mejs-controls .mejs-nexttrack, body .progression-large .progression-skin .mejs-controls .mejs-prevtrack, body .progression-large .progression-skin .mejs-controls .mejs-prevtrack button, body .progression-large .progression-skin .mejs-controls .mejs-nexttrack button,
+body .progression-large .progression-skin  .mejs-controls .mejs-hide-playlist button body .progression-large .progression-skin .mejs-controls .mejs-show-playlist button, body .progression-large .progression-skin .mejs-controls .mejs-show-playlist, body .progression-large .progression-skin  .mejs-controls .mejs-hide-playlist, body .progression-large .progression-skin .mejs-controls .mejs-fullscreen-button button, body .progression-large .progression-skin .mejs-controls .mejs-fullscreen-button, body .progression-large .progression-skin .mejs-controls .mejs-unmute button, body .progression-large .mejs-container.progression-skin .mejs-controls {
+	height:40px;
+}
+
+body .progression-large .progression-skin .mejs-controls .mejs-playpause-button  button, body .progression-large  .progression-skin .mejs-controls .mejs-playpause-button  {
+	height:40px;
+	width:40px;
+}
+
+body .progression-large .progression-skin .mejs-controls .mejs-hide-playlist button:before, body .progression-large .progression-skin .mejs-controls .mejs-show-playlist button:before, body .progression-large .progression-skin .mejs-controls .mejs-unmute button:before, body .progression-large .progression-skin .mejs-controls .mejs-mute button:before, body .progression-large .progression-skin .mejs-controls .mejs-playpause-button  button:before, body .progression-large .progression-skin .mejs-controls .mejs-mute button {
+	line-height:40px;
+} 
+
+body .progression-large .progression-skin .mejs-inner .mejs-controls .mejs-time {
+	height: 27px; /* Needs to add to total height */
+	padding-top:13px; /* Needs to add to total height */
+}
+
+/* Re-position Progress Bar */
+body .progression-large .progression-skin .mejs-controls div.mejs-time-rail {
+	padding-top:10px;
+}
+
+/* Re-position Volume Slider */
+body .progression-large .progression-skin .mejs-controls div.mejs-horizontal-volume-slider {
+	margin-top:5px; 
+}
+
+
+
+/* -------------------- B. Button Sizes  -------------------- */
+/* Play + Pause Buttons */
+body .progression-large .progression-skin .mejs-controls .mejs-playpause-button  button:before {
+	font-size:17px;
+}
+body .progression-large .progression-skin .mejs-controls .mejs-pause button:before  {
+	font-size:15px;
+}
+
+/* Mute Buttons */
+body .progression-large .progression-skin .mejs-controls .mejs-mute button:before, body .progression-large .progression-skin .mejs-controls .mejs-unmute button:before  {
+	font-size:18px;
+}
+
+/* Full Screen Button */
+body .progression-large .progression-skin .mejs-controls .mejs-fullscreen-button button:before, body .progression-large .progression-skin .mejs-controls .mejs-unfullscreen button:before {
+	font-size:12px;
+}
+
+/* Playlist Button */
+body .progression-large .progression-skin .mejs-controls .mejs-hide-playlist button:before, body .progression-large .progression-skin .mejs-controls .mejs-show-playlist button:before {
+	font-size:15px;
+}	
+
+/* Next/Previous Track Button */
+body .progression-large .progression-skin .mejs-controls .mejs-prevtrack button:before, body .progression-large .progression-skin .mejs-controls .mejs-nexttrack button:before {
+	font-size:13px;
+}
+
+
+
+/*
+=============================================== 09. Live Preview Styles ===============================================
+*/
+body#progression-player-preview .progression-skin {
+	-webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.18);
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.18);
+}
+
+body#progression-player-preview {background: url(../build/cream_pixels.png); max-width:800px; margin:0 auto; padding:20px 20px 50px 20px; font-family:"Helvetica Neue", Helvetica, Arial, Sans-Serif;}
+body#progression-player-preview ul#prog-page-navigation { margin:25px auto 35px auto; padding:0px;  list-style:none; text-align:center; font-weight:bold; font-size:13px; border-bottom:1px solid #dddddd;}
+body#progression-player-preview ul#prog-page-navigation li {display:inline;  padding:0px; margin:0px;}
+body#progression-player-preview ul#prog-page-navigation li a {
+	position:relative; top:5px;
+	text-decoration:none;display:inline-block;  
+	background:#dddddd; 
+	background-image: linear-gradient(bottom, #dddddd 0%, #eeeeee 59%);
+	background-image: -o-linear-gradient(bottom, #dddddd 0%, #eeeeee 59%);
+	background-image: -moz-linear-gradient(bottom, #dddddd 0%, #eeeeee 59%);
+	background-image: -webkit-linear-gradient(bottom, #dddddd 0%, #eeeeee 59%);
+	background-image: -ms-linear-gradient(bottom, #dddddd 0%, #eeeeee 59%);
+	background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, #dddddd),color-stop(0.59, #eeeeee) );
+	color:#999999; 
+	text-shadow: 1px 1px 1px rgba(250, 250, 250, 0.5);
+	padding:7px 8px;
+	margin-bottom:5px;
+	-webkit-border-top-left-radius: 3px; -webkit-border-top-right-radius: 3px; -moz-border-radius-topleft: 3px; -moz-border-radius-topright: 3px; border-top-left-radius: 3px; border-top-right-radius: 3px;
+}
+body#progression-player-preview ul#prog-page-navigation li a:hover, body#progression-player-preview ul#prog-page-navigation li.current-menu-item a { 
+	background:#aaaaaa; 
+	background-image: linear-gradient(bottom, #aaaaaa 0%, #bbbbbb 59%);
+	background-image: -o-linear-gradient(bottom, #aaaaaa 0%, #bbbbbb 59%);
+	background-image: -moz-linear-gradient(bottom, #aaaaaa 0%, #bbbbbb 59%);
+	background-image: -webkit-linear-gradient(bottom, #aaaaaa 0%, #bbbbbb 59%);
+	background-image: -ms-linear-gradient(bottom, #aaaaaa 0%, #bbbbbb 59%);
+	background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, #aaaaaa),color-stop(0.59, #bbbbbb) );
+	color:#ffffff;
+	text-shadow:none;
+}
+
+body#progression-player-preview hr {background:transparent; border-bottom:1px solid #dddddd; border-top:none; margin:30px 0px;}
+ul#progression-options li {font-size:14px; padding-bottom:4px;}
+ul#progression-options li span {font-size:13px;}
+body#progression-player-preview pre {background:#e8e8e8; border:1px solid #c5c5c5; overflow-x:auto;}
+
+

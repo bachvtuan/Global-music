@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GOod job</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script><!-- jQuery Latest -->
+  <script src="old_jquery-ui.min.js"></script>
+  <script src="jquery.mousewheel.min.js"></script><!-- jQuery Latest -->
+  
+  <script src="audio1_html5.js"></script><!-- Playlist JavaSCript -->
+  
+  <link rel="stylesheet" href="audio1_html5.css" /><!-- Default Player Styles -->
+</head>
+<body>
+
+ <div class="audio1_html5">
+  <audio id="audio1_html5_white" preload="metadata">
+    <div class="xaudioplaylist">
+      <ul>
+        <li class="xtitle">This is Freeform A</li>
+        <li class="xauthor">Author Name</li>
+        <li class="xthumb">audio/thumbs/t_a1.jpg</li>
+        <li class="xsources_mp3">http://st02.freesocialmusic.com/mp3/2014/09/12/1178050012/141050406314_1679.mp3</li>
+        <li class="xsources_ogg">audio/wm_follow_me.ogg</li>
+      </ul>                 
+
+      <ul>
+        <li class="xtitle">Follow Me Here B</li>
+        <li class="xauthor">Author Name</li>
+        <li class="xthumb">audio/thumbs/t_a2.jpg</li>
+        <li class="xsources_mp3">http://st02.freesocialmusic.com/mp3/2014/09/12/1246064308/141050407616_7462.mp3</li>
+        <li class="xsources_ogg">audio/adg3com_crypticpsyche.ogg</li>
+      </ul>                   
+
+      <ul>
+        <li class="xtitle">This is Freeform C</li>
+        <li class="xauthor">Author Name</li>
+        <li class="xthumb">audio/thumbs/t_a1.jpg</li>
+        <li class="xsources_mp3">http://aredir.nixcdn.com/394390d9007440a2ce76b87507406ec8/5423c69c/NhacCuaTui139/KeDaTinh-LamHung_z35b.mp3</li>
+      </ul>
+
+      <ul>
+        <li class="xtitle">Follow Me Here D</li>
+        <li class="xauthor">Author Name</li>
+        <li class="xthumb">audio/thumbs/t_a2.jpg</li>
+        <li class="xsources_mp3">http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY3JTJGZSUyRjdlM2I4MjRiY2Q4ZTU0MjU4YzMxNmM4OGYwMjQ1NGQ2Lm1wMyU3QzI</li>
+      </ul> 
+    </div>
+  </audio>
+     
+ </div>             
+
+<div class="audio2_html5">
+   <audio id="audio2_html5_white" preload="metadata">
+    <div class="xaudioplaylist">
+      <ul>
+        <li class="xtitle">This is Freeform C</li>
+        <li class="xauthor">Author Name</li>
+        <li class="xthumb">audio/thumbs/t_a1.jpg</li>
+        <li class="xsources_mp3">http://aredir.nixcdn.com/394390d9007440a2ce76b87507406ec8/5423c69c/NhacCuaTui139/KeDaTinh-LamHung_z35b.mp3</li>
+      </ul>
+
+      <ul>
+        <li class="xtitle">Follow Me Here D</li>
+        <li class="xauthor">Author Name</li>
+        <li class="xthumb">audio/thumbs/t_a2.jpg</li>
+        <li class="xsources_mp3">http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY3JTJGZSUyRjdlM2I4MjRiY2Q4ZTU0MjU4YzMxNmM4OGYwMjQ1NGQ2Lm1wMyU3QzI</li>
+      </ul> 
+    </div>
+  </audio>  
+
+</div>
+
+<script>
+  
+  jQuery(function() {
+
+    jQuery('#audio1_html5_white').audio1_html5({
+        skin: 'blackControllers',
+        playerPadding:5,
+        autoPlay:true,
+        playerBg: '#FFFFFF',
+        bufferEmptyColor: '#d5d5d5',
+        bufferFullColor: '#afafaf',
+        seekbarColor: '#000000',
+        volumeOffColor: '#afafaf',
+        volumeOnColor: '#000000',
+        timerColor: '#000000',
+        songAuthorTitleColor: '#000000',
+                
+        playlistBgColor:'#ffffff',
+        playlistRecordBgOffColor:'#ffffff',
+        playlistRecordBgOnColor:'#c9c9c9',
+        playlistRecordBottomBorderOffColor:'#838383',
+        playlistRecordBottomBorderOnColor:'#000000',
+        playlistRecordTextOffColor:'#838383',
+        playlistRecordTextOnColor:'#000000'   
+      });   
+
+    $('#stop').click(function(){
+      console.log("Stopped");
+      //$('.blackControllers').html("");
+      jQuery('#audio1_html5_white').trigger('pause');
+      $('.audio1_html5').remove();
+      window.clearInterval(global_interval);
+      
+
+      jQuery('#audio2_html5_white').audio1_html5({
+          skin: 'blackControllers',
+          playerPadding:5,
+          autoPlay:true,
+          playerBg: '#FFFFFF',
+          bufferEmptyColor: '#d5d5d5',
+          bufferFullColor: '#afafaf',
+          seekbarColor: '#000000',
+          volumeOffColor: '#afafaf',
+          volumeOnColor: '#000000',
+          timerColor: '#000000',
+          songAuthorTitleColor: '#000000',
+                  
+          playlistBgColor:'#ffffff',
+          playlistRecordBgOffColor:'#ffffff',
+          playlistRecordBgOnColor:'#c9c9c9',
+          playlistRecordBottomBorderOffColor:'#838383',
+          playlistRecordBottomBorderOnColor:'#000000',
+          playlistRecordTextOffColor:'#838383',
+          playlistRecordTextOnColor:'#000000'   
+        });   
+      
+
+      /*jQuery('#audio1_html5_white2').audio1_html5({
+          skin: 'blackControllers',
+          playerPadding:5,
+          autoPlay:true,
+          playerBg: '#FFFFFF',
+          bufferEmptyColor: '#d5d5d5',
+          bufferFullColor: '#afafaf',
+          seekbarColor: '#000000',
+          volumeOffColor: '#afafaf',
+          volumeOnColor: '#000000',
+          timerColor: '#000000',
+          songAuthorTitleColor: '#000000',
+                  
+          playlistBgColor:'#ffffff',
+          playlistRecordBgOffColor:'#ffffff',
+          playlistRecordBgOnColor:'#c9c9c9',
+          playlistRecordBottomBorderOffColor:'#838383',
+          playlistRecordBottomBorderOnColor:'#000000',
+          playlistRecordTextOffColor:'#838383',
+          playlistRecordTextOnColor:'#000000'   
+        });   */
+
+      
+    });
+    
+  });
+
+</script>
+
+  <a id="stop">Stop</a>
+</body>
+</html>

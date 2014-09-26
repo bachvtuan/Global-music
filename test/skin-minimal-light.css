@@ -1,0 +1,183 @@
+/*
+Skin Name: Minimal Light
+*/
+
+/*  Table of Contents 
+01. Responsive Max Width
+02. Main Backgrounds
+03. Borders
+04. Button/Font Colors
+05. Playlist Backgrounds & Fonts
+06. Progress/Volume Bar Backgrounds
+07. Player Height
+08. Button Sizes
+*/
+
+
+/*
+=============================================== 01. Responsive Max Width ===============================================
+*/
+/* body .responsive-wrapper {max-width:550px;} */
+
+/*
+=============================================== 02. Main Backgrounds ===============================================
+*/
+/* Main Background Color */
+body .mejs-container.progression-skin.progression-minimal-light .mejs-controls {
+	background:#f7f7f7; /* IE Fall-Back */
+}
+
+/* Button Hover Background Color */
+body .progression-skin.progression-minimal-light .mejs-controls .mejs-nexttrack:hover, body .progression-skin.progression-minimal-light .mejs-controls .mejs-prevtrack:hover,  body .progression-skin.progression-minimal-light .mejs-controls .mejs-show-playlist:hover, body .progression-skin.progression-minimal-light  .mejs-controls .mejs-hide-playlist:hover,  body .progression-skin.progression-minimal-light .mejs-controls .mejs-mute button:hover,  body .progression-skin.progression-minimal-light .mejs-controls .mejs-fullscreen-button:hover,  body .progression-skin.progression-minimal-light .mejs-controls .mejs-hide-playlist, body .progression-skin.progression-minimal-light .mejs-controls .mejs-playpause-button:hover {
+	background: #f7f7f7; /* IE Fall-Back */
+}
+body .progression-skin.progression-minimal-light .mejs-controls .mejs-nexttrack, body .progression-skin.progression-minimal-light .mejs-controls .mejs-prevtrack,  body .progression-skin.progression-minimal-light .mejs-controls .mejs-show-playlist, body .progression-skin.progression-minimal-light  .mejs-controls .mejs-hide-playlist,  body .progression-skin.progression-minimal-light .mejs-controls .mejs-mute button,  body .progression-skin.progression-minimal-light .mejs-controls .mejs-fullscreen-button,  body .progression-skin.progression-minimal-light .mejs-controls .mejs-hide-playlist, body .progression-skin.progression-minimal-light .mejs-controls .mejs-playpause-button {
+	-webkit-transition-duration: 200ms;
+	-webkit-transition-property: background;
+	-webkit-transition-timing-function: ease-in-out;
+	-moz-transition-duration: 200ms;
+	-moz-transition-property: background;
+	-moz-transition-timing-function: ease-in-out;
+	-o-transition-duration: 200ms;
+	-o-transition-property: background;
+	-o-transition-timing-function: ease-in-out;
+	transition-duration: 200ms;
+	transition-property: background;
+}
+
+/*
+=============================================== 03. Borders ===============================================
+*/
+/* Main Outline Border */
+body .mejs-container.progression-skin.progression-minimal-light, body .mejs-container.progression-skin.progression-minimal-light .mejs-controls  {
+	border-color:#c1c1c1;
+}
+
+/* Button Borders */
+body .progression-skin.progression-minimal-light .mejs-controls .mejs-playpause-button, body .progression-skin.progression-minimal-light .mejs-inner .mejs-controls .mejs-time, body .progression-skin.progression-minimal-light .mejs-controls .mejs-fullscreen-button,  body .progression-skin.progression-minimal-light .mejs-controls .mejs-show-playlist, body .progression-skin.progression-minimal-light  .mejs-controls .mejs-hide-playlist, body .progression-skin.progression-minimal-light .mejs-controls .mejs-prevtrack button,  body .progression-skin.progression-minimal-light .mejs-controls .mejs-nexttrack button {
+	border-color:#c1c1c1;
+}
+
+
+/*
+=============================================== 04. Button/Font Colors ===============================================
+*/
+/* Main Button Color */
+body .progression-skin.progression-minimal-light .mejs-controls button {color:#888888;}
+
+/* Main Button Hover Color */
+body .progression-skin.progression-minimal-light .mejs-controls button:hover {
+	color:#555555;
+}
+
+/* Timer Color 00:00 */
+body .progression-skin.progression-minimal-light .mejs-inner .mejs-time .mejs-currenttime, body .progression-skin.progression-minimal-light .mejs-inner .mejs-time  .mejs-duration {
+	color:#aaaaaa;
+}
+
+
+/*
+=============================================== 05. Playlist Backgrounds & Fonts ===============================================
+*/
+/* PlayList Borders */
+body .progression-skin.progression-minimal-light .mejs-playlist ul, body .progression-skin.progression-minimal-light .mejs-playlist li {
+	border-color:#c1c1c1;
+}
+
+/* PlayList Background */
+body .progression-skin.progression-minimal-light .mejs-playlist, body .progression-skin.progression-minimal-light .mejs-playlist ul { 
+	background: #ffffff;
+}
+
+/* PlayList Font Color */
+body .progression-skin.progression-minimal-light .mejs-playlist li { color: #888888;  }
+
+/* PlayList Hover Background */
+body .progression-skin.progression-minimal-light .mejs-playlist li:hover {
+	color: #777777;
+	background:#e9e9e9;
+}
+
+/* PlayList Current Selected Item */
+body .progression-skin.progression-minimal-light .mejs-playlist li.current {
+	color:#666666;
+	background: #e9e9e9;
+}
+
+
+/*
+=============================================== 06. Progress/Volume Bar Backgrounds ===============================================
+*/
+/* Main Progress Bar Background */
+body .progression-skin.progression-minimal-light .mejs-controls .mejs-time-rail .mejs-time-total {
+	background:#c9c9c9; /* IE Fall-Back */
+	-webkit-box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0);
+	box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0);
+}
+
+
+/* Main Progress Bar Loading Background */
+body .progression-skin.progression-minimal-light .mejs-controls .mejs-time-rail .mejs-time-loaded { 
+	-webkit-box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0);
+	box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0);
+	background:#bbbbbb; /* IE Fall-Back */
+
+}
+
+/* Main Progress Bar Currently Played Background */
+body .progression-skin.progression-minimal-light .mejs-controls .mejs-time-rail .mejs-time-current {
+	-webkit-box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0);
+	box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0);
+	background:#666666; /* IE Fall-Back */
+}
+
+/* Main Progress Bar Handle */
+body .progression-skin.progression-minimal-light .mejs-controls .mejs-time-rail .mejs-time-handle  {
+	display: block; margin: 0; padding:0px; border: 0;
+	width: 4px;
+	height: 4px;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	top:-1px;
+	left:-6px;
+	-webkit-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.15);
+	box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.15);
+	border:4px solid #ffffff;
+	background: #ffffff;	
+	
+}
+
+/* Volume Bar Background Default */
+body .progression-skin.progression-minimal-light .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-total {
+	background:#c9c9c9; /* IE Fall-Back */
+	-webkit-box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0);
+	box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0);
+}
+
+/* Volume Bar Background Volume On */
+body .progression-skin.progression-minimal-light .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-current {
+	background:#777777; /* IE Fall-Back */
+	-webkit-box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0);
+	box-shadow: inset 1px 1px 1px 1px rgba(0, 0, 0, 0);
+}
+
+
+/* Volume Bar Volume Handle */
+body .progression-skin.progression-minimal-light .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-handle {
+	display: block;
+	position: absolute;
+	width: 4px;
+	height:4px;
+	margin-left:-3px;
+	top:10px;
+	background: #ffffff;	
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	cursor: pointer;
+	-webkit-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.15);
+	box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.15);
+	border:3px solid #ffffff;
+	text-align: center;
+}

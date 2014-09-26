@@ -1,0 +1,260 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HTML5 Audio Player with Playlist by Tean</title>
+        
+    <link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.css" media="all" /><!-- scroll in playlist -->
+        <link rel="stylesheet" type="text/css" href="css/html5audio_default.css" />
+    <link rel="stylesheet" type="text/css" href="css/html5audio_classic_multiple.css" />
+        
+        <script type="text/javascript" src="js/swfobject.js"></script><!-- flash backup --> 
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script><!-- jquery ui sortable/draggable -->
+        <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script><!-- mobile drag/sort -->
+        <script type="text/javascript" src="js/jquery.XDomainRequest.js"></script><!-- ofm ie9 and below fix -->
+        <script type="text/javascript" src="js/jquery.mousewheel.min.js"></script><!-- scroll in playlist -->
+        <script type="text/javascript" src="js/jquery.jscrollpane.min.js"></script><!-- scroll in playlist -->
+        <script type="text/javascript" src="js/id3-minimized.js"></script><!-- id3 tags -->
+        <script type="text/javascript" src="http://www.youtube.com/player_api"></script><!-- youtube -->
+        <script type="text/javascript" src="js/jquery.apYoutubePlayer.min.js"></script><!-- youtube -->
+        <script type="text/javascript" src="js/jquery.apPlaylistManager.min.js"></script>
+        <script type="text/javascript" src="js/jquery.apTextScroller.min.js"></script><!-- scrollable song name -->
+        <script type="text/javascript" src="js/jquery.html5audio.min.js"></script>
+        <script type="text/javascript" src="js/jquery.html5audio.func.js"></script>
+        <script type="text/javascript" src="js/jquery.html5audio.settings_classic_multiple.js"></script>
+        
+  </head>
+  <body>
+    
+      <div id="bg1"></div>
+    
+      <div id="componentWrapper">
+        
+           <div class="controls_toggle"><img src='media/data/icons/set2/play.png' alt='controls_toggle'/></div>
+             
+             <div class="player_mediaTime_current">00:00</div>
+        
+             <div class="player_progress">
+                  <div class="progress_bg"></div>
+                  <div class="load_progress"></div>
+                  <div class="play_progress"></div>
+                  <div class="player_progress_tooltip"><p></p></div>
+             </div>
+             
+             <div class="player_mediaTime_total">00:00</div>
+             
+             <div class="player_volume_wrapper">
+                 <div class="player_volume"><img src='media/data/icons/set2/volume.png' alt='player_volume'/></div>
+                 <div class="volume_seekbar" data-orientation="vertical" data-autoHide="3000">
+                     <div class="volume_bg"></div>
+                     <div class="volume_level"></div>
+                     <div class="player_volume_tooltip"><p></p></div>
+                  </div>
+             </div>
+              
+        </div>
+        
+        <div id="componentWrapper2">
+        
+           <div class="controls_toggle"><img src='media/data/icons/set2/play.png' alt='controls_toggle'/></div>
+             
+             <div class="player_mediaTime_current">00:00</div>
+        
+             <div class="player_progress">
+                  <div class="progress_bg"></div>
+                  <div class="load_progress"></div>
+                  <div class="play_progress"></div>
+                  <div class="player_progress_tooltip"><p></p></div>
+             </div>
+             
+             <div class="player_mediaTime_total">00:00</div>
+             
+             <div class="player_volume_wrapper">
+                 <div class="player_volume"><img src='media/data/icons/set2/volume.png' alt='player_volume'/></div>
+                 <div class="volume_seekbar" data-orientation="vertical" data-autoHide="3000">
+                     <div class="volume_bg"></div>
+                     <div class="volume_level"></div>
+                     <div class="player_volume_tooltip"><p></p></div>
+                  </div>
+             </div>
+              
+        </div>
+        
+        <div id="componentWrapper3">
+        
+           <div class="controls_toggle"><img src='media/data/icons/set2/play.png' alt='controls_toggle'/></div>
+        
+             <div class="player_progress">
+                  <div class="progress_bg"></div>
+                  <div class="load_progress"></div>
+                  <div class="play_progress"></div>
+                  <div class="player_progress_tooltip"><p></p></div>
+             </div>
+             
+             <div class="player_volume_wrapper">
+                 <div class="player_volume"><img src='media/data/icons/set2/volume.png' alt='player_volume'/></div>
+                 <div class="volume_seekbar" data-autoHide="3000">
+                     <div class="volume_bg"></div>
+                     <div class="volume_level"></div>
+                     <div class="player_volume_tooltip"><p></p></div>
+                  </div>
+             </div>
+
+        </div>
+        
+        <div id="componentWrapper4">
+        
+           <div class="controls_prev"><img src='media/data/icons/set2/prev.png' alt='controls_prev'/></div>
+        
+           <div class="controls_toggle"><img src='media/data/icons/set2/play.png' alt='controls_toggle'/></div>
+             
+             <div class="player_mediaTime_current">00:00</div>
+             
+             <div class="controls_next"><img src='media/data/icons/set2/next.png' alt='controls_next'/></div>
+        
+             <div class="player_progress">
+                  <div class="progress_bg"></div>
+                  <div class="load_progress"></div>
+                  <div class="play_progress"></div>
+                  <div class="player_progress_tooltip"><p></p></div>
+             </div>
+             
+             <div class="player_mediaTime_total">00:00</div>
+             
+             <div class="player_volume_wrapper">
+                 <div class="player_volume"><img src='media/data/icons/set2/volume.png' alt='player_volume'/></div>
+                 <div class="volume_seekbar" data-orientation="vertical" data-autoHide="3000">
+                     <div class="volume_bg"></div>
+                     <div class="volume_level"></div>
+                     <div class="player_volume_tooltip"><p></p></div>
+                  </div>
+             </div>
+
+        </div>
+        
+        <div id="componentWrapper5">
+        
+           <div class="controls_prev"><img src='media/data/icons/set2/prev.png' alt='controls_prev'/></div>
+        
+           <div class="controls_toggle"><img src='media/data/icons/set2/play.png' alt='controls_toggle'/></div>
+             
+             <div class="controls_next"><img src='media/data/icons/set2/next.png' alt='controls_next'/></div>
+        
+             <div class="player_progress">
+                  <div class="progress_bg"></div>
+                  <div class="load_progress"></div>
+                  <div class="play_progress"></div>
+                  <div class="player_progress_tooltip"><p></p></div>
+             </div>
+             
+             <div class="player_volume_wrapper">
+                 <div class="player_volume"><img src='media/data/icons/set2/volume.png' alt='player_volume'/></div>
+                 <div class="volume_seekbar" data-autoHide="3000">
+                     <div class="volume_bg"></div>
+                     <div class="volume_level"></div>
+                     <div class="player_volume_tooltip"><p></p></div>
+                  </div>
+             </div>
+
+        </div>
+        
+        <div id="componentWrapper6">
+        
+           <div class="controls_prev"><img src='media/data/icons/set2/prev.png' alt='controls_prev'/></div>
+        
+           <div class="controls_toggle"><img src='media/data/icons/set2/play.png' alt='controls_toggle'/></div>
+             
+             <div class="controls_next"><img src='media/data/icons/set2/next.png' alt='controls_next'/></div>
+             
+             <div class="player_volume_wrapper">
+                 <div class="player_volume"><img src='media/data/icons/set2/volume.png' alt='player_volume'/></div>
+                 <div class="volume_seekbar" data-orientation="vertical" data-autoHide="3000">
+                     <div class="volume_bg"></div>
+                     <div class="volume_level"></div>
+                     <div class="player_volume_tooltip"><p></p></div>
+                  </div>
+             </div>
+
+        </div>
+        
+        <div id="componentWrapper7">
+        
+           <div class="controls_toggle"><img src='media/data/icons/set2/play.png' alt='controls_toggle'/></div>
+             
+             <div class="player_volume_wrapper">
+                 <div class="player_volume"><img src='media/data/icons/set2/volume.png' alt='player_volume'/></div>
+                 <div class="volume_seekbar" data-orientation="vertical" data-autoHide="3000">
+                     <div class="volume_bg"></div>
+                     <div class="volume_level"></div>
+                     <div class="player_volume_tooltip"><p></p></div>
+                  </div>
+             </div>
+
+        </div>
+        
+        <div id="componentWrapper8">
+        
+           <div class="controls_toggle"><img src='media/data/icons/set2/play.png' alt='controls_toggle'/></div>
+             
+             <div class="player_mediaTime_current">00:00</div>
+        
+             <div class="player_progress">
+                  <div class="progress_bg"></div>
+                  <div class="load_progress"></div>
+                  <div class="play_progress"></div>
+                  <div class="player_progress_tooltip"><p></p></div>
+             </div>
+             
+             <div class="player_mediaTime_total">00:00</div>
+             
+             <div class="player_volume_wrapper">
+                 <div class="player_volume"><img src='media/data/icons/set2/volume.png' alt='player_volume'/></div>
+                 <div class="volume_seekbar" data-orientation="vertical" data-autoHide="3000">
+                     <div class="volume_bg"></div>
+                     <div class="volume_level"></div>
+                     <div class="player_volume_tooltip"><p></p></div>
+                  </div>
+             </div>
+              
+             <div class="playlistHolder">
+                 <div class="componentPlaylist">
+                     <div class="playlist_inner">
+                      <!-- playlist items are appended here! --> 
+                     </div>
+                 </div>
+                 <!-- preloader --> 
+                 <div class="preloader"></div>
+             </div>
+
+        </div>
+        
+        <!-- List of playlists -->
+        <div id="playlist_list">
+                     
+             <!-- local playlist -->
+             <ul id='playlist1'>
+                 <li class= 'playlistItem' data-type='local' data-mp3='http://www.interactivepixel.net/media/audio/1/Tim_McMorris_-_A_Bright_And_Hopeful_Future.mp3'><a class='playlistNonSelected' href='#'>Tim McMorris - A Bright And Hopeful Future</a></li>
+                 <li class= 'playlistItem' data-type='local' data-mp3='../media/audio/1/Tim_McMorris_-_Be_My_Valentine.mp3' data-ogg='../media/audio/1/Tim_McMorris_-_Be_My_Valentine.ogg'><a class='playlistNonSelected' href='#'>Tim McMorris - Be My Valentine</a></li>
+                 <li class= 'playlistItem' data-type='local' data-mp3='http://www.interactivepixel.net/media/audio/1/Tim_McMorris_-_Give_Our_Dreams_Their_Wings_To_Fly.mp3' data-ogg='../media/audio/1/Tim_McMorris_-_Give_Our_Dreams_Their_Wings_To_Fly.ogg'><a class='playlistNonSelected' href='#'>Tim McMorris - Give Our Dreams Their Wings To Fly</a></li>
+                 <li class= 'playlistItem' data-type='local' data-mp3='../media/audio/1/Tim_McMorris_-_Happy_Days_Are_Here_To_Stay.mp3' data-ogg='../media/audio/1/Tim_McMorris_-_Happy_Days_Are_Here_To_Stay.ogg'><a class='playlistNonSelected' href='#'>Tim McMorris - Happy Days Are Here To Stay</a></li>
+                 <li class= 'playlistItem' data-type='local' data-mp3='../media/audio/1/Tim_McMorris_-_Health_Happiness_Success.mp3' data-ogg='../media/audio/1/Tim_McMorris_-_Health_Happiness_Success.ogg'><a class='playlistNonSelected' href='#'>Tim McMorris - Health Happiness Success</a></li>
+                 <li class= 'playlistItem' data-type='local' data-mp3='../media/audio/1/Tim_McMorris_-_Marketing_Advertising_Music.mp3' data-ogg='../media/audio/1/Tim_McMorris_-_Marketing_Advertising_Music.ogg'><a class='playlistNonSelected' href='#'>Tim McMorris - Marketing Advertising Music</a></li>
+                 <li class= 'playlistItem' data-type='local' data-mp3='../media/audio/1/Tim_McMorris_-_Successful_Business_Venture.mp3' data-ogg='../media/audio/1/Tim_McMorris_-_Successful_Business_Venture.ogg'><a class='playlistNonSelected' href='#'>Tim McMorris - Successful Business Venture</a></li>
+             </ul>
+             
+             <ul id='playlist2'>
+                 <li class= 'playlistItem' data-type='local' data-mp3='http://www.interactivepixel.net/media/audio/2/Soundroll_-_A_Way_To_The_Top.mp3' data-ogg='../media/audio/2/Soundroll_-_A_Way_To_The_Top.ogg'><a class='playlistNonSelected' href='#'>Soundroll - A Way To The Top</a></li>
+                 <li class= 'playlistItem' data-type='local' data-mp3='../media/audio/2/Soundroll_-_Feel_Good_Journey.mp3' data-ogg='../media/audio/2/Soundroll_-_Feel_Good_Journey.ogg'><a class='playlistNonSelected' href='#'>Soundroll - Feel Good Journey</a></li>
+                 <li class= 'playlistItem' data-type='local' data-mp3='../media/audio/2/Soundroll_-_Fight_No_More.mp3' data-ogg='../media/audio/2/Soundroll_-_Fight_No_More.ogg'><a class='playlistNonSelected' href='#'>Soundroll - Fight No More</a></li>
+                 <li class= 'playlistItem' data-type='local' data-mp3='../media/audio/2/Soundroll_-_Funky_Boom.mp3' data-ogg='../media/audio/2/Soundroll_-_Funky_Boom.ogg'><a class='playlistNonSelected' href='#'>Soundroll - Funky Boom</a></li>
+                 <li class= 'playlistItem' data-type='local' data-mp3='../media/audio/2/Soundroll_-_Pump_The_Club.mp3' data-ogg='../media/audio/2/Soundroll_-_Pump_The_Club.ogg'><a class='playlistNonSelected' href='#'>Soundroll - Pump The Club</a></li>
+                 <li class= 'playlistItem' data-type='local' data-mp3='../media/audio/2/Soundroll_-_Rush.mp3' data-ogg='../media/audio/2/Soundroll_-_Rush.ogg'><a class='playlistNonSelected' href='#'>Soundroll - Rush</a></li>
+                 <li class= 'playlistItem' data-type='local' data-mp3='../media/audio/2/Soundroll_-_Sun_Is_So_Bright.mp3' data-ogg='../media/audio/2/Soundroll_-_Sun_Is_So_Bright.ogg'><a class='playlistNonSelected' href='#'>Soundroll - Sun Is So Bright</a></li>
+             </ul>
+
+         </div>
+  
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script><!-- jQuery Latest -->
+  <script src="mediaelement-and-player.min.js"></script><!-- Audio/Video Player jQuery -->
+  <script src="mep-feature-playlist.js"></script><!-- Playlist JavaSCript -->
+  
+  <link rel="stylesheet" href="progression-player.css" /><!-- Default Player Styles -->
+  <link href="font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" /><!-- Player Icons 
+  -->
+  <link rel="stylesheet" href="skin-minimal-light.css" /><!-- Default Player Styles -->
+  </head>
+<body>
+<!-- <audio class="progression-single progression-skin progression-audio-player progression-minimal-light" controls="controls" preload="none">
+  <source src="http://progressionstudios.com/player/media/indie-rock.mp3" type="audio/mp3"/>
+</audio> -->
+
+<div class="progression-playlist-height responsive-wrapper responsive-audio" style="padding-bottom:174px;"><!-- Adjust padding-bottom as needed so the playlist doesn't cover content below -->
+<audio class="progression-playlist progression-skin progression-minimal-light progression-audio-player" controls="controls" preload="none" autoplay>
+  <source src="http://aredir.nixcdn.com/394390d9007440a2ce76b87507406ec8/5423c69c/NhacCuaTui139/KeDaTinh-LamHung_z35b.mp3" title="Cheer Up by sevenfoursounds" type="audio/mpeg"/>
+  <source src="http://progressionstudios.com/player/media/indie-rock.mp3" title="Indie rock by AdamCaptured" type="audio/mpeg" />
+  <source src="http://progressionstudios.com/player/media/winner-preview.mp3" title="Winner by kristijanf" type="audio/mpeg"/>
+  <source src="http://progressionstudios.com/player/media/get-out-of-my-way-preview.mp3" title="Get Out of My Way by AdamCaptured" type="audio/mpeg"/>
+  <source src="http://progressionstudios.com/player/media/positive-thinking-preview.mp3" title="Positive Thinking by BeatheBeat" type="audio/mpeg"/>
+  <source src="http://progressionstudios.com/player/media/glitchy-digital-preview.mp3" title="Glitchy Digital Crystal Logo #07 by alkis" type="audio/mpeg"/>
+</audio>
+</div><!-- close .responsive-wrapper -->
+
+
+<script>
+/*$('.progression-single').mediaelementplayer({
+  audioWidth: 400, // width of audio player
+  audioHeight:40, // height of audio player
+  startVolume: 0.5, // initial volume when the player starts
+  features: ['playpause','current','progress','duration','tracks','volume','fullscreen']
+  });*/
+
+$('.progression-playlist').mediaelementplayer({
+  audioWidth: 400, // width of audio player
+  audioHeight:40, // height of audio player
+  startVolume: 0.5, // initial volume when the player starts
+  loop: false, // useful for <audio> player loops
+  features: ['playlistfeature', 'prevtrack', 'playpause', 'nexttrack','current', 'progress', 'duration',
+   'volume', 'playlist'],
+  playlist: true, //Playlist Show
+  playlistposition: 'bottom', //Playlist Location,
+  });
+
+</script>
+</body>
+</html>
