@@ -1,0 +1,11 @@
+{
+  "port": 3000,
+  "env":"developement",
+  "secret_key": "SD(idkfsgf4",
+  "mongo_uri": "mongodb://127.0.0.1:27017/music_app",
+  "mongo_name": "music_app",
+  "page_title": "Mobile app",
+  "asset_version":2,
+  "template_version":1,
+  "page_description":"Listen to music at everywhere"
+}

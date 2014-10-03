@@ -1,0 +1,32 @@
+doctype html
+html( ng-app="app" )
+  head
+    title!= page_title
+    meta(name="descrition",content=page_description)
+    link(rel="Shortcut Icon",href="frontend/images/mobile.png",type="image/x-icon")
+    script(src="frontend/js/dependencies.min.js")
+    
+    script( src="share/js/angular-1.2.25/angular.min.js")
+    script( src="share/js/angular-1.2.25/angular-sanitize.min.js")
+    script( src="share/js/angular-1.2.25/angular-route.min.js")
+    script( src="share/js/angular-1.2.25/angular-resource.min.js")
+    script( src="share/js/angular-1.2.25/angular-cookies.min.js")
+
+    script(type='text/javascript').
+      var is_debug = #{is_debug};
+      var asset_version = #{asset_version};
+      var template_version_string = "v#{template_version}";
+
+    script(src="frontend/js/app.js")
+    script(src="frontend/js/general.js")
+    script(src="frontend/js/users/user.js")
+    script(src="frontend/js/users/login.js")
+
+    link(href="share/css/bootstrap.min.css",media="screen",rel="stylesheet")
+    link(href="frontend/css/style.css",media="screen",rel="stylesheet")
+
+  body
+    block content
+    #footer
+      p copyright 2014
+  
