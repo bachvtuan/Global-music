@@ -40,3 +40,5 @@ https://github.com/expressjs/csurf
 npm install csurf --save
 
 http://runnable.com/U0tEnHwraXYyp-JG/simple-usage-of-express-session-and-cookie-parser-with-express-for-node-js
+
+https://github.com/chriso/validator.js

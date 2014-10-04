@@ -73,11 +73,25 @@ configs( config_file, function(config){
     app.locals.pretty = true;
   }
 
+  require('./app/tools/db_schemal');
+
   connectDB();
 
 });
 
+function connectDB(){
+  var mongoose = require('mongoose');
+  mongoose.connect( config.mongo_uri );
+  var db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function callback () {
+    showSucc("Connected to the db");
 
+    connectRedis();
+  });
+}
+
+/*
 function connectDB(){
    var MongoClient = require('mongodb').MongoClient,
    format = require('util').format;
@@ -95,7 +109,7 @@ function connectDB(){
 
   });
 
-}
+}*/
 
 function connectRedis(){
   var redis  = require("redis"),
@@ -137,20 +151,20 @@ function boot(){
   var methodOverride = require('method-override');
   app.use(methodOverride());
 
+  if ( !global.is_debug ){
+    var csrf    = require('csurf')
 
-  var csrf    = require('csurf')
+    app.use(csrf())
 
-  app.use(csrf())
+    // error handler
+    app.use(function (err, req, res, next) {
+      if (err.code !== 'EBADCSRFTOKEN') return next(err)
 
-  // error handler
-  app.use(function (err, req, res, next) {
-    if (err.code !== 'EBADCSRFTOKEN') return next(err)
-
-    // handle CSRF token errors here
-    res.status(403)
-    res.send('session has expired or form tampered with')
-  })
-
+      // handle CSRF token errors here
+      res.status(403)
+      res.send('session has expired or form tampered with')
+    })    
+  }
 
   require('./app/modules/frontend')(app);
   require('./app/modules/backend')(app);

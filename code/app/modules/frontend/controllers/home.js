@@ -12,7 +12,13 @@ module.exports = function(BaseController){
 
       showLog("is asset_version", global.asset_version);
 
-      public_data.csrfToken = req.csrfToken() ;
+      if ( !global.is_debug ){
+        public_data.csrfToken = req.csrfToken() ;
+      }
+      else{
+        public_data.csrfToken = "sometest";
+      }
+      
       
       this.render( res,'index', public_data )
     }

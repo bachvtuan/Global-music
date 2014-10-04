@@ -6,6 +6,6 @@ global.throwError = function(res,obj){
 //Middleware to attach database
 global.attachDB = function(req, res, next) {
   //db is global varriable
-  req.db = db;
+  //req.db = db;
   next();
 };
