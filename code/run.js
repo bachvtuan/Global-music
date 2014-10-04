@@ -14,12 +14,9 @@ app.use(express.static('app/public'));
 //Allow download file
 //app.use(express.static('app/files'));
 
-//Allow get body in the request
-var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: false }));
 
-var methodOverride = require('method-override');
-app.use(methodOverride());
+
+
 
 //production or development
 //process.env.NODE_ENV = 'production';
@@ -58,6 +55,7 @@ require('./app/tools/pre_init');
 require('./app/tools/general');
 var configs = require('./configs');
 showLog( process.argv );
+
 
 //nodejs run.js config_production.js
 var config_file = process.argv[2] || "config.json";
@@ -115,6 +113,44 @@ function connectRedis(){
 }
 
 function boot(){
+
+  var expressSession = require('express-session');
+  var cookieParser = require('cookie-parser'); // the session is stored in a cookie, so we use this to parse it
+
+  app.use(cookieParser());
+  //app.use(expressSession({secret:'a3flsjf&*&S*DHFSDF'}));
+  app.use(expressSession({
+      secret: 'tais#@@$%ao',
+      name: "cookie_name",
+      //store: db, // connect-mongo session store
+      proxy: true,
+      resave: true,
+      saveUninitialized: true
+  }));
+
+  //Allow get body in the request
+  var bodyParser = require('body-parser');
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use( bodyParser.json() );       // to support JSON-encoded bodies
+  //app.use( bodyParser.urlencoded() ); // to support URL-encoded bodies
+
+  var methodOverride = require('method-override');
+  app.use(methodOverride());
+
+
+  var csrf    = require('csurf')
+
+  app.use(csrf())
+
+  // error handler
+  app.use(function (err, req, res, next) {
+    if (err.code !== 'EBADCSRFTOKEN') return next(err)
+
+    // handle CSRF token errors here
+    res.status(403)
+    res.send('session has expired or form tampered with')
+  })
+
 
   require('./app/modules/frontend')(app);
   require('./app/modules/backend')(app);

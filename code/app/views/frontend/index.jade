@@ -1,5 +1,10 @@
 extend header
 block content
-  h1!= message
-  div(ng-view, id="main-view")
+  input(type="hidden",name="_csrf",value=csrfToken)
+  div#wrapper
+    div(ng-view, id="main-view")
+    form(action="tuan",method="post")
+      input(type="text",name="chan")
+      input(type="hidden",name="_csrf",value=csrfToken)
+      input(type="submit")
   

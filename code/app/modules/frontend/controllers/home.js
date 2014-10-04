@@ -9,7 +9,10 @@ module.exports = function(BaseController){
         asset_version: global.config.asset_version,
         template_version: global.config.template_version
       };
+
       showLog("is asset_version", global.asset_version);
+
+      public_data.csrfToken = req.csrfToken() ;
       
       this.render( res,'index', public_data )
     }

@@ -57,7 +57,23 @@ function showSucc(){
   generalLog(arguments,'succ');
 }
 
+function jsonSucc(data){
+  return {
+    status:'ok',
+    data:data
+  }
+}
+
+function jsonErr(message){
+  return {
+    status:'error',
+    data:message
+  }
+}
+
 global.showLog    = showLog;
 global.showWarn   = showWarn;
 global.showError  = showError;
 global.showSucc   = showSucc;
+global.jsonSucc   = jsonSucc;
+global.jsonErr    = jsonErr;

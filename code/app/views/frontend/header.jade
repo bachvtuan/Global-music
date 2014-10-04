@@ -4,8 +4,8 @@ html( ng-app="app" )
     title!= page_title
     meta(name="descrition",content=page_description)
     link(rel="Shortcut Icon",href="frontend/images/mobile.png",type="image/x-icon")
-    script(src="frontend/js/dependencies.min.js")
-    
+    script( src="frontend/js/dependencies.min.js")
+    script( src="share/js/alertifyjs/alertify.min.js")
     script( src="share/js/angular-1.2.25/angular.min.js")
     script( src="share/js/angular-1.2.25/angular-sanitize.min.js")
     script( src="share/js/angular-1.2.25/angular-route.min.js")
@@ -16,17 +16,24 @@ html( ng-app="app" )
       var is_debug = #{is_debug};
       var asset_version = #{asset_version};
       var template_version_string = "v#{template_version}";
+      $(document).ready(function(){
+        window.csrf = $('input[type="hidden"][name="_csrf"]').val();
+      })
 
     script(src="frontend/js/app.js")
+    script(src="frontend/js/libraries/factories.js")
     script(src="frontend/js/general.js")
     script(src="frontend/js/users/user.js")
     script(src="frontend/js/users/login.js")
+    script(src="frontend/js/users/register.js")
 
-    link(href="share/css/bootstrap.min.css",media="screen",rel="stylesheet")
-    link(href="frontend/css/style.css",media="screen",rel="stylesheet")
+    link(rel="stylesheet", href="frontend/css/bootstrap.min.css")
+    link(rel="stylesheet", href="frontend/bootflat/css/bootflat.css")
+    link(rel="stylesheet", href="frontend/css/alertify/alertify.min.css")
+    link(rel="stylesheet", href="frontend/css/alertify/themes/default.min.css")
+    link(rel="stylesheet", href="frontend/css/font-awesome-4.2.0/css/font-awesome.css")
+    link(rel="stylesheet", href="frontend/css/style.css")
 
   body
     block content
-    #footer
-      p copyright 2014
   
