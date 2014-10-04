@@ -31,7 +31,6 @@ module.exports = function(BaseController){
       console.log("req.body");
       var body = req.body;
       var mongoose = require('mongoose');
-      showLog(body);
 
       var validator_error = validateRegister( body );
 
@@ -42,8 +41,6 @@ module.exports = function(BaseController){
       //res.json( jsonSucc( req.body ) );
       var User     = mongoose.model( 'User' );
       var filter = {"$or":[{user_name:body.user_name}, {email:body.email} ]}
-
-      showLog(filter);
 
       User.find(filter, function(err, users){
 
@@ -61,12 +58,6 @@ module.exports = function(BaseController){
           }
         }
 
-/*        showLog("come here");
-        showLog(body);*/
-        //Append created_date to body
-        //body.created_date = Date.now();
-        showLog( body );
-
 
         var bcrypt = require('bcrypt-nodejs');
         bcrypt.hash(body.password, null, null, function(err, hash) {
@@ -80,7 +71,7 @@ module.exports = function(BaseController){
             if (err){
               return res.jsonErr(err);
             }
-            showLog(user);
+            //showLog(user);
             res.json(user)
           });
 
