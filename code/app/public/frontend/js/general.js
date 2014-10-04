@@ -34,12 +34,12 @@ function error(message){
 
 /*
 path: path of template 
-return: template_version with path is given
+return: templateVersion with path is given
 ex: 
 path  = static/js/base/workspaces/list.html
 return static/js/base/workspaces/templates/v1/list.html?v=23
 */
-function template_version(path){
+function templateVersion(path){
   var seperate_arr = path.split("/");
   if (seperate_arr.length > 2){
     //Add "templates" before the end item of array
@@ -50,7 +50,7 @@ function template_version(path){
 }
 
 function prependTemplateUrl( prefix_url ){
-  return "api/{0}/{1}".format( template_version_string, prefix_url );
+  return "api/{0}/{1}".format( templateVersion_string, prefix_url );
 }
 
 function timeStamp(){

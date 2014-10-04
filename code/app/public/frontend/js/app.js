@@ -2,7 +2,9 @@ var app = angular.module('app', [
     'ngRoute',
     'ngCookies',
     'ngResource',
-    'usersApp'
+    'usersApp',
+    'dashboardApp',
+    'playerApp'
   ]);
 
 app.run(function($rootScope, $window,$http, $cookies, $dialogs, $location) {
@@ -23,6 +25,11 @@ app.run(function($rootScope, $window,$http, $cookies, $dialogs, $location) {
       callback(res.data);
     }
   }
+
+  $rootScope.templateVersion = function( template_url ){
+    return $window.templateVersion( template_url );
+  }
+
 
 
 });

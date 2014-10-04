@@ -1,9 +1,21 @@
 usersApp.controller('LoginCtrl', 
-  function ($scope, $http, $location,$window, Users, $dialogs) {
+  function ($scope, $http, $location,$window, Users, $dialogs, $location, $cookieStore) {
 
   $scope.init = function(){
     $scope.pending_login = false;
     $scope.resetValue();
+    Users.get({tail:'info'}, function(res){
+      log(res);
+      if (res.status == "ok"){
+        var user = res.data;
+        $scope.redirectDashboard(user);
+      }
+    });
+  }
+
+  $scope.redirectDashboard = function(user){
+    $cookieStore.put('user', user);
+    $location.path('/dashboard');
   }
 
   $scope.resetValue = function(){
@@ -27,6 +39,7 @@ usersApp.controller('LoginCtrl',
       $scope.pending_login = false;
       $scope.processRetrieveData(res,function(data){
         $dialogs.success("successful :Your login information is accepted");
+        $scope.redirectDashboard(data);
       });
     });
   }

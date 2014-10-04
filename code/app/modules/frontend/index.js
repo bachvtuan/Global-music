@@ -18,6 +18,10 @@ module.exports = function( app ){
     UserController.register( req, res, next );
   });
 
+  app.get('/users/info', attachDB, function (req, res,next) {
+    UserController.info( req, res, next );
+  });
+
   app.post('/tuan', attachDB, function (req, res,next) {
     res.json({title:'good'});
   })

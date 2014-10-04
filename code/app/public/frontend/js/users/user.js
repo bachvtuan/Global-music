@@ -14,16 +14,16 @@ function($resource,$cookies){
 usersApp.config(['$routeProvider',function($routeProvider) {
   $routeProvider.
     when('/login', {
-      templateUrl:  template_version('frontend/js/users/login.html'),
+      templateUrl:  templateVersion('frontend/js/users/login.html'),
       controller: 'LoginCtrl'
     }).
     when('/register', {
-      templateUrl: template_version('frontend/js/users/register.html'),
+      templateUrl: templateVersion('frontend/js/users/register.html'),
       controller: 'RegisterCtrl'
     }).
     when('/logout', {
       //This template is cached before
-      templateUrl: template_version('frontend/js/users/logout.html'),
+      templateUrl: templateVersion('frontend/js/users/logout.html'),
       controller: 'LogoutCtrl'
     }).
     otherwise({

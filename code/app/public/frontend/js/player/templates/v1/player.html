@@ -1,0 +1,15 @@
+<div class="player-zone">
+  <img class="cover" src="frontend/images/album.png" />
+  <p class="title">{{ current_song.title }}</p>
+  <load-audio source="current_song.url" ></load-audio>
+  <div class="volume-tune">
+    <p>Volume</p>
+    <div class="wrap-range" ng-click="changeVolume($event)" >
+      <div class="range" ng-style="range_style" ></div>
+    </div>
+  </div>
+
+  <i id="current-list" class="fa fa-th-list"></i>
+  <i id="prev-song" ng-click="prev()" class="fa fa-step-backward"></i>
+  <i id="next-song" ng-click="next()" class="fa fa-step-forward"></i>
+</div>

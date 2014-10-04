@@ -141,7 +141,7 @@ function boot(db){
       }),
       proxy: true,
       resave: true,
-      cookie: { maxAge: 60000 },
+      //cookie: { maxAge: 1000*60*2 },
       saveUninitialized: true
   }));
 

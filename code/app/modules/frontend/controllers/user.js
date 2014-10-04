@@ -135,6 +135,16 @@ module.exports = function(BaseController){
 
       });
 
+    },
+    //end register
+    info: function(req, res, next) {
+      if (req.session.user){
+        res.json( jsonSucc( req.session.user ) );
+      }
+      else{
+        res.json( jsonErr("You are not login") );  
+      }
+      
     }
   });
 }
