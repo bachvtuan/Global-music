@@ -86,8 +86,8 @@ function connectDB(){
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function callback () {
     showSucc("Connected to the db");
-
-    connectRedis();
+    
+    connectRedis(db);
   });
 }
 
@@ -111,7 +111,7 @@ function connectDB(){
 
 }*/
 
-function connectRedis(){
+function connectRedis(db){
   var redis  = require("redis"),
   client = redis.createClient();
 
@@ -122,23 +122,26 @@ function connectRedis(){
   client.on('connect', function(){
     showSucc("connected to redis");
     //Boot router
-    boot();
+    boot(db);
   });
 }
 
-function boot(){
+function boot(db){
 
   var expressSession = require('express-session');
   var cookieParser = require('cookie-parser'); // the session is stored in a cookie, so we use this to parse it
-
+  var MongoStore = require('connect-mongo')(expressSession);
   app.use(cookieParser());
   //app.use(expressSession({secret:'a3flsjf&*&S*DHFSDF'}));
   app.use(expressSession({
       secret: 'tais#@@$%ao',
       name: "cookie_name",
-      //store: db, // connect-mongo session store
+      store:new MongoStore({
+        mongoose_connection: db
+      }),
       proxy: true,
       resave: true,
+      cookie: { maxAge: 60000 },
       saveUninitialized: true
   }));
 

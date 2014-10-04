@@ -38,8 +38,6 @@ usersApp.controller('RegisterCtrl',
       password: $scope.password
     };
     
-    //post_data = $scope.appendCsrf( post_data );
-    log("post_data", post_data);
     $scope.pending_register = true;
     Users.post({tail:'register'}, post_data, function(res){
       $scope.pending_register = false;
@@ -50,6 +48,4 @@ usersApp.controller('RegisterCtrl',
       });
     });
   }
-
-
 });

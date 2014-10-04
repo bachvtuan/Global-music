@@ -25,6 +25,7 @@
     "express-session": "~1.8.2",
     "mongoose": "~3.8.17",
     "bcrypt-nodejs": "0.0.3",
-    "validator": "~3.19.0"
+    "validator": "~3.19.0",
+    "connect-mongo": "~0.4.1"
   }
 }
