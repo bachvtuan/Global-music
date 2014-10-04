@@ -47,30 +47,27 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
   $scope.init = function(){
     $scope.current_song = $scope.songs[ $scope.song_index ];
 
-    
-
-    var audiojs_setting = {
+    $scope.audiojs_setting = {
       callbackError:function(error){
-          console.log(error);
-          console.clear();
-          var msg = alertify.message(error, 0);
-          $('body').one('click', function(){
-            msg.dismiss();
-        });
+        console.log(error);
+        console.clear();
+        var msg = $dialogs.error(error);
       },
       callbackPlay:function(){
         console.log("callbackPlay");
         $('#logo img').addClass('animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
           $(this).removeClass('animated');
         });
+      },
+      trackEnded: function() {
+        $scope.$apply(function(){
+          $scope.next();
+        })
       }
     };  
 
     $timeout(function(){
-      console.log("audiojs_setting");
-      console.log(audiojs_setting);
-      //audio.load($scope.songs[0].url);
-      var as = audiojs.createAll(audiojs_setting);
+      var as = audiojs.createAll($scope.audiojs_setting);
       $scope.audio =  as[0];
       $scope.audio.play();
 
@@ -82,20 +79,44 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
   $scope.prev = function(){
     log("prev");
     $scope.song_index--;
-    $scope.song_index = $scope.song_index < 0 ? 0 :$scope.song_index;
+    //$scope.song_index = $scope.song_index < 0 ? 0 :$scope.song_index;
     $scope.current_song = $scope.songs[ $scope.song_index ];
+    $scope.removeError();
     $scope.audio.load( $scope.current_song );
     $timeout(function(){
       $scope.audio.play();
     },100);
     
   }
+  $scope.removeOld = function(){
+    $('.scrubber').remove();
+    $('.played').remove();
+    $('.duration').remove();
+    
+  }
+
+  //Just make sure if it happended
+  $scope.removeError = function(){
+    if ($('.audiojs').hasClass('error')){
+      $('.audiojs').removeClass('error');
+    }
+  }
 
   $scope.next = function(){
+/*          var as = audiojs.createAll($scope.audiojs_setting);
+      $scope.audio =  as[0];
+      $scope.audio.play();*/
+    log($scope.audio);
+    $scope.audio.element.pause();
+    
     log("next");
     $scope.song_index++;
-    $scope.song_index = $scope.song_index > $scope.songs.length ? 0 :$scope.song_index;
+    $scope.song_index = $scope.song_index >= $scope.songs.length ? 0 :$scope.song_index;
     $scope.current_song = $scope.songs[ $scope.song_index ];
+    $scope.removeError();
+//    $scope.removeOld();
+    //var as = audiojs.createAll($scope.audiojs_setting);
+  //  $scope.audio =  as[0];
     $scope.audio.load( $scope.current_song );
 
     $timeout(function(){
