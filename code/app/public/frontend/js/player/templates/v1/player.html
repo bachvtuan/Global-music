@@ -10,13 +10,14 @@
       </div>
     </div>
 
-    <i id="current-list" class="fa fa-th-list" ng-click="show_list=!show_list;"></i>
+    <i id="current-list" class="fa fa-th-list" ng-class="{active:show_list}" ng-click="show_list=!show_list;"></i>
     <i id="prev-song" ng-click="prev()" class="fa fa-step-backward"></i>
     <i id="next-song" ng-click="next()" class="fa fa-step-forward"></i>
   </div>
   
-  <div class="playlist" ng-if="show_list">
+  <div class="playlist animate-if" ng-if="show_list">
     <h3>Playlist</h3>
+    <i class="fa fa-close" ng-click="$parent.show_list =  false;"></i>
     <div class="scroll" ng-if="songs.length > 0">
       <ul>
         <li ng-repeat="song in songs">

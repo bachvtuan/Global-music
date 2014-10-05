@@ -391,6 +391,14 @@ h3{
         border-color: #fff transparent transparent transparent;
 
       }
+      .fa-close{
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 15pt;
+        color: $gray;
+        cursor: pointer;
+      }
       .scroll{
         overflow-y:auto;
         max-height: 310px;
@@ -539,7 +547,7 @@ h3{
       color: $lighter-gray;
       font-size: 20px;
       cursor: pointer;
-      &:hover{
+      &:hover,&.active{
         color: $blue;
       }
 
@@ -562,3 +570,6 @@ h3{
     text-shadow: none;
   }
 }
+
+
+@import 'animate';

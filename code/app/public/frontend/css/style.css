@@ -297,6 +297,13 @@ h3 {
         border-width: 15px;
         left: 120px;
         border-color: #fff transparent transparent transparent; }
+      #wrapper .wrap-player-zone .playlist .fa-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 15pt;
+        color: #434343;
+        cursor: pointer; }
       #wrapper .wrap-player-zone .playlist .scroll {
         overflow-y: auto;
         max-height: 310px; }
@@ -397,7 +404,7 @@ h3 {
       color: #7b7b7b;
       font-size: 20px;
       cursor: pointer; }
-      #wrapper .player-zone i#next-song:hover, #wrapper .player-zone i#prev-song:hover, #wrapper .player-zone i#current-list:hover {
+      #wrapper .player-zone i#next-song:hover, #wrapper .player-zone i#next-song.active, #wrapper .player-zone i#prev-song:hover, #wrapper .player-zone i#prev-song.active, #wrapper .player-zone i#current-list:hover, #wrapper .player-zone i#current-list.active {
         color: #008fd5; }
     #wrapper .player-zone i#prev-song {
       right: 100px; }
@@ -409,3 +416,35 @@ h3 {
   .alertify-notifier.ajs-right .ajs-message a {
     color: #008fd5;
     text-shadow: none; }
+
+.fast_animate, .animate-if, .animate-repeat.ng-move,
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out; }
+
+/* Begin animate if */
+.animate-if.ng-enter,
+.animate-if.ng-leave.ng-leave-active {
+  opacity: 0; }
+
+.animate-if.ng-leave,
+.animate-if.ng-enter.ng-enter-active {
+  opacity: 1; }
+
+/* End animate if */
+/*Animate repeat */
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+  opacity: 0; }
+
+.animate-repeat.ng-leave,
+.animate-repeat.ng-move.ng-move-active,
+.animate-repeat.ng-enter.ng-enter-active {
+  opacity: 1; }
+
+/* End animate repeat */
