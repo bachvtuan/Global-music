@@ -185,6 +185,7 @@ h3 {
   background: #fbf9f8;
   margin: 30px auto 0px auto;
   padding: 35px;
+  position: relative;
   /* end .player-zone */ }
   #wrapper #header {
     margin-bottom: 30px;
@@ -261,7 +262,7 @@ h3 {
     color: #7b7b7b;
     font-weight: normal; }
   #wrapper .wrap-song-list .song-list {
-    height: 380px;
+    height: 370px;
     padding-right: 10px;
     overflow: auto; }
     #wrapper .wrap-song-list .song-list ul li {
@@ -273,6 +274,36 @@ h3 {
         color: #008fd5; }
       #wrapper .wrap-song-list .song-list ul li a {
         color: #7b7b7b; }
+  #wrapper .wrap-player-zone {
+    position: absolute;
+    bottom: 0px;
+    left: 35px;
+    right: 35px; }
+    #wrapper .wrap-player-zone .playlist {
+      position: absolute;
+      right: 0px;
+      bottom: 120px;
+      padding: 20px;
+      background: #fff;
+      width: 300px;
+      height: 400px; }
+      #wrapper .wrap-player-zone .playlist:before {
+        position: absolute;
+        bottom: -30px;
+        width: 0;
+        height: 0;
+        content: '';
+        border-style: solid;
+        border-width: 15px;
+        left: 120px;
+        border-color: #fff transparent transparent transparent; }
+      #wrapper .wrap-player-zone .playlist .scroll {
+        overflow-y: auto;
+        max-height: 310px; }
+        #wrapper .wrap-player-zone .playlist .scroll ul li a {
+          line-height: 2em; }
+          #wrapper .wrap-player-zone .playlist .scroll ul li a.active {
+            color: #008fd5; }
   #wrapper .player-zone {
     margin-top: 20px;
     height: 80px;

@@ -4,7 +4,8 @@ var app = angular.module('app', [
     'ngResource',
     'usersApp',
     'dashboardApp',
-    'playerApp'
+    'playerApp',
+    'songApp'
   ]);
 
 app.run(function($rootScope, $window,$http, $cookies, $dialogs, $location) {
