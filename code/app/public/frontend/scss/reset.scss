@@ -1,0 +1,9 @@
+.btn{
+  border-radius: 0px;
+  background-color:transparent;
+  border-color:$blue !important;
+  &:hover{
+    background-color:$blue;
+
+  }
+}

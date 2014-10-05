@@ -1,27 +1,6 @@
-
-$body_font: "Myriad Pro" ,"Helvetica Neue", Arial, sans-serif;
-$header_font: "Segoe UI", "Myriad Pro", $body-font;
-$body_color : #34495e;
-$blue:#008fd5;
-$gray : #434343;
-$lighter-gray: #7b7b7b;
-$font-gray: #aaa;
-$border:#cacaca;
-$bubble:#eee;
-$fade_gray : #f5f5f5;
-$green:#65bd10;
-$fade_blue :#d9edf7;
-$border_radius:2px;
-$very_fast_animate : all .1s ease-in-out;
-$fast_animate : all .2s ease-in-out;
-$bootstrap_blue: #3a89a3;
-$orange: #f0ad4e;
-$horizontal_height:400px;
-@font-face {
-    font-family: "Myriad Pro Light";
-    src: url(../fonts/MyriadPro-Light.ttf);
-    font-weight: bold;
-}
+@import 'define';
+@import 'animate';
+@import 'reset';
 
 button.working, a.working, input.working {
   padding-right: 23px;
@@ -238,7 +217,7 @@ h3{
   height:620px;
   background:#fbf9f8;
   margin: 30px auto 0px auto;
-  padding: 35px;
+  padding: $wide_pading;
   position:relative;
 
   #header{
@@ -267,7 +246,7 @@ h3{
             content: "";
             position: absolute;
             top: 10px;
-            left: -35px;
+            left: -$wide_pading;
             width: 0px;
             height: 0px;
             border-top: 5px solid transparent;
@@ -367,8 +346,8 @@ h3{
   .wrap-player-zone{
     position:absolute;
     bottom:0px;
-    left:35px;
-    right:35px;
+    left:$wide_pading;
+    right:$wide_pading;
 
 
     .playlist{
@@ -572,4 +551,8 @@ h3{
 }
 
 
-@import 'animate';
+.quick-buttons{
+  position:absolute;
+  top: $wide_pading;
+  right: $wide_pading;
+}

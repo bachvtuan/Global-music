@@ -15,7 +15,7 @@ usersApp.controller('LoginCtrl',
 
   $scope.redirectDashboard = function(user){
     $cookieStore.put('user', user);
-    $location.path('/dashboard');
+    $location.path('/albums');
   }
 
   $scope.resetValue = function(){

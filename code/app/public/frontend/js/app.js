@@ -4,13 +4,16 @@ var app = angular.module('app', [
     'ngResource',
     'ngAnimate',
     'usersApp',
-    'dashboardApp',
+    'albumApp',
     'playerApp',
-    'songApp'
+    'songApp',
+    'navigationApp',
+    'headerApp'
   ]);
 
 app.run(function($rootScope, $window,$http, $cookies, $dialogs, $location) {
   //Logic given data, consider it's error or normal data
+
   $rootScope.processRetrieveData = function(res,callback,callback_error){
     if (typeof res['status'] && res['status'] == 'error'){
       var message = res['data'];
@@ -32,6 +35,7 @@ app.run(function($rootScope, $window,$http, $cookies, $dialogs, $location) {
     return $window.templateVersion( template_url );
   }
 
-
+  $rootScope.navigation_template = $rootScope.templateVersion('frontend/js/navigation/navigation.html');
+  $rootScope.header_template = $rootScope.templateVersion('frontend/js/header/header.html');
 
 });

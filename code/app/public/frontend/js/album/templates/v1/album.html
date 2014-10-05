@@ -1,0 +1,35 @@
+<div ng-controller="HeaderCtrl">
+  <ng-include src="header_template" ng-init="init('album')"></ng-include>
+</div>
+
+<div class="main row">
+  <div class="col-md-2" ng-controller="NavigationCtrl">
+    <ng-include src="navigation_template" ng-init="init('album')"></ng-include>
+  </div>
+  <div class="col-md-6">
+    <div class="content-list">
+      <div class="album">
+        <img src="frontend/images/album.png">
+        <a class="title" title="Những bài hát bất hủ của Lam Trường va Dam Vinh Hung"  data-placement="bottom" >
+          Những bài hát bất hủ của Lam Trường va Dam Vinh Hung
+        </a>
+        <p class="number-songs">Bai hat: <span>5</span></p>
+        <p class="tag">Tags: <span><a>Quê Hương</a>, <a>Nhạc trẻ</a>, <a>Trữ tình</a>, <a>Nhạc tiền chiến</a>, <a>Nhac nuoc ngoai</a>, <a>Trung Quoc</a></span></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="wrap-song-list">
+      <h4><i class="fa fa-music"></i> Song in album</h4>
+      <div class="song-list">
+        <ul  type="1">
+          <li><span>1.</span> <a>Noi tinh yeu bat dau</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="quick-buttons">
+  <button class="btn btn-default"><i class="fa fa-plus"></i> New album</button>
+</div>
