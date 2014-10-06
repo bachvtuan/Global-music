@@ -1,6 +1,6 @@
 
 //This direct to generate img tag with source url is proviced,
-app.directive('loadimage', function($parse) {
+app.directive('loadImage', function($parse) {
   return {
     restrict: 'EA',
     scope: {

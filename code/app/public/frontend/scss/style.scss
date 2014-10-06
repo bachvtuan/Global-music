@@ -78,6 +78,19 @@ h3{
   margin: 5px 0px;
   color: $lighter-gray;
 }
+
+.fa-close{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 15pt;
+  color: $gray;
+  cursor: pointer;
+}
+
+.form-control{
+  border-radius:0px !important;
+}
 @keyframes flip {
   0% {
     -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -360deg);
@@ -371,12 +384,7 @@ h3{
 
       }
       .fa-close{
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        font-size: 15pt;
-        color: $gray;
-        cursor: pointer;
+        @extend .fa-close;
       }
       .scroll{
         overflow-y:auto;
@@ -555,4 +563,35 @@ h3{
   position:absolute;
   top: $wide_pading;
   right: $wide_pading;
+}
+
+#lean_overlay {
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: none;
+}
+.tuan-modal{
+  position: fixed;
+  z-index: 2;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background:rgba(33,33,33,0.8);
+
+  .body{
+    width: 600px;
+    margin: 80px auto;
+    background: $white;
+    padding: $wide_pading;
+    position:relative;
+    .fa-close{
+      @extend .fa-close;
+    }
+  }
 }

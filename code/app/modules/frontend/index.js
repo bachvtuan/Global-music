@@ -4,6 +4,8 @@ module.exports = function( app ){
 
   var HomeController =  require('./controllers/home')(BaseController);
   var UserController =  require('./controllers/user')(BaseController);
+  var AlbumController =  require('./controllers/album')(BaseController);
+
   
 
   app.get('/', attachDB, function (req, res,next) {
@@ -22,15 +24,16 @@ module.exports = function( app ){
     UserController.info( req, res, next );
   });
 
-  app.post('/tuan', attachDB, function (req, res,next) {
-    res.json({title:'good'});
-  })
+  app.post('/albums', attachDB, function (req, res,next) {
+    AlbumController.add( req, res, next );
+  });
+
 
   app.get('/hello.txt', function(req, res){
     res.send('Hello World');
   });
 
-  app.get('/json', function(req, res){
+  app.get('/test', function(req, res){
     res.json({title:'Hello World'});
   });
 }

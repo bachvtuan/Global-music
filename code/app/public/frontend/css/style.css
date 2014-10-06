@@ -107,6 +107,17 @@ h3 {
   margin: 5px 0px;
   color: #7b7b7b; }
 
+.fa-close, #wrapper .wrap-player-zone .playlist .fa-close, .tuan-modal .body .fa-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 15pt;
+  color: #434343;
+  cursor: pointer; }
+
+.form-control {
+  border-radius: 0px !important; }
+
 @keyframes flip {
   0% {
     -webkit-transform: perspective(400px) rotate3d(0, 1, 0, -360deg);
@@ -335,13 +346,6 @@ h3 {
         border-width: 15px;
         left: 120px;
         border-color: #fff transparent transparent transparent; }
-      #wrapper .wrap-player-zone .playlist .fa-close {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        font-size: 15pt;
-        color: #434343;
-        cursor: pointer; }
       #wrapper .wrap-player-zone .playlist .scroll {
         overflow-y: auto;
         max-height: 310px; }
@@ -459,3 +463,28 @@ h3 {
   position: absolute;
   top: 35px;
   right: 35px; }
+
+#lean_overlay {
+  position: fixed;
+  z-index: 100;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background: #000;
+  display: none; }
+
+.tuan-modal {
+  position: fixed;
+  z-index: 2;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background: rgba(33, 33, 33, 0.8); }
+  .tuan-modal .body {
+    width: 600px;
+    margin: 80px auto;
+    background: white;
+    padding: 35px;
+    position: relative; }
