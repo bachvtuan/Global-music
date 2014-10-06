@@ -24,7 +24,11 @@ module.exports = function( app ){
     UserController.info( req, res, next );
   });
 
-  app.post('/albums', attachDB, function (req, res,next) {
+  app.get('/albums', checkUser, function (req, res,next) {
+    AlbumController.index( req, res, next );
+  });
+
+  app.post('/albums', checkUser, function (req, res,next) {
     AlbumController.add( req, res, next );
   });
 

@@ -9,3 +9,15 @@ global.attachDB = function(req, res, next) {
   //req.db = db;
   next();
 };
+
+//Middleware to attach database
+global.checkUser = function(req, res, next) {
+  //db is global varriable
+  //req.db = db;
+  if (!req.session.user){
+    return res.json(jsonError("You're not login"));
+  }
+  
+  next();
+};
+

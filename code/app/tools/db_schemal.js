@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var userSchema = mongoose.Schema({
   user_name: String,
@@ -11,7 +12,7 @@ var userSchema = mongoose.Schema({
 mongoose.model('User', userSchema)
 
 var albumSchema = mongoose.Schema({
-  userId: ObjectId,
+  user_id: mongoose.Schema.ObjectId,
   title: String,
   //Store base64
   cover:String,

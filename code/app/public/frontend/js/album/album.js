@@ -23,11 +23,22 @@ albumApp.controller('AlbumCtrl',
   function ($scope, $http, $location,$window, $dialogs, Albums) {
 
   $scope.init = function(){
-    $scope.show_add = false;
+    
     $scope.pending_add_album = false;
+    $scope.resetValue();
+    $scope.albums = null;
+    Albums.get({}, function(res){
+      $scope.processRetrieveData(res,function(data){
+        log("Data", data);
+        $scope.albums = data;
+      });
+    });
+  }
+
+  $scope.resetValue = function(){
+    $scope.show_add = false;
     $scope.album_title = "";
     $scope.album_cover = "";
-    //$('#myModal').modal(options)
   }
   $scope.submitAlbum = function(){
     log("submit album");
@@ -37,10 +48,14 @@ albumApp.controller('AlbumCtrl',
     };
     log("post_data", post_data);
 
+
     $scope.pending_add_album = true;
     Albums.post({}, post_data, function(res){
       $scope.pending_add_album = false;
       $scope.processRetrieveData(res,function(data){
+        $scope.albums.push(data);
+        $dialogs.success("You added new album");
+        $scope.resetValue();
       });
     });
   }

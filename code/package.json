@@ -26,6 +26,8 @@
     "mongoose": "~3.8.17",
     "bcrypt-nodejs": "0.0.3",
     "validator": "~3.19.0",
-    "connect-mongo": "~0.4.1"
+    "connect-mongo": "~0.4.1",
+    "easyimage": "~1.0.3",
+    "tmp": "0.0.24"
   }
 }

@@ -2,12 +2,13 @@
   <ng-include src="header_template" ng-init="init('album')"></ng-include>
 </div>
 
-<div class="main row">
+<div class="main row album-page" ng-init="init()">
   <div class="col-md-2" ng-controller="NavigationCtrl">
     <ng-include src="navigation_template" ng-init="init('album')"></ng-include>
   </div>
   <div class="col-md-6">
     <div class="content-list">
+      <!--
       <div class="album">
         <img src="frontend/images/album.png">
         <a class="title" title="Những bài hát bất hủ của Lam Trường va Dam Vinh Hung"  data-placement="bottom" >
@@ -15,6 +16,23 @@
         </a>
         <p class="number-songs">Bai hat: <span>5</span></p>
         <p class="tag">Tags: <span><a>Quê Hương</a>, <a>Nhạc trẻ</a>, <a>Trữ tình</a>, <a>Nhạc tiền chiến</a>, <a>Nhac nuoc ngoai</a>, <a>Trung Quoc</a></span></p>
+      </div>
+      -->
+      <div ng-if="albums === null"  >
+        <ng-include src="'loading.html'" ng-init="text='Loading your albums'"></ng-include>
+      </div>
+      <div ng-if="albums.length == 0">
+        <p>You don't have any album, You can add more by clicking the button at the top right corner</p>
+      </div>
+      <div ng-if="albums.length > 0">
+        <div class="album" ng-repeat="album in albums">
+          <img src="frontend/images/album.png">
+          <a class="title" title="{{album.title}}"  data-placement="bottom" >
+            {{album.title}}
+          </a>
+          <p class="number-songs">Bai hat: <span>5</span></p>
+          <p class="tag">Tags: <span><a>Quê Hương</a>, <a>Nhạc trẻ</a>, <a>Trữ tình</a>, <a>Nhạc tiền chiến</a>, <a>Nhac nuoc ngoai</a>, <a>Trung Quoc</a></span></p>
+        </div>
       </div>
     </div>
   </div>
@@ -45,13 +63,13 @@
         <form class="form" ng-submit="submitAlbum()">
           <p>
             <label>Album title</label>
-            <input type="text" class="form-control" ng-model="$parent.album_title" placeHolder="Album title" ng-required />
+            <input type="text" class="form-control" ng-model="$parent.album_title" placeHolder="Album title" ng-required focus-me="{{true}}" />
           </p>
           <p>
             <label>Album cover</label>
             <input type="url" class="form-control"  ng-model="$parent.album_cover" placeHolder="The cover from url" />
           </p>
-          <p ng-if="album_cover">
+          <p ng-if="album_cover" class="preview-image">
             <label>Preview:</label><br/>
             <load-image source="album_cover" width="100px" height="100px" />
           </p>

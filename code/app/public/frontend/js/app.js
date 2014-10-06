@@ -11,8 +11,9 @@ var app = angular.module('app', [
     'headerApp'
   ]);
 
-app.run(function($rootScope, $window,$http, $cookies, $dialogs, $location) {
+app.run(function($rootScope, $window,$http, $cookies, $dialogs, $location, $templateCache) {
   //Logic given data, consider it's error or normal data
+  $templateCache.put('loading.html','<div class="wrap-loader"><p class="inline link"><i class="fa fa-circle-o-notch fa-spin"></i>&nbsp; {{text}}</p></div>');
 
   $rootScope.processRetrieveData = function(res,callback,callback_error){
     if (typeof res['status'] && res['status'] == 'error'){

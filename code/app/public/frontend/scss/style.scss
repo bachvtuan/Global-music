@@ -575,6 +575,12 @@ h3{
     background: #000;
     display: none;
 }
+.preview-image{
+  img{
+    max-width: 200px;
+    max-height: 200px;
+  }
+}
 .tuan-modal{
   position: fixed;
   z-index: 2;
@@ -586,7 +592,7 @@ h3{
 
   .body{
     width: 600px;
-    margin: 80px auto;
+    margin: $wide_pading auto;
     background: $white;
     padding: $wide_pading;
     position:relative;
