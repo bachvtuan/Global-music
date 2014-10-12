@@ -79,6 +79,7 @@ function generalAddAlbum(body, res, req){
     });
   }
   else{
+    showLog("Added new album withot cover", body);
     new Album( body ).save( function( err, album, count ){
       return res.json( jsonSucc(album) );
     });          
@@ -130,7 +131,7 @@ module.exports = function(BaseController){
 */
         //return res.end("weri");
 
-        if ( body.tags ){
+        if ( body.tags && body.tags.trim() != "" ){
           var tags = body.tags.split(",");
           showLog("tags is ", tags);
           
@@ -192,6 +193,8 @@ module.exports = function(BaseController){
           });
         }
         else{
+          showLog("Added without using tag");
+          delete body.tags;
           generalAddAlbum(body,res,req);
         }
 

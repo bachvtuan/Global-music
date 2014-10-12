@@ -24,7 +24,7 @@
           </a>
           <p class="number-songs">Number songs: <span>{{album.song_numbers}}</span></p>
 
-          <p class="tag" ng-if="album.tags.length > 0">Tags: 
+          <p class="tag" ng-if="album.tags.length > 0 ">Tags: 
             <span>
               <a ng-repeat="tag in album.tags" ng-href="#/tag/{{tag.name}}">
                 {{tag.name}}

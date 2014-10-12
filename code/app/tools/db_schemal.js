@@ -30,7 +30,7 @@ var albumSchema = mongoose.Schema({
   title: String,
   feature_id: mongoose.Schema.ObjectId,
   song_numbers:{ type: Number, default: 0 },
-  tags:{ type: [tagSchema], default: [] },
+  tags:{ type: [tagSchema] },
   created_date:{ type: Date, default: Date.now() },
   status:{ type: String, default: 'actived' }
 })
