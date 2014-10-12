@@ -8,16 +8,6 @@
   </div>
   <div class="col-md-6">
     <div class="content-list">
-      <!--
-      <div class="album">
-        <img src="frontend/images/album.png">
-        <a class="title" title="Những bài hát bất hủ của Lam Trường va Dam Vinh Hung"  data-placement="bottom" >
-          Những bài hát bất hủ của Lam Trường va Dam Vinh Hung
-        </a>
-        <p class="number-songs">Bai hat: <span>5</span></p>
-        <p class="tag">Tags: <span><a>Quê Hương</a>, <a>Nhạc trẻ</a>, <a>Trữ tình</a>, <a>Nhạc tiền chiến</a>, <a>Nhac nuoc ngoai</a>, <a>Trung Quoc</a></span></p>
-      </div>
-      -->
       <div ng-if="albums === null"  >
         <ng-include src="'loading.html'" ng-init="text='Loading your albums'"></ng-include>
       </div>
@@ -26,12 +16,20 @@
       </div>
       <div ng-if="albums.length > 0">
         <div class="album" ng-repeat="album in albums">
-          <img src="frontend/images/album.png">
+
+          <img ng-if="!album.feature_id" src="frontend/images/album.png">
+          <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)" ></load-image>
           <a class="title" title="{{album.title}}"  data-placement="bottom" >
             {{album.title}}
           </a>
-          <p class="number-songs">Bai hat: <span>5</span></p>
-          <p class="tag">Tags: <span><a>Quê Hương</a>, <a>Nhạc trẻ</a>, <a>Trữ tình</a>, <a>Nhạc tiền chiến</a>, <a>Nhac nuoc ngoai</a>, <a>Trung Quoc</a></span></p>
+          <p class="number-songs">Number songs: <span>{{album.song_numbers}}</span></p>
+
+          <p class="tag" ng-if="album.tags.length > 0">Tags: 
+            <span>
+              <a ng-repeat="tag in album.tags" ng-href="#/tag/{{tag.name}}">
+                {{tag.name}}
+              </a>
+            </span></p>
         </div>
       </div>
     </div>
@@ -72,6 +70,11 @@
           <p ng-if="album_cover" class="preview-image">
             <label>Preview:</label><br/>
             <load-image source="album_cover" width="100px" height="100px" />
+          </p>
+          <p>
+            <label>Album tags</label>
+            <input type="text" class="form-control" ng-model="$parent.album_tags" placeHolder="Album tags"  />
+            <small>Seperate by comma(,)</small>
           </p>
           <button type="submit" class="btn btn-default"  ng-disabled="!album_title || pending_add_album"  class="btn btn-default"  ng-class="{'working': pending_add_album}">
             <i class="fa fa-plus"></i> Add

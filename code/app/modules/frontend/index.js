@@ -5,6 +5,7 @@ module.exports = function( app ){
   var HomeController =  require('./controllers/home')(BaseController);
   var UserController =  require('./controllers/user')(BaseController);
   var AlbumController =  require('./controllers/album')(BaseController);
+  var MediaController =  require('./controllers/media')(BaseController);
 
   
 
@@ -22,6 +23,10 @@ module.exports = function( app ){
 
   app.get('/users/info', attachDB, function (req, res,next) {
     UserController.info( req, res, next );
+  });
+
+  app.get('/media/:id', attachDB, function (req, res,next) {
+    MediaController.index( req, res, next );
   });
 
   app.get('/albums', checkUser, function (req, res,next) {

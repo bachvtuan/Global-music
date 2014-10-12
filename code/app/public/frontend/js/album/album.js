@@ -21,6 +21,11 @@ function($resource,$cookies){
 
 albumApp.controller('AlbumCtrl', 
   function ($scope, $http, $location,$window, $dialogs, Albums) {
+  
+  $scope.mediaLink = function(media_id){
+    log("media_id", media_id);
+    return "/media/" + media_id;
+  }
 
   $scope.init = function(){
     
@@ -36,15 +41,19 @@ albumApp.controller('AlbumCtrl',
   }
 
   $scope.resetValue = function(){
-    $scope.show_add = false;
-    $scope.album_title = "";
-    $scope.album_cover = "";
+
+    $scope.show_add     = false;
+    $scope.album_title  = "";
+    $scope.album_cover  = "";
+    $scope.album_tags   = "";
+
   }
   $scope.submitAlbum = function(){
     log("submit album");
     var post_data = {
       title:$scope.album_title,
-      cover:$scope.album_cover
+      cover:$scope.album_cover,
+      tags: $scope.album_tags
     };
     log("post_data", post_data);
 
