@@ -20,10 +20,9 @@ function($resource,$cookies){
 
 
 albumApp.controller('AlbumCtrl', 
-  function ($scope, $http, $location,$window, $dialogs, Albums) {
+  function ($scope, $http, $location,$window, $dialogs, Albums,$timeout) {
   
   $scope.mediaLink = function(media_id){
-    log("media_id", media_id);
     return "/media/" + media_id;
   }
 
@@ -32,12 +31,51 @@ albumApp.controller('AlbumCtrl',
     $scope.pending_add_album = false;
     $scope.resetValue();
     $scope.albums = null;
+    $scope.current_album_id = null;
     Albums.get({}, function(res){
       $scope.processRetrieveData(res,function(data){
         log("Data", data);
         $scope.albums = data;
+        
       });
     });
+  }
+
+  $scope.activeAlbum = function(album){
+    log("tai sao", album);
+    $scope.current_album = album;
+    $scope.current_album_id = $scope.current_album._id;
+  }
+
+  $scope.showAddModel = function(){
+    $scope.show_add = true;
+    $scope.initTag();
+  }
+
+  $scope.initTag = function(){
+    $timeout(function(){
+      $('#album-tags').tagsInput({
+        width:'auto',
+        height:50
+      });
+    },100);
+    
+  }
+
+  $scope.removeAlbum = function(){
+    log("come to remove album");
+    var title = "Are you sure to remove the album: " + $scope.current_album.title;
+    alertify.confirm( title ).setting('onok', function(){
+     $scope.$apply(function(){
+      log("good");
+      Albums.remove({id:$scope.current_album._id},function(res){
+        $scope.processRetrieveData(res,function(data){
+          log("done");
+          $scope.removeItemInList( $scope.albums, $scope.current_album._id );
+        });
+      })
+     })
+    }); 
   }
 
   $scope.resetValue = function(){
@@ -53,10 +91,9 @@ albumApp.controller('AlbumCtrl',
     var post_data = {
       title:$scope.album_title,
       cover:$scope.album_cover,
-      tags: $scope.album_tags
+      tags: $('#album-tags').val()
     };
     log("post_data", post_data);
-
 
     $scope.pending_add_album = true;
     Albums.post({}, post_data, function(res){

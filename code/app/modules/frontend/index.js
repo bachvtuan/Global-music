@@ -6,6 +6,8 @@ module.exports = function( app ){
   var UserController =  require('./controllers/user')(BaseController);
   var AlbumController =  require('./controllers/album')(BaseController);
   var MediaController =  require('./controllers/media')(BaseController);
+  var TagController =  require('./controllers/tag')(BaseController);
+  var SongController =  require('./controllers/song')(BaseController);
 
   
 
@@ -25,6 +27,12 @@ module.exports = function( app ){
     UserController.info( req, res, next );
   });
 
+
+  app.get('/tags', checkUser, function (req, res,next) {
+    TagController.index( req, res, next );
+  });
+
+
   app.get('/media/:id', attachDB, function (req, res,next) {
     MediaController.index( req, res, next );
   });
@@ -37,12 +45,23 @@ module.exports = function( app ){
     AlbumController.add( req, res, next );
   });
 
+  app.delete('/albums', checkUser, function (req, res,next) {
+    AlbumController.delete( req, res, next );
+  });
+  /* end album */
+
+  app.get('/songs', checkUser, function (req, res,next) {
+    SongController.index(req, res, next );
+  });
+
+  app.post('/songs', checkUser, function (req, res,next) {
+    SongController.add( req, res, next );
+  });
+  
+
 
   app.get('/hello.txt', function(req, res){
     res.send('Hello World');
   });
 
-  app.get('/test', function(req, res){
-    res.json({title:'Hello World'});
-  });
 }

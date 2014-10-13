@@ -32,11 +32,23 @@ app.run(function($rootScope, $window,$http, $cookies, $dialogs, $location, $temp
     }
   }
 
+  //Find item in the list by id and remove it
+  $rootScope.removeItemInList = function(list,id){
+    for ( var i=0 ; i<  list.length; i++ ){
+      if (list[i]._id == id ){
+        list.splice(i, 1);
+        break;
+      }
+    }
+  }
+
+
   $rootScope.templateVersion = function( template_url ){
     return $window.templateVersion( template_url );
   }
 
   $rootScope.navigation_template = $rootScope.templateVersion('frontend/js/navigation/navigation.html');
   $rootScope.header_template = $rootScope.templateVersion('frontend/js/header/header.html');
+  $rootScope.song_template = $rootScope.templateVersion('frontend/js/song/song.html');
 
 });

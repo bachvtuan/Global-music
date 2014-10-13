@@ -73,7 +73,7 @@ configs( config_file, function(config){
     app.locals.pretty = true;
   }
 
-  require('./app/tools/db_schemal');
+  require('./app/db/db_schemal');
 
   connectDB();
 

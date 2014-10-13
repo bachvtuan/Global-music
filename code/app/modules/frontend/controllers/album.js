@@ -200,6 +200,38 @@ module.exports = function(BaseController){
 
       });
       // end find albums
+    },
+    //end add
+    delete: function(req, res, next) {
+      
+      //res.json( jsonSucc( req.body ) );
+      var user_id = req.session.user._id;
+      var album_id = req.query.id;
+      showLog(album_id);
+
+      Album.findById(album_id, function(err, album){
+        showLog("album", album);
+        if ( !album ){
+          return res.json( jsonErr("Not found your album for remove") );
+        }
+
+        if ( album.user_id != user_id ){
+          return res.json( jsonErr("You can't remove this album") );
+        }
+        if ( album.feature_id ){
+          showLog("Remove feature photo");
+          Media.findByIdAndRemove(album.feature_id, function(err, media){
+            album.remove();
+            return res.json(jsonSucc("ok"));
+          }); // executes
+        }
+        else{
+          album.remove();
+          return res.json(jsonSucc("ok"));
+        }
+        
+      });
+      
     }
   });
 }

@@ -16,10 +16,10 @@
       </div>
       <div ng-if="albums.length > 0">
         <div class="album" ng-repeat="album in albums">
-
           <img ng-if="!album.feature_id" src="frontend/images/album.png">
           <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)" ></load-image>
-          <a class="title" title="{{album.title}}"  data-placement="bottom" >
+          <a class="title" title="{{album.title}}"  data-placement="bottom"
+            ng-click="activeAlbum(album)" >
             {{album.title}}
           </a>
           <p class="number-songs">Number songs: <span>{{album.song_numbers}}</span></p>
@@ -35,19 +35,20 @@
     </div>
   </div>
   <div class="col-md-4">
-    <div class="wrap-song-list">
-      <h4><i class="fa fa-music"></i> Song in album</h4>
-      <div class="song-list">
-        <ul  type="1">
-          <li><span>1.</span> <a>Noi tinh yeu bat dau</a></li>
-        </ul>
-      </div>
+    <div ng-controller="SongCtrl" >
+      <ng-include src="song_template" ></ng-include>
     </div>
   </div>
 </div>
 
 <div class="quick-buttons">
-  <button class="btn btn-default" ng-click="show_add = !show_add;">
+  <button class="btn btn-primary" ng-if="current_album">
+    <i class="fa fa-pencil"></i> Edit 
+  </button>
+  <button class="btn btn-warning" ng-if="current_album" ng-click="removeAlbum()">
+    <i class="fa fa-remmove"></i> Delete
+  </button>
+  <button class="btn btn-default" ng-click="showAddModel()">
     <i class="fa fa-plus"></i> New album
   </button>
 </div>
@@ -73,7 +74,7 @@
           </p>
           <p>
             <label>Album tags</label>
-            <input type="text" class="form-control" ng-model="$parent.album_tags" placeHolder="Album tags"  />
+            <input type="text" id="album-tags" class="form-control tags" ng-model="$parent.album_tags" placeHolder="Album tags"  />
             <small>Seperate by comma(,)</small>
           </p>
           <button type="submit" class="btn btn-default"  ng-disabled="!album_title || pending_add_album"  class="btn btn-default"  ng-class="{'working': pending_add_album}">

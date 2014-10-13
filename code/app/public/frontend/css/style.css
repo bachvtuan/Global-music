@@ -33,12 +33,19 @@
   opacity: 1; }
 
 /* End animate repeat */
+@font-face {
+  font-family: "Myriad Pro Light";
+  src: url(../fonts/MyriadPro-Light.ttf);
+  font-weight: bold; }
 .btn {
   border-radius: 0px;
-  background-color: transparent;
+  /* background-color:transparent; */
   border-color: #008fd5 !important; }
   .btn:hover {
     background-color: #008fd5; }
+
+.clear {
+  clear: both; }
 
 button.working, a.working, input.working {
   padding-right: 23px; }
