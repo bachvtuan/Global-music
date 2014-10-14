@@ -1,22 +1,33 @@
-<div class="btn-group pull-right" ng-if="songs !== null">
-  <button type="button" class="btn btn-default" ng-click="addSong()">Add song</button>
-  <button type="button" class="btn btn-default">Middle</button>
-  <button type="button" class="btn btn-default">Right</button>
-</div>
-<p class="clear" ng-if="songs == null && !loading_songs">The song list is empty</p>
-<div ng-if="loading_songs"   class="clear">
-  <ng-include src="'loading.html'" ng-init="text='Loading songs in the album'"></ng-include>
-</div>
-<p  class="clear" ng-if="song !== null && songs.length == 0">Album doesn't have any song, you can add more</p>
-<div class="wrap-song-list clear" ng-if="song !== null && songs.length > 0">
-  <h4><i class="fa fa-music"></i> Song in album</h4>
-  <div class="song-list">
-    <ul  type="1">
-      <li ng-repeat="song in songs">
-        <span>1.</span> <a>{{song.title}}</a>
-      </li>
-      <!-- <li><span>1.</span> <a>Noi tinh yeu bat dau</a></li> -->
-    </ul>
+<div class="wrap-song-list clear" >
+  <div class="btn-group group-song pull-right" ng-if="songs !== null">
+    <button type="button" class="btn" ng-click="addSong()"><i class="fa fa-plus"></i> Add song</button>
+  </div>
+  <p class="clear alert" ng-if="songs == null && !loading_songs">The song list is empty</p>
+  <div ng-if="loading_songs"   class="clear">
+    <ng-include src="'loading.html'" ng-init="text='Loading songs in the album'"></ng-include>
+  </div>
+  <p  class="clear alert" ng-if="song !== null && songs.length == 0">Album doesn't have any song, you can add more</p>
+  
+  <div ng-if="song !== null && songs.length > 0">
+    <h4><i class="fa fa-music"></i> Song in album</h4>
+    <div class="song-list">
+      <ul  type="1">
+        <li ng-repeat="song in songs">
+          <span>{{ $index +1 }}</span> <a>{{song.title}}</a>
+          <!-- Single button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-wrench"></i>
+            </button>
+            <ul class="dropdown-menu pull-right" role="menu">
+              <li><a href="#">Edit</a></li>
+              <li><a href="#">Delete</a></li>
+              <li><a href="#">Play</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 

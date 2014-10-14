@@ -43,26 +43,26 @@ button.working, a.working, input.working {
 }
 
 body{
-  background: -webkit-linear-gradient(90deg, #D3959B 10%, #BFE6BA 90%); /* Chrome 10+, Saf5.1+ */
-  background:    -moz-linear-gradient(90deg, #D3959B 10%, #BFE6BA 90%); /* FF3.6+ */
-  background:     -ms-linear-gradient(90deg, #D3959B 10%, #BFE6BA 90%); /* IE10 */
-  background:      -o-linear-gradient(90deg, #D3959B 10%, #BFE6BA 90%); /* Opera 11.10+ */
-  background:         linear-gradient(90deg, #D3959B 10%, #BFE6BA 90%); /* W3C */
-  font-family: $body_font;;
+  background:url("../images/violate.jpg");
+  font-family: $body_font;
+  color: $ligth_white;
   
 }
 a,p{
-  color: $lighter-gray;
-  font-size: 13px;
+  
+  font-size: 14px;
   line-height: 1.2em;
 }
-a{
-  cursor: pointer;
-}
-a:hover{
 
-  color: $blue;
+a{
+  color: $white;
+  cursor: pointer;
+  &:hover{
+    text-decoration: none;
+    color: $blue;
+  }
 }
+
 
 h1,h2,h3,h4{
   color: $gray;
@@ -76,7 +76,7 @@ h3{
   font-weight: normal;
   font-size: 18pt;
   margin: 5px 0px;
-  color: $lighter-gray;
+  color: $white;
 }
 
 .fa-close{
@@ -84,12 +84,92 @@ h3{
   top: 20px;
   right: 20px;
   font-size: 15pt;
-  color: $gray;
+  color: $white;
   cursor: pointer;
 }
 
 .form-control{
   border-radius:0px !important;
+}
+.btn{
+  background-color:$dark_fade_background;
+  border:none;
+  color: $white;
+  &:hover{
+    background:$dark_fade_background;
+    border:none;
+    color: $blue;
+  }
+}
+.alert{
+  background:$fade_background;
+  border-radius:0px;
+}
+
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open>.dropdown-toggle.btn-default{
+  background-color:$dark_fade_background;
+}
+.alertify-notifier {
+  .ajs-message{
+    border-radius:0px;
+    border:none;
+    &.ajs-success{
+      background-color:$very_dark_fade_background;
+    }
+    &.ajs-error{
+      background:rgba(114,31,59,0.7);
+      /* color: #721F3B; */
+    }
+  }
+}
+.alertify{
+  .ajs-dialog{
+    background:url("../images/violate.jpg");
+    .ajs-header{
+      color: $white;
+    }
+    .ajs-header,.ajs-body,.ajs-footer{
+      color: $white;
+      background-color:transparent;
+    }
+    .ajs-body .ajs-content{
+      padding-left:0px;
+    }
+    .ajs-footer .ajs-buttons .ajs-button{
+      background-color:$fade_background;
+      color: $white;
+    }    
+  }
+  .ajs-commands button.ajs-close{
+    font:normal normal normal 14px/1 FontAwesome;
+    background-image:none;
+    font-size: 15pt;
+    &:before{
+      content:"\f00d";
+      position: absolute;
+      top: 8px;
+      left: 8px;
+    }
+  }
+}
+
+.dropdown-menu{
+  background:$very_dark_fade_background;
+  border-radius:0px;
+  .divider{
+    background:$dark;
+  }
+
+
+  li{
+    a{
+      color: $white;
+      &:hover,&:focus{
+        background:$fade_background;
+        color: $white;
+      }
+    }
+  }
 }
 @keyframes flip {
   0% {
@@ -228,13 +308,13 @@ h3{
 #wrapper{
   width: 950px;
   height:620px;
-  background:#fbf9f8;
+  background:$fade_background;
   margin: 30px auto 0px auto;
   padding: $wide_pading;
   position:relative;
 
   #header{
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     position:relative;
     #logo{
       position:absolute;
@@ -245,8 +325,10 @@ h3{
       }
     }
     input[type="search"]{
-      background: #fbf9f8;
+      background: transparent;
       border-radius: 0px;
+      border:1px solid $very_fade_background;
+      color: $white;
     }
   }
   .navigation{
@@ -283,7 +365,8 @@ h3{
     overflow:auto;
     .album{
       clear: both;
-      margin: 0px 0px 30px 0px;
+      margin: 0px 0px 20px 0px;
+      overflow:hidden;
       position:relative;
       &:hover{
         
@@ -295,7 +378,6 @@ h3{
         height: 80px;
       }
       a.title{
-        color: $gray;
         margin: 0px 0px 0px 0px;
         font-size: 15px;
         line-height: 16px;
@@ -311,7 +393,7 @@ h3{
       }
       p.tag{
         /* background: url("../images/tag_blue.png") no-repeat left center; */
-        color: $lighter-gray;
+        color: $gray;
         margin: 0px;
         display: inline-block;
         width: 300px;
@@ -330,19 +412,25 @@ h3{
     }
   }
   .wrap-song-list{
+    .group-song{
+      margin-bottom: 20px;
+    }
     h4{
-      margin:0px 0px 10px 0px;
-      color: $lighter-gray;
+      margin:10px 0px 10px 0px;
       font-weight: normal;
+      display: inline-block;
     }
     .song-list{
       height:370px;
-      padding-right: 10px;
+      padding-right:0px;
       overflow: auto;
+      width: 100%;
 
-      ul{
-        li{
+      > ul{
+        > li{
             padding:6px 0px;
+            position:relative;
+            margin-bottom: 5px;
             span{
               min-width: 20px;
               display: inline-block;
@@ -352,9 +440,11 @@ h3{
                 color: $blue;
               }
             }
-          a{
-            color: $lighter-gray;
-          }
+            .btn-group{
+              position:absolute;
+              right: 0px;
+              top:0px;
+            }
         }
       }
     }    
@@ -369,11 +459,10 @@ h3{
     .playlist{
       position: absolute;
       right: 0px;
-      bottom: 120px;
-      padding: 20px;
-      background: #fff;
+      bottom: 130px;
+      background: $dark;
       width: 300px;
-      height: 400px;
+      height: 401px;
       &:before{
         position: absolute;
         bottom: -30px;
@@ -383,15 +472,23 @@ h3{
         border-style: solid;
         border-width: 15px;
         left: 120px;
-        border-color: #fff transparent transparent transparent;
+        border-color: #040404 transparent transparent transparent;
 
       }
       .fa-close{
         @extend .fa-close;
+        right: 10px;
+        top: 10px;
+      }
+      h3{
+        padding: 10px 20px;
+        margin: 0px;
+        background: $very_dark_fade_background;
       }
       .scroll{
         overflow-y:auto;
-        max-height: 310px;
+        max-height: 354px;
+        padding:20px;
         ul{
           li{
             a{
@@ -467,7 +564,7 @@ h3{
          position: relative;
          width: 420px; 
          height: 14px;
-         background:$lighter-gray;
+         background:$gray;
       }
 
       .progress {
@@ -519,7 +616,7 @@ h3{
       .wrap-range{
         cursor: pointer;
         height:14px;
-        background:$lighter-gray;
+        background:$gray;
         width: 100px;
         float: left;
         .range{
@@ -534,7 +631,7 @@ h3{
       position:absolute;
       top:25px;
       right: 10px;
-      color: $lighter-gray;
+      color: $gray;
       font-size: 20px;
       cursor: pointer;
       &:hover,&.active{
@@ -591,14 +688,43 @@ h3{
   left: 0px;
   height: 100%;
   width: 100%;
-  background:rgba(33,33,33,0.8);
+  background:$very_dark_fade_background;
+  
 
   .body{
     width: 600px;
     margin: $wide_pading auto;
-    background: $white;
+
+    background:url("../images/violate.jpg");
+    /* background: 
+      linear-gradient(
+        $fade_background, 
+        $fade_background
+      ),
+      url("../images/violate.jpg");
+     */
     padding: $wide_pading;
     position:relative;
+
+    input,div.tagsinput{
+      background:$fade_background;
+      border:$gray;
+      color: $white !important;
+    }
+    div.tagsinput{
+      span.tag{
+        background:$very_dark_fade_background;
+        border-radius:0px;
+        border:1px solid $gray;
+        color: $white ;
+        a{
+          color: $blue;
+        }
+      }
+    }
+    .btn{
+      background:$very_dark_fade_background;
+    }
     .fa-close{
       @extend .fa-close;
     }

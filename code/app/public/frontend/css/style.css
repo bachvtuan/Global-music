@@ -77,31 +77,23 @@ button.working, a.working, input.working {
   background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0.5, rgba(255, 255, 255, 0.2)), color-stop(0.5, transparent), to(transparent)); }
 
 body {
-  background: -webkit-linear-gradient(90deg, #d3959b 10%, #bfe6ba 90%);
-  /* Chrome 10+, Saf5.1+ */
-  background: -moz-linear-gradient(90deg, #d3959b 10%, #bfe6ba 90%);
-  /* FF3.6+ */
-  background: -ms-linear-gradient(90deg, #d3959b 10%, #bfe6ba 90%);
-  /* IE10 */
-  background: -o-linear-gradient(90deg, #d3959b 10%, #bfe6ba 90%);
-  /* Opera 11.10+ */
-  background: linear-gradient(90deg, #d3959b 10%, #bfe6ba 90%);
-  /* W3C */
-  font-family: "Myriad Pro", "Helvetica Neue", Arial, sans-serif; }
+  background: url("../images/violate.jpg");
+  font-family: "Myriad Pro", "Helvetica Neue", Arial, sans-serif;
+  color: #eeeeee; }
 
 a, p {
-  color: #7b7b7b;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.2em; }
 
 a {
+  color: white;
   cursor: pointer; }
-
-a:hover {
-  color: #008fd5; }
+  a:hover {
+    text-decoration: none;
+    color: #008fd5; }
 
 h1, h2, h3, h4 {
-  color: #434343; }
+  color: #cccccc; }
 
 ul, ol {
   list-style: none;
@@ -112,18 +104,76 @@ h3 {
   font-weight: normal;
   font-size: 18pt;
   margin: 5px 0px;
-  color: #7b7b7b; }
+  color: white; }
 
 .fa-close, #wrapper .wrap-player-zone .playlist .fa-close, .tuan-modal .body .fa-close {
   position: absolute;
   top: 20px;
   right: 20px;
   font-size: 15pt;
-  color: #434343;
+  color: white;
   cursor: pointer; }
 
 .form-control {
   border-radius: 0px !important; }
+
+.btn {
+  background-color: rgba(0, 0, 0, 0.35);
+  border: none;
+  color: white; }
+  .btn:hover {
+    background: rgba(0, 0, 0, 0.35);
+    border: none;
+    color: #008fd5; }
+
+.alert {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0px; }
+
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open > .dropdown-toggle.btn-default {
+  background-color: rgba(0, 0, 0, 0.35); }
+
+.alertify-notifier .ajs-message {
+  border-radius: 0px;
+  border: none; }
+  .alertify-notifier .ajs-message.ajs-success {
+    background-color: rgba(0, 0, 0, 0.5); }
+  .alertify-notifier .ajs-message.ajs-error {
+    background: rgba(114, 31, 59, 0.7);
+    /* color: #721F3B; */ }
+
+.alertify .ajs-dialog {
+  background: url("../images/violate.jpg"); }
+  .alertify .ajs-dialog .ajs-header {
+    color: white; }
+  .alertify .ajs-dialog .ajs-header, .alertify .ajs-dialog .ajs-body, .alertify .ajs-dialog .ajs-footer {
+    color: white;
+    background-color: transparent; }
+  .alertify .ajs-dialog .ajs-body .ajs-content {
+    padding-left: 0px; }
+  .alertify .ajs-dialog .ajs-footer .ajs-buttons .ajs-button {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white; }
+.alertify .ajs-commands button.ajs-close {
+  font: normal normal normal 14px/1 FontAwesome;
+  background-image: none;
+  font-size: 15pt; }
+  .alertify .ajs-commands button.ajs-close:before {
+    content: "\f00d";
+    position: absolute;
+    top: 8px;
+    left: 8px; }
+
+.dropdown-menu {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0px; }
+  .dropdown-menu .divider {
+    background: rgba(0, 0, 0, 0.8); }
+  .dropdown-menu li a {
+    color: white; }
+    .dropdown-menu li a:hover, .dropdown-menu li a:focus {
+      background: rgba(0, 0, 0, 0.3);
+      color: white; }
 
 @keyframes flip {
   0% {
@@ -238,13 +288,13 @@ h3 {
 #wrapper {
   width: 950px;
   height: 620px;
-  background: #fbf9f8;
+  background: rgba(0, 0, 0, 0.3);
   margin: 30px auto 0px auto;
   padding: 35px;
   position: relative;
   /* end .player-zone */ }
   #wrapper #header {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     position: relative; }
     #wrapper #header #logo {
       position: absolute;
@@ -253,8 +303,10 @@ h3 {
       #wrapper #header #logo img {
         width: 60px; }
     #wrapper #header input[type="search"] {
-      background: #fbf9f8;
-      border-radius: 0px; }
+      background: transparent;
+      border-radius: 0px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: white; }
   #wrapper .navigation ul {
     margin-bottom: 30px; }
     #wrapper .navigation ul li.active {
@@ -280,7 +332,8 @@ h3 {
     overflow: auto; }
     #wrapper .content-list .album {
       clear: both;
-      margin: 0px 0px 30px 0px;
+      margin: 0px 0px 20px 0px;
+      overflow: hidden;
       position: relative; }
       #wrapper .content-list .album img {
         float: left;
@@ -288,7 +341,6 @@ h3 {
         width: 80px;
         height: 80px; }
       #wrapper .content-list .album a.title {
-        color: #434343;
         margin: 0px 0px 0px 0px;
         font-size: 15px;
         line-height: 16px;
@@ -302,7 +354,7 @@ h3 {
           color: #008fd5; }
       #wrapper .content-list .album p.tag {
         /* background: url("../images/tag_blue.png") no-repeat left center; */
-        color: #7b7b7b;
+        color: #cccccc;
         margin: 0px;
         display: inline-block;
         width: 300px;
@@ -312,24 +364,31 @@ h3 {
       #wrapper .content-list .album .number-songs {
         /* margin-bottom:0px; */ }
       #wrapper .content-list .album p.tag span, #wrapper .content-list .album .number-songs span {
-        color: #434343; }
+        color: #cccccc; }
+  #wrapper .wrap-song-list .group-song {
+    margin-bottom: 20px; }
   #wrapper .wrap-song-list h4 {
-    margin: 0px 0px 10px 0px;
-    color: #7b7b7b;
-    font-weight: normal; }
+    margin: 10px 0px 10px 0px;
+    font-weight: normal;
+    display: inline-block; }
   #wrapper .wrap-song-list .song-list {
     height: 370px;
-    padding-right: 10px;
-    overflow: auto; }
-    #wrapper .wrap-song-list .song-list ul li {
-      padding: 6px 0px; }
-      #wrapper .wrap-song-list .song-list ul li span {
+    padding-right: 0px;
+    overflow: auto;
+    width: 100%; }
+    #wrapper .wrap-song-list .song-list > ul > li {
+      padding: 6px 0px;
+      position: relative;
+      margin-bottom: 5px; }
+      #wrapper .wrap-song-list .song-list > ul > li span {
         min-width: 20px;
         display: inline-block; }
-      #wrapper .wrap-song-list .song-list ul li.playing a {
+      #wrapper .wrap-song-list .song-list > ul > li.playing a {
         color: #008fd5; }
-      #wrapper .wrap-song-list .song-list ul li a {
-        color: #7b7b7b; }
+      #wrapper .wrap-song-list .song-list > ul > li .btn-group {
+        position: absolute;
+        right: 0px;
+        top: 0px; }
   #wrapper .wrap-player-zone {
     position: absolute;
     bottom: 0px;
@@ -338,11 +397,10 @@ h3 {
     #wrapper .wrap-player-zone .playlist {
       position: absolute;
       right: 0px;
-      bottom: 120px;
-      padding: 20px;
-      background: #fff;
+      bottom: 130px;
+      background: rgba(0, 0, 0, 0.8);
       width: 300px;
-      height: 400px; }
+      height: 401px; }
       #wrapper .wrap-player-zone .playlist:before {
         position: absolute;
         bottom: -30px;
@@ -352,10 +410,18 @@ h3 {
         border-style: solid;
         border-width: 15px;
         left: 120px;
-        border-color: #fff transparent transparent transparent; }
+        border-color: #040404 transparent transparent transparent; }
+      #wrapper .wrap-player-zone .playlist .fa-close {
+        right: 10px;
+        top: 10px; }
+      #wrapper .wrap-player-zone .playlist h3 {
+        padding: 10px 20px;
+        margin: 0px;
+        background: rgba(0, 0, 0, 0.5); }
       #wrapper .wrap-player-zone .playlist .scroll {
         overflow-y: auto;
-        max-height: 310px; }
+        max-height: 354px;
+        padding: 20px; }
         #wrapper .wrap-player-zone .playlist .scroll ul li a {
           line-height: 2em; }
           #wrapper .wrap-player-zone .playlist .scroll ul li a.active {
@@ -372,7 +438,7 @@ h3 {
       float: left;
       margin: 0px 20px 0px 0px; }
     #wrapper .player-zone p.title {
-      color: #434343;
+      color: #cccccc;
       font-size: 13pt; }
     #wrapper .player-zone .audiojs {
       display: table;
@@ -404,7 +470,7 @@ h3 {
         position: relative;
         width: 420px;
         height: 14px;
-        background: #7b7b7b; }
+        background: #cccccc; }
       #wrapper .player-zone .audiojs .progress {
         position: absolute;
         top: 0px;
@@ -422,7 +488,7 @@ h3 {
         left: 0px;
         height: 14px;
         width: 0px;
-        background: #434343;
+        background: #cccccc;
         cursor: pointer; }
       #wrapper .player-zone .audiojs strong {
         font-weight: normal; }
@@ -435,12 +501,12 @@ h3 {
       right: 200px;
       top: 0px; }
       #wrapper .player-zone .volume-tune p {
-        color: #434343;
+        color: #cccccc;
         font-size: 13pt; }
       #wrapper .player-zone .volume-tune .wrap-range {
         cursor: pointer;
         height: 14px;
-        background: #7b7b7b;
+        background: #cccccc;
         width: 100px;
         float: left; }
         #wrapper .player-zone .volume-tune .wrap-range .range {
@@ -450,7 +516,7 @@ h3 {
       position: absolute;
       top: 25px;
       right: 10px;
-      color: #7b7b7b;
+      color: #cccccc;
       font-size: 20px;
       cursor: pointer; }
       #wrapper .player-zone i#next-song:hover, #wrapper .player-zone i#next-song.active, #wrapper .player-zone i#prev-song:hover, #wrapper .player-zone i#prev-song.active, #wrapper .player-zone i#current-list:hover, #wrapper .player-zone i#current-list.active {
@@ -492,10 +558,30 @@ h3 {
   left: 0px;
   height: 100%;
   width: 100%;
-  background: rgba(33, 33, 33, 0.8); }
+  background: rgba(0, 0, 0, 0.5); }
   .tuan-modal .body {
     width: 600px;
     margin: 35px auto;
-    background: white;
+    background: url("../images/violate.jpg");
+    /* background: 
+      linear-gradient(
+        $fade_background, 
+        $fade_background
+      ),
+      url("../images/violate.jpg");
+     */
     padding: 35px;
     position: relative; }
+    .tuan-modal .body input, .tuan-modal .body div.tagsinput {
+      background: rgba(0, 0, 0, 0.3);
+      border: #cccccc;
+      color: white !important; }
+    .tuan-modal .body div.tagsinput span.tag {
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 0px;
+      border: 1px solid #cccccc;
+      color: white; }
+      .tuan-modal .body div.tagsinput span.tag a {
+        color: #008fd5; }
+    .tuan-modal .body .btn {
+      background: rgba(0, 0, 0, 0.5); }
