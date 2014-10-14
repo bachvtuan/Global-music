@@ -48,7 +48,8 @@ albumApp.controller('AlbumCtrl',
   }
 
   $scope.showAddModel = function(){
-    $scope.show_add = true;
+    $scope.resetValue();
+    $scope.show_form = true;
     $scope.initTag();
   }
 
@@ -63,30 +64,30 @@ albumApp.controller('AlbumCtrl',
   }
 
   $scope.removeAlbum = function(){
-    log("come to remove album");
     var title = "Are you sure to remove the album: " + $scope.current_album.title;
-    alertify.confirm( title ).setting('onok', function(){
-     $scope.$apply(function(){
-      log("good");
+    $dialogs.confirm( title, function(){
       Albums.remove({id:$scope.current_album._id},function(res){
         $scope.processRetrieveData(res,function(data){
-          log("done");
           $scope.removeItemInList( $scope.albums, $scope.current_album._id );
+          $scope.current_album_id = null;
+          $scope.current_album = null;
         });
       })
-     })
-    }); 
+    });
   }
 
   $scope.resetValue = function(){
 
-    $scope.show_add     = false;
-    $scope.album_title  = "";
-    $scope.album_cover  = "";
-    $scope.album_tags   = "";
+    $scope.show_form      = false;
+    $scope.album_title    = "";
+    $scope.album_cover    = "";
+    $scope.album_tags     = "";
+    $scope.is_edit_album  = null;
 
   }
   $scope.submitAlbum = function(){
+
+
     log("submit album");
     var post_data = {
       title:$scope.album_title,
@@ -95,6 +96,15 @@ albumApp.controller('AlbumCtrl',
     };
     log("post_data", post_data);
 
+    if ( $scope.is_edit_album ){
+      $scope.doEditAlbum(post_data);
+    }
+    else{
+      $scope.doAddAlbum(post_data);
+    }
+  }
+
+  $scope.doAddAlbum = function(post_data){
     $scope.pending_add_album = true;
     Albums.post({}, post_data, function(res){
       $scope.pending_add_album = false;
@@ -104,5 +114,18 @@ albumApp.controller('AlbumCtrl',
         $scope.resetValue();
       });
     });
+  }
+
+  $scope.editAlbum = function(){
+    $scope.show_form = true;
+    $scope.is_edit_album = true;
+    $scope.album_title = $scope.current_album.title;
+    $scope.album_tags =  _.map( $scope.current_album.tags, function(tag){ return tag.name });
+    log( $scope.album_tags );
+    $scope.initTag();
+  }
+  $scope.doEditAlbum = function(post_data){
+    log("post_data in editAlbum", post_data );
+    $scope.is_edit_album = null;
   }
 });

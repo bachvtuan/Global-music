@@ -20,9 +20,9 @@
               <i class="fa fa-gear"></i>
             </button>
             <ul class="dropdown-menu pull-right" role="menu">
-              <li><a href="#">Edit</a></li>
-              <li><a href="#">Delete</a></li>
-              <li><a href="#">Play</a></li>
+              <li><a ng-click="editSong(song)"><i class="fa fa-pencil"></i> Edit</a></li>
+              <li><a ng-click="deleteSong(song)"><i class="fa fa-remove"></i> Delete</a></li>
+              <li><a ng-click="playSong($index)"><i class="fa fa-play"></i> Play</a></li>
             </ul>
           </div>
         </li>

@@ -64,8 +64,14 @@ songApp.controller('SongCtrl',
       });
     });
   }
+  //End submit song
 
+  $scope.editSong = function(song){
+    log("editSong song", song);
+  }
 
+  $scope.deleteSong = function(song){
+    log("delete song", song);
+  }
 
-  
 });

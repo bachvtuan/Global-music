@@ -10,7 +10,7 @@ module.exports = function(BaseController){
         template_version: global.config.template_version
       };
 
-      showLog("is asset_version", global.asset_version);
+      /*showLog("is asset_version", global.asset_version);*/
 
       if ( !global.is_debug ){
         public_data.csrfToken = req.csrfToken() ;
@@ -18,7 +18,6 @@ module.exports = function(BaseController){
       else{
         public_data.csrfToken = "sometest";
       }
-      
       
       this.render( res,'index', public_data )
     }
