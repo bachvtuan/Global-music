@@ -24,13 +24,13 @@ button.working, a.working, input.working {
 *::-webkit-scrollbar-track
 {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-  background-color: #F5F5F5;
+  background-color: $fade_background;
 }
 
 *::-webkit-scrollbar
 {
   width: 5px;
-  background-color: #F5F5F5;
+  background-color: $fade_background;
 }
 
 *::-webkit-scrollbar-thumb
@@ -46,6 +46,7 @@ body{
   background:url("../images/violate.jpg");
   font-family: $body_font;
   color: $ligth_white;
+  background-size:cover;
   
 }
 a,p{
@@ -96,10 +97,23 @@ h3{
   border:none;
   color: $white;
   &:hover{
-    background:$dark_fade_background;
+    background:$very_dark_fade_background;
     border:none;
-    color: $blue;
+    color: $white;
   }
+  &.transparent{
+    padding:0px;
+    background:none !important;
+    &:hover{
+      background:none;
+      border:none;
+      color: $white;
+    }
+  }
+}
+input{
+  background-color:$fade_background !important;
+  color: $white !important;
 }
 .alert{
   background:$fade_background;
@@ -483,7 +497,6 @@ h3{
       h3{
         padding: 10px 20px;
         margin: 0px;
-        background: $very_dark_fade_background;
       }
       .scroll{
         overflow-y:auto;
@@ -564,7 +577,7 @@ h3{
          position: relative;
          width: 420px; 
          height: 14px;
-         background:$gray;
+         background:$fade_background;
       }
 
       .progress {
@@ -585,7 +598,7 @@ h3{
         left: 0px;
         height: 14px;
         width: 0px;
-        background: $gray; 
+        background:$dark_fade_background;
         cursor: pointer;
       }
 
@@ -616,7 +629,7 @@ h3{
       .wrap-range{
         cursor: pointer;
         height:14px;
-        background:$gray;
+        background:$fade_background;
         width: 100px;
         float: left;
         .range{
@@ -652,6 +665,8 @@ h3{
 }
 .alertify-notifier.ajs-right .ajs-message{
   word-wrap: break-word;
+  background: $fade_background;
+  color: $white;
   a{
     color: $blue;
     text-shadow: none;
@@ -689,9 +704,11 @@ h3{
   height: 100%;
   width: 100%;
   background:$very_dark_fade_background;
-  
+  overflow-y: auto;
+
 
   .body{
+
     width: 600px;
     margin: $wide_pading auto;
 

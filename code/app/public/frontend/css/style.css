@@ -66,11 +66,11 @@ button.working, a.working, input.working {
 
 *::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #F5F5F5; }
+  background-color: rgba(0, 0, 0, 0.3); }
 
 *::-webkit-scrollbar {
   width: 5px;
-  background-color: #F5F5F5; }
+  background-color: rgba(0, 0, 0, 0.3); }
 
 *::-webkit-scrollbar-thumb {
   background-color: #0ae;
@@ -79,7 +79,8 @@ button.working, a.working, input.working {
 body {
   background: url("../images/violate.jpg");
   font-family: "Myriad Pro", "Helvetica Neue", Arial, sans-serif;
-  color: #eeeeee; }
+  color: #eeeeee;
+  background-size: cover; }
 
 a, p {
   font-size: 14px;
@@ -122,9 +123,20 @@ h3 {
   border: none;
   color: white; }
   .btn:hover {
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.5);
     border: none;
-    color: #008fd5; }
+    color: white; }
+  .btn.transparent {
+    padding: 0px;
+    background: none !important; }
+    .btn.transparent:hover {
+      background: none;
+      border: none;
+      color: white; }
+
+input {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  color: white !important; }
 
 .alert {
   background: rgba(0, 0, 0, 0.3);
@@ -416,8 +428,7 @@ h3 {
         top: 10px; }
       #wrapper .wrap-player-zone .playlist h3 {
         padding: 10px 20px;
-        margin: 0px;
-        background: rgba(0, 0, 0, 0.5); }
+        margin: 0px; }
       #wrapper .wrap-player-zone .playlist .scroll {
         overflow-y: auto;
         max-height: 354px;
@@ -470,7 +481,7 @@ h3 {
         position: relative;
         width: 420px;
         height: 14px;
-        background: #cccccc; }
+        background: rgba(0, 0, 0, 0.3); }
       #wrapper .player-zone .audiojs .progress {
         position: absolute;
         top: 0px;
@@ -488,7 +499,7 @@ h3 {
         left: 0px;
         height: 14px;
         width: 0px;
-        background: #cccccc;
+        background: rgba(0, 0, 0, 0.35);
         cursor: pointer; }
       #wrapper .player-zone .audiojs strong {
         font-weight: normal; }
@@ -506,7 +517,7 @@ h3 {
       #wrapper .player-zone .volume-tune .wrap-range {
         cursor: pointer;
         height: 14px;
-        background: #cccccc;
+        background: rgba(0, 0, 0, 0.3);
         width: 100px;
         float: left; }
         #wrapper .player-zone .volume-tune .wrap-range .range {
@@ -527,7 +538,9 @@ h3 {
       right: 150px; }
 
 .alertify-notifier.ajs-right .ajs-message {
-  word-wrap: break-word; }
+  word-wrap: break-word;
+  background: rgba(0, 0, 0, 0.3);
+  color: white; }
   .alertify-notifier.ajs-right .ajs-message a {
     color: #008fd5;
     text-shadow: none; }
@@ -558,7 +571,8 @@ h3 {
   left: 0px;
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.5); }
+  background: rgba(0, 0, 0, 0.5);
+  overflow-y: auto; }
   .tuan-modal .body {
     width: 600px;
     margin: 35px auto;
