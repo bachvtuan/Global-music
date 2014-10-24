@@ -42,6 +42,40 @@ app.run(function($rootScope, $window,$http, $cookies, $dialogs, $location, $temp
     }
   }
 
+  //To prevent broken binding, so should be loop all key in data and assign to scope object
+  $rootScope.updateScopeObject = function(scope_object, data, remove_old_properties){
+
+    var new_key = [];
+    remove_old_properties = angular.isDefined(remove_old_properties) ? remove_old_properties: true;
+    for (var key in data){
+      new_key.push( key );
+      scope_object[key] = data[key];
+    }
+    if ( !remove_old_properties ){
+      return;
+    }
+    for ( var key in scope_object ){
+      if ( new_key.indexOf(key) == -1 ){
+        //Should delete this key
+        delete scope_object[ key ];
+      }
+    }
+  }
+
+  //Update new item in the list by id given inside the new_item
+  $rootScope.updateItemInList = function(list,new_item){
+    var updated = false;
+    for ( var i=0 ; i<  list.length; i++ ){
+      if (list[i]._id == new_item._id ){
+        $rootScope.updateScopeObject(list[i],new_item);
+        //list[i] = new_item;
+        updated = true;
+        break;
+      }
+    }
+    return updated;
+  }
+
 
   $rootScope.templateVersion = function( template_url ){
     return $window.templateVersion( template_url );

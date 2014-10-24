@@ -50,7 +50,7 @@ albumApp.controller('AlbumCtrl',
   $scope.showAddModel = function(){
     $scope.resetValue();
     $scope.show_form = true;
-    $scope.initTag();
+    //$scope.initTag();
   }
 
   $scope.initTag = function(){
@@ -122,10 +122,26 @@ albumApp.controller('AlbumCtrl',
     $scope.album_title = $scope.current_album.title;
     $scope.album_tags =  _.map( $scope.current_album.tags, function(tag){ return tag.name });
     log( $scope.album_tags );
-    $scope.initTag();
+    //$scope.initTag();
   }
   $scope.doEditAlbum = function(post_data){
     log("post_data in editAlbum", post_data );
-    $scope.is_edit_album = null;
+    var copy_album = angular.copy( $scope.current_album );
+    //$scope.is_edit_album = null;
+    $scope.pending_edit_album = true;
+    copy_album.title = post_data.title;
+    copy_album.cover = post_data.cover;
+    copy_album.tags = post_data.tags;
+
+    Albums.update({}, copy_album, function(res){
+      $scope.pending_edit_album = false;
+      $scope.processRetrieveData(res,function(data){
+        $scope.updateItemInList( $scope.albums, data );
+        $scope.current_album = data;
+        $dialogs.success("The album is updated");
+        log( $scope.albums );
+        $scope.resetValue();
+      });
+    });
   }
 });

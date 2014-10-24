@@ -45,6 +45,10 @@ module.exports = function( app ){
     AlbumController.add( req, res, next );
   });
 
+  app.put('/albums', checkUser, function (req, res,next) {
+    AlbumController.update( req, res, next );
+  });
+
   app.delete('/albums', checkUser, function (req, res,next) {
     AlbumController.delete( req, res, next );
   });

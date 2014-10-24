@@ -15,7 +15,7 @@
         <p>You don't have any album, You can add more by clicking the button at the top right corner</p>
       </div>
       <div ng-if="albums.length > 0">
-        <div class="album" ng-repeat="album in albums">
+        <div class="album" ng-repeat="album in albums  track by album._id">
           <img ng-if="!album.feature_id" src="frontend/images/album.png">
           <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)" ></load-image>
           <a class="title" title="{{album.title}}"  data-placement="bottom"
@@ -26,7 +26,7 @@
 
           <p class="tag" ng-if="album.tags.length > 0 ">Tags: 
             <span>
-              <a ng-repeat="tag in album.tags" ng-href="#/tag/{{tag.name}}">
+              <a ng-repeat="tag in album.tags track by tag._id" ng-href="#/tag/{{tag.name}}">
                 {{tag.name}}
               </a>
             </span></p>
