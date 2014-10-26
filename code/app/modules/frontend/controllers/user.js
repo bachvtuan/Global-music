@@ -145,6 +145,11 @@ module.exports = function(BaseController){
         res.json( jsonErr("You are not login") );  
       }
       
+    },
+    logout: function( req, res, next ){
+      delete req.session.user;
+      res.json("ok");
+      
     }
   });
 }

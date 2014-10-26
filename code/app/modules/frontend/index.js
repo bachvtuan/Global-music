@@ -19,6 +19,10 @@ module.exports = function( app ){
     UserController.login( req, res, next );
   });
 
+  app.post('/users/logout', attachDB, function (req, res,next) {
+    UserController.logout( req, res, next );
+  });
+
   app.post('/users/register', attachDB, function (req, res,next) {
     UserController.register( req, res, next );
   });
@@ -27,6 +31,7 @@ module.exports = function( app ){
     UserController.info( req, res, next );
   });
 
+  /*end user*/
 
   app.get('/tags', checkUser, function (req, res,next) {
     TagController.index( req, res, next );
