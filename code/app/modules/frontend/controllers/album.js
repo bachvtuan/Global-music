@@ -4,6 +4,7 @@ var mongoose  = require('mongoose');
 var Album     = mongoose.model( 'Album' );
 var Media     = mongoose.model( 'Media' );
 var Tag       = mongoose.model( 'Tag' );
+var Song      = mongoose.model( 'Song' );
 
 function validateAlbum(body){
 
@@ -153,11 +154,6 @@ function generalDoTags(tags_string, req, callback){
         } else {
           console.log('All tags have been processed successfully');
           callback( arr_tags );
-
-          /*body.tags = arr_tags;
-          showLog(body);
-
-          generalAddAlbum(body,res,req);*/
         }
     });
   });
@@ -190,6 +186,15 @@ function generalUpdateAlbum(current_ablum, update_album,req, res){
   }
 }
 
+function generalRemoveAlbum(album, res){
+  Song.remove({ album_id: album._id }, function(err){
+    if ( err ){
+      return showLog("err while remove song from delete album");
+    }
+    album.remove();
+    return res.json(jsonSucc("ok"));
+  });
+}
 
 module.exports = function(BaseController){
  return BaseController.extend({ 
@@ -233,11 +238,7 @@ module.exports = function(BaseController){
         }
 
         body.user_id = req.session.user._id;
-        /*showLog("before2", user_id);
-        showLog("before", req.session.user._id, body);
-*/
-        //return res.end("weri");
-
+        
         if ( body.tags && body.tags.trim() != "" ){
           generalDoTags(body.tags, req, function(arr_tags){
             body.tags = arr_tags;
@@ -274,19 +275,20 @@ module.exports = function(BaseController){
         if ( album.feature_id ){
           showLog("Remove feature photo");
           Media.findByIdAndRemove(album.feature_id, function(err, media){
-            album.remove();
-            return res.json(jsonSucc("ok"));
+            return generalRemoveAlbum( album, res );
+            /*album.remove();
+            return res.json(jsonSucc("ok"));*/
           }); // executes
         }
         else{
-          album.remove();
-          return res.json(jsonSucc("ok"));
+          /*album.remove();
+          return res.json(jsonSucc("ok"));*/
+          return generalRemoveAlbum( album, res );
         }
         
       });
       
     },
-
     update: function(req, res, next) {
       var update_album = req.body;
       //res.json( jsonSucc( req.body ) );
@@ -300,11 +302,11 @@ module.exports = function(BaseController){
         showLog("album", album);
 
         if ( !album ){
-          return res.json( jsonErr("Not found your album for remove") );
+          return res.json( jsonErr("Not found your album for update") );
         }
 
         if ( album.user_id != user_id ){
-          return res.json( jsonErr("You can't remove this album") );
+          return res.json( jsonErr("You can't update this album") );
         }
         album.title = update_album.title;
 

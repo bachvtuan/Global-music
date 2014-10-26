@@ -19,7 +19,7 @@
           <img ng-if="!album.feature_id" src="frontend/images/album.png">
           <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)" ></load-image>
           <a class="title" title="{{album.title}}"  data-placement="bottom"
-            ng-click="activeAlbum(album)" >
+            ng-click="activeAlbum(album)" ng-class="{active:album == current_album}" >
             {{album.title}}
           </a>
           <p class="number-songs">Number songs: <span>{{album.song_numbers}}</span></p>

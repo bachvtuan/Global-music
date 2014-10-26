@@ -401,7 +401,7 @@ input{
         white-space: nowrap;
         overflow: hidden;
         display: inline-block;
-        &:hover{
+        &:hover,&.active{
           color: $blue;
         }
       }

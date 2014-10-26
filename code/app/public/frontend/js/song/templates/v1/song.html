@@ -31,9 +31,9 @@
   </div>
 </div>
 
-<div class="tuan-modal animate-if" ng-if="show_add_song">
+<div class="tuan-modal animate-if" ng-if="show_song_form">
   <div class="body">
-      <i class="fa fa-close" ng-click="$parent.$parent.show_add_song = false;" ></i>
+      <i class="fa fa-close" ng-click="$parent.$parent.show_song_form = false;" ></i>
       <h3>Add new song</h3>
       <hr/>
       <div class="content">
@@ -47,8 +47,8 @@
             <input type="url" class="form-control"  ng-model="$parent.$parent.song_link" placeHolder="The url for song" />
           </p>
           
-          <button type="submit" class="btn btn-default"  ng-disabled="!song_title || !song_link || pending_add_song"  class="btn btn-default"  ng-class="{'working': pending_add_song}">
-            <i class="fa fa-plus"></i> Add
+          <button type="submit" class="btn btn-default"  ng-disabled="!song_title || !song_link || pending_add_song"  class="btn btn-default"  ng-class="{'working': pending_add_song || pending_edit_song}">
+            <i class="fa fa-plus"></i> {{is_edit_song ? "Update":"Add"}}
           </button>
         </form>
       </div>

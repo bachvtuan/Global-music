@@ -362,7 +362,7 @@ input {
         white-space: nowrap;
         overflow: hidden;
         display: inline-block; }
-        #wrapper .content-list .album a.title:hover {
+        #wrapper .content-list .album a.title:hover, #wrapper .content-list .album a.title.active {
           color: #008fd5; }
       #wrapper .content-list .album p.tag {
         /* background: url("../images/tag_blue.png") no-repeat left center; */

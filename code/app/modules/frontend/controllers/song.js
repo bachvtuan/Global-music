@@ -53,11 +53,81 @@ module.exports = function(BaseController){
         body.user_id = user_id;
 
         Song( body ).save( function( err, song, count ){
-          return res.json( jsonSucc(song) );
+          if (err){
+            return showError("Error while add new song");
+          }
+          album.song_numbers++;
+          album.save();
+          return res.json( jsonSucc({song:song,album:album}) );
         });          
       });
       
-    }
+    },
+    update:function( req, res, next ){
+      var update_song = req.body;
+      //res.json( jsonSucc( req.body ) );
+      var user_id = req.session.user._id;
+      var song_id = update_song._id;
+      showLog(song_id);
+
+      var validator_error = validateSong( update_song );
+
+      if ( typeof(validator_error) == "string" ){
+        return res.json( jsonErr(validator_error) );
+      }
+
+      Song.findById(song_id, function(err, song){
+
+        if (err){
+          return showError("error while update song_id "+ song_id);
+        }
+
+        if ( !song ){
+          return res.json( jsonErr("Not found your song for update") );
+        }
+
+        if ( song.user_id != user_id ){
+          return res.json( jsonErr("You can't update this song") );
+        }
+
+        song.title = update_song.title;
+        song.link = update_song.link;
+        song.save();
+        return res.json( jsonSucc(song) );
+      });
+
+    },
+    delete: function(req, res, next) {
+      
+      //res.json( jsonSucc( req.body ) );
+      var user_id = req.session.user._id;
+      var song_id = req.query.id;
+      showLog(song_id);
+
+      Song.findById(song_id, function(err, song){
+
+        showLog("song", song);
+        if ( !song ){
+          return res.json( jsonErr("Not found your song for remove") );
+        }
+
+        if ( song.user_id != user_id ){
+          return res.json( jsonErr("You can't remove this song") );
+        }
+
+        Album.findById( song.album_id, function(err, album){
+          if (!album){
+            return res.json( jsonErr("Not found album for this song") );
+          }
+          album.song_numbers--;
+          album.save();
+          song.remove();
+          return res.json( jsonSucc(album) );
+        });
+        
+      });
+      
+    },
   });
 }
  

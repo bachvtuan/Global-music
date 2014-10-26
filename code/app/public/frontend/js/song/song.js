@@ -35,43 +35,82 @@ songApp.controller('SongCtrl',
 
 
   $scope.addSong = function(){
-    $scope.show_add_song = true;
+    $scope.show_song_form = true;
   }
 
   $scope.resetValue = function(){
     $scope.song_title = "";
     $scope.song_link = "";
+    $scope.is_edit_song = false;
   }
 
   $scope.submitSong = function(){
-    log("song title", $scope.song_title);
-    log("song title", $scope.song_link);
-    log("submit album");
+
     var post_data = {
       title:$scope.song_title,
       link:$scope.song_link,
       album_id: $scope.current_album_id
     };
+
     log("post_data", post_data);
+
+    if ( $scope.is_edit_song ){
+      return $scope.doUpdateSong(post_data);
+    }
 
     $scope.pending_add_song = true;
     Songs.post({}, post_data, function(res){
       $scope.pending_add_song = false;
       $scope.processRetrieveData(res,function(data){
-        $scope.songs.push(data);
+        $scope.songs.push(data.song);
         $dialogs.success("You added new song");
+        $scope.updateScopeObject( $scope.current_album, data.album );
         $scope.resetValue();
       });
     });
   }
   //End submit song
 
+  $scope.doUpdateSong = function(update_song_data){
+    log("update_song_data", update_song_data);
+    //$scope.show_song_form = false;
+
+    var copy_song = angular.copy( $scope.edit_song );
+    //$scope.is_edit_album = null;
+    $scope.pending_edit_song = true;
+    
+    copy_song = _.extend( copy_song, update_song_data );
+    log("copy_song", copy_song);
+    Songs.update({}, copy_song, function(res){
+      $scope.pending_edit_song = false;
+      $scope.processRetrieveData(res,function(data){
+        $scope.updateItemInList( $scope.songs, data );
+        $scope.show_song_form = false;
+        $dialogs.success("The song is updated");
+        $scope.resetValue();
+      });
+    });
+  }
+
   $scope.editSong = function(song){
     log("editSong song", song);
+    $scope.is_edit_song = true;
+    $scope.edit_song = angular.copy(song);
+    $scope.song_title = song.title;
+    $scope.song_link = song.link;
+    $scope.show_song_form = true;
   }
 
   $scope.deleteSong = function(song){
-    log("delete song", song);
+    var title = "Are you sure to remove the song: " + song.title;
+    $dialogs.confirm( title, function(){
+      Songs.remove({id:song._id},function(res){
+        $scope.processRetrieveData(res,function(data){
+          $scope.updateScopeObject( $scope.current_album, data );
+          $scope.removeItemInList( $scope.songs, song._id );
+        });
+      })
+    });
   }
 
 });

@@ -61,8 +61,16 @@ module.exports = function( app ){
   app.post('/songs', checkUser, function (req, res,next) {
     SongController.add( req, res, next );
   });
-  
 
+  app.put('/songs', checkUser, function (req, res,next) {
+    SongController.update( req, res, next );
+  });
+
+  app.delete('/songs', checkUser, function (req, res,next) {
+    SongController.delete( req, res, next );
+  });
+
+  /* end song */
 
   app.get('/hello.txt', function(req, res){
     res.send('Hello World');

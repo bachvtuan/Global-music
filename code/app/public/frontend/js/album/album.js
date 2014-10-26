@@ -129,9 +129,9 @@ albumApp.controller('AlbumCtrl',
     var copy_album = angular.copy( $scope.current_album );
     //$scope.is_edit_album = null;
     $scope.pending_edit_album = true;
-    copy_album.title = post_data.title;
-    copy_album.cover = post_data.cover;
-    copy_album.tags = post_data.tags;
+    
+    copy_album = _.extend( copy_album, post_data );
+    log("copy_album", copy_album);
 
     Albums.update({}, copy_album, function(res){
       $scope.pending_edit_album = false;

@@ -10,25 +10,9 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
   $scope.show_list = false;
   $scope.current_audio = null;
 
-  $scope.songs = [ 
-    
+  $scope.songs = [     
     {title:'Moi nguoi mot qua khu',url:'http://st01.freesocialmusic.com/mp3/2011/03/24/1408055534/13009529743_499.mp3'},
     {title:'Phan Duyen Hai No Phan Duyen Hai No Phan Duyen Hai No',url:'http://data12.chiasenhac.com/downloads/1318/5/1317988-8c2e338c/320/Phai%20Duyen%20Hay%20No%20-%20Hamlet%20Truong%20[MP3%20320kbps].mp3'},
-    {title:'Rieng mot goc roi',url:'http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY3JTJGZSUyRjdlM2I4MjRiY2Q4ZTU0MjU4YzMxNmM4OGYwMjQ1NGQ2Lm1wMyU3QzI'},
-    {title:'Le da',url:'http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY1JTJGMyUyRjUzM2NiODdlNDQwYzIwNGU2MzcwOTc0YThmNzI5MzBmLm1wMyU3QzI'},
-    {title:'Saigon Den do',url:'http://st02.freesocialmusic.com/mp3/2014/09/12/1178050012/141050406314_1679.mp3'},
-    {title:'Moi nguoi mot qua khu',url:'http://st01.freesocialmusic.com/mp3/2011/03/24/1408055534/13009529743_499.mp3'},
-    {title:'Phan Duyen Hai No',url:'http://data12.chiasenhac.com/downloads/1318/5/1317988-8c2e338c/320/Phai%20Duyen%20Hay%20No%20-%20Hamlet%20Truong%20[MP3%20320kbps].mp3'},
-    {title:'Rieng mot goc roi',url:'http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY3JTJGZSUyRjdlM2I4MjRiY2Q4ZTU0MjU4YzMxNmM4OGYwMjQ1NGQ2Lm1wMyU3QzI'},
-    {title:'Le da',url:'http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY1JTJGMyUyRjUzM2NiODdlNDQwYzIwNGU2MzcwOTc0YThmNzI5MzBmLm1wMyU3QzI'},
-    {title:'Saigon Den do',url:'http://st02.freesocialmusic.com/mp3/2014/09/12/1178050012/141050406314_1679.mp3'},
-    {title:'Moi nguoi mot qua khu',url:'http://st01.freesocialmusic.com/mp3/2011/03/24/1408055534/13009529743_499.mp3'},
-    {title:'Phan Duyen Hai No',url:'http://data12.chiasenhac.com/downloads/1318/5/1317988-8c2e338c/320/Phai%20Duyen%20Hay%20No%20-%20Hamlet%20Truong%20[MP3%20320kbps].mp3'},
-    {title:'Rieng mot goc roi',url:'http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY3JTJGZSUyRjdlM2I4MjRiY2Q4ZTU0MjU4YzMxNmM4OGYwMjQ1NGQ2Lm1wMyU3QzI'},
-    {title:'Le da',url:'http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY1JTJGMyUyRjUzM2NiODdlNDQwYzIwNGU2MzcwOTc0YThmNzI5MzBmLm1wMyU3QzI'},
-    {title:'Saigon Den do',url:'http://st02.freesocialmusic.com/mp3/2014/09/12/1178050012/141050406314_1679.mp3'},
-    {title:'Moi nguoi mot qua khu',url:'http://st01.freesocialmusic.com/mp3/2011/03/24/1408055534/13009529743_499.mp3'},
-    {title:'Phan Duyen Hai No',url:'http://data12.chiasenhac.com/downloads/1318/5/1317988-8c2e338c/320/Phai%20Duyen%20Hay%20No%20-%20Hamlet%20Truong%20[MP3%20320kbps].mp3'},
     {title:'Rieng mot goc roi',url:'http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY3JTJGZSUyRjdlM2I4MjRiY2Q4ZTU0MjU4YzMxNmM4OGYwMjQ1NGQ2Lm1wMyU3QzI'},
     {title:'Le da',url:'http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY1JTJGMyUyRjUzM2NiODdlNDQwYzIwNGU2MzcwOTc0YThmNzI5MzBmLm1wMyU3QzI'},
     {title:'Saigon Den do',url:'http://st02.freesocialmusic.com/mp3/2014/09/12/1178050012/141050406314_1679.mp3'}
