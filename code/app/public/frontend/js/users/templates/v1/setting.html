@@ -1,0 +1,84 @@
+<div ng-controller="HeaderCtrl">
+  <ng-include src="header_template" ng-init="init('album')"></ng-include>
+</div>
+
+<div class="main row my-profile" ng-init="init()">
+  <div class="col-md-2" ng-controller="NavigationCtrl">
+    <ng-include src="navigation_template" ng-init="init('user-setting')"></ng-include>
+  </div>
+  <div class="col-md-10">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li ng-class="{active:current_tab =='general'}">
+        <a role="tab" ng-click="current_tab ='general'" data-toggle="tab">Edit general</a>
+      </li>
+      <li ng-class="{active:current_tab =='password'}">
+        <a role="tab" ng-click="current_tab ='password'" data-toggle="tab">Change password</a>
+      </li>
+      <li ng-class="{active:current_tab =='background'}">
+        <a ng-click="current_tab ='background'" role="tab" data-toggle="tab">Background</a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div class="tab-pane" ng-class="{active:current_tab =='general'}">
+        <form  role="form" ng-submit="updateBasic()">
+          <div class="form-group">
+            <label class="control-label">First Name</label>
+            <input type="text" class="form-control"  placeholder="First name" ng-model="edit_user['info:first_name']">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Last Name</label>
+            <input type="text" class="form-control"  placeholder="Last name" ng-model="edit_user['info:last_name']">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label">Email Address</label>
+            <input type="email" class="form-control"  placeholder="Email" ng-model="edit_user['info:email']">
+          </div>
+                     
+          <button type="submit" class="btn btn-default" ng-class="{'working': working_basic}" ng-disabled="working_basic" >Save</button>
+        </form>
+      </div>
+      <div class="tab-pane" ng-class="{active:current_tab =='password'}">
+        <form  role="form" ng-submit="updatePassword()">
+          <div class="form-group">
+            <label class="control-label">Old password</label>
+            <input type="password" class="form-control"  placeholder="Old password" ng-model="$parent.$parent.current_password">
+          </div>
+          <div class="form-group">
+            <label class="control-label">New password</label>
+            <input type="password" class="form-control"  placeholder="New password" ng-model="$parent.$parent.new_password">
+          </div>
+          <div class="form-group">
+            <label class="control-label">Confirm password</label>
+            <input type="password" class="form-control"  placeholder="Confirm password" ng-model="$parent.$parent.confirm_password">
+          </div>
+          <button type="submit" class="btn btn-default"  ng-class="{'working': working_password}" ng-disabled="working_password" >Save</button>
+        </form>
+      </div>
+      <div class="tab-pane" ng-class="{active:current_tab =='background'}" >
+        <div class="wrap-theme">
+          <div class="thumbnail" ng-repeat="style in list_style" ng-class="{active:current_style == style}">
+            <div class="wrap-preview cursor"  ng-click="setStyle(style)">
+              <load-image source="style.preview" ></load-image>
+            </div>
+            <div class="caption text-center">
+              <h3>{{style.name  }}</h3>
+            </div>              
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+</div>
+
+<div class="quick-buttons">
+  <!-- <button class="btn" ng-click="showAddModel()">
+    <i class="fa fa-plus"></i> Save
+  </button> -->
+</div>

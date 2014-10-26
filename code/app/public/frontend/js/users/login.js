@@ -1,5 +1,5 @@
 usersApp.controller('LoginCtrl', 
-  function ($scope, $http, $location,$window, Users, $dialogs, $location, $cookieStore) {
+  function ($scope, $http, $location,$window, Users, $dialogs, $location, $cookieStore, $rootScope, $userStyle) {
 
   $scope.init = function(){
     $scope.pending_login = false;
@@ -15,6 +15,8 @@ usersApp.controller('LoginCtrl',
 
   $scope.redirectDashboard = function(user){
     $cookieStore.put('user', user);
+    $rootScope.user = user;
+    $userStyle.setBodyStyle();
     $location.path('/albums');
   }
 
@@ -38,6 +40,7 @@ usersApp.controller('LoginCtrl',
     Users.post({tail:'login'}, post_data, function(res){
       $scope.pending_login = false;
       $scope.processRetrieveData(res,function(data){
+        
         $dialogs.success("successful :Your login information is accepted");
         $scope.redirectDashboard(data);
       });

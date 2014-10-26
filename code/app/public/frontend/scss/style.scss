@@ -43,7 +43,7 @@ button.working, a.working, input.working {
 }
 
 body{
-  background:url("../images/sunset.jpg");
+  background:url("../images/backgrounds/sunset.jpg");
   font-family: $body_font;
   color: $ligth_white;
   background-size:cover;
@@ -64,6 +64,9 @@ a{
   }
 }
 
+.cursor{
+  cursor: pointer;
+}
 
 h1,h2,h3,h4{
   color: $gray;
@@ -138,7 +141,7 @@ input{
 }
 .alertify{
   .ajs-dialog{
-    background:url("../images/violate.jpg");
+    background:$dark;
     .ajs-header{
       color: $white;
     }
@@ -730,7 +733,7 @@ input{
     width: 600px;
     margin: $wide_pading auto;
 
-    background:url("../images/violate.jpg");
+    background:$dark;
     /* background: 
       linear-gradient(
         $fade_background, 
@@ -743,7 +746,7 @@ input{
 
     input,div.tagsinput{
       background:$fade_background;
-      border:$gray;
+      border:1px solid $fade_bright;
       color: $white !important;
     }
     div.tagsinput{
@@ -759,9 +762,70 @@ input{
     }
     .btn{
       background:$very_dark_fade_background;
+      border:1px solid $fade_bright;
     }
     .fa-close{
       @extend .fa-close;
     }
   }
 }
+
+.my-profile{
+/*   #preview-avatar{
+    max-width: 300px;
+    max-height: 300px;
+  }
+  #current-avatar{
+    width: 100px;
+    height: 100px;
+    margin: 10px 0px;
+  } */
+  .wrap-theme{
+    height: $horizontal_height;
+    overflow:auto;
+    .thumbnail{
+      float: left;
+      margin: 0px 10px 10px 0px;
+      background: transparent;
+      border-radius: 0px;
+      border-color: $fade_bright;
+      padding:0px;
+      position:relative;
+      &.active{
+        /* border:2px solid $bootstrap_blue; */
+        .caption{
+          background: $dark;
+          h3{
+            color: $bootstrap_blue;
+          }
+          
+        }
+      }
+      .wrap-preview{
+        
+      }
+      
+      img{
+        width: 155px;
+        height: 120px;
+      }
+      a.btn.active{
+        background:$bootstrap_blue !important;
+      }
+      .caption{
+        padding:5px;
+        position:absolute;
+        bottom:0px;
+        left: 0px;
+        background:$very_dark_fade_background;
+        width: 100%;
+        h3{
+          font-size: 10pt;
+          margin:5px 0px 0px 0px;
+        }
+      }
+    }
+  }
+}
+
+@import 'extra';

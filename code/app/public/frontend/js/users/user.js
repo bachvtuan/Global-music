@@ -26,6 +26,12 @@ usersApp.config(['$routeProvider',function($routeProvider) {
       templateUrl: templateVersion('frontend/js/users/logout.html'),
       controller: 'LogoutCtrl'
     }).
+    when('/edit-profile', {
+      //This template is cached before
+      templateUrl: templateVersion('frontend/js/users/setting.html'),
+      controller: 'UserSettingCtrl'
+    }).
+    
     otherwise({
       redirectTo: '/login'
     });

@@ -31,7 +31,7 @@ app.directive('loadImage', function($parse) {
     template: '<img />',
     link: function(scope, iElement, iAttrs) {
       var class_   = angular.isDefined(iAttrs.extraClass )  ? iAttrs.extraClass: "";
-      log("class_", class_);
+      
       scope.$watch('source', function(value) {
         var img = iElement.find('img');
         

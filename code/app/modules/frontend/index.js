@@ -23,6 +23,10 @@ module.exports = function( app ){
     UserController.logout( req, res, next );
   });
 
+  app.put('/users/update', attachDB, function (req, res,next) {
+    UserController.update( req, res, next );
+  });
+
   app.post('/users/register', attachDB, function (req, res,next) {
     UserController.register( req, res, next );
   });

@@ -1,3 +1,5 @@
+var mongoose = require('mongoose');
+var User     = mongoose.model( 'User' );
 
 function validateRegister(body){
 
@@ -48,10 +50,6 @@ module.exports = function(BaseController){
       if ( typeof(validator_error) == "string" ){
         return res.json( jsonErr(validator_error) );
       }
-      
-
-      var mongoose = require('mongoose');
-      var User     = mongoose.model( 'User' );
 
       var filter = {"$or":[{user_name:body.login_name}, {email:body.login_name} ]}
 
@@ -92,10 +90,10 @@ module.exports = function(BaseController){
         return res.json( jsonErr(validator_error) );
       }
 
-      var mongoose = require('mongoose');
+      
 
       //res.json( jsonSucc( req.body ) );
-      var User     = mongoose.model( 'User' );
+      
       var filter = {"$or":[{user_name:body.user_name}, {email:body.email} ]}
 
       User.find(filter, function(err, users){
@@ -149,6 +147,45 @@ module.exports = function(BaseController){
     logout: function( req, res, next ){
       delete req.session.user;
       res.json("ok");
+      
+    },
+    update: function( req, res, next ){
+      var action = req.query.action;
+      if (!action){
+        return res.json( jsonErr("Expect action param") );
+      }
+      var body = req.body;
+      var current_user = req.session.user;
+      
+      if ( !current_user ){
+        res.json( jsonErr("You are not login") );  
+      }
+
+      showLog("body",body);
+      showLog("action",action);
+      switch( action){
+        case 'extra':this.updateExtra(body,current_user, req, res);break;
+      }
+    },
+    updateExtra: function(body,current_user, req, res){
+      if (body.theme){
+        User.findById(current_user._id, function(err, user){
+
+          if (err){
+            return showError("error while update song_id "+ song_id);
+          }
+          user.theme= body.theme;
+          /*showLog("user1",user);
+          showLog("theme", body.theme);*/
+          user.save();
+          showLog("user1",user);
+          req.session.user = user;
+          return res.json( jsonSucc(user)  );
+        });
+      }
+      else{
+        return res.json( jsonSucc(current_user)  );
+      }
       
     }
   });

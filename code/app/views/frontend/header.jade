@@ -32,6 +32,7 @@ html( ng-app="app" )
     script(src="frontend/js/users/login.js")
     script(src="frontend/js/users/logout.js")
     script(src="frontend/js/users/register.js")
+    script(src="frontend/js/users/setting.js")
     script(src="frontend/js/album/album.js")
     script(src="frontend/js/player/player.js")
     script(src="frontend/js/song/song.js")
@@ -46,6 +47,6 @@ html( ng-app="app" )
     link(rel="stylesheet", href="share/css/jquery.tagsinput.css")
     link(rel="stylesheet", href="frontend/css/style.css")
 
-  body
+  body(ng-style="body_style",ng-class="body_class")
     block content
   
