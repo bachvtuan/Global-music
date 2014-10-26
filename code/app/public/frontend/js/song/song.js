@@ -11,7 +11,7 @@ function($resource,$cookies){
 }]);
 
 songApp.controller('SongCtrl', 
-  function ($scope, $http, $location,$window, $dialogs, Songs) {
+  function ($scope, $http, $location,$window, $dialogs, Songs, fSharedService) {
 
   $scope.songs = null;
   $scope.loading_songs = false;
@@ -113,4 +113,13 @@ songApp.controller('SongCtrl',
     });
   }
 
+  $scope.playSong = function( song_index ){
+    log("song_index", song_index);
+    var broadcast_data = {
+      index: song_index,
+      songs: angular.copy( $scope.songs )
+    }
+    log("pre data", broadcast_data);
+    fSharedService.prepForBroadcast({cmd:'play-songs',data: broadcast_data });
+  }
 });

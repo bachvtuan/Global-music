@@ -1,6 +1,6 @@
 var playerApp = angular.module('playerApp', []);
 
-playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $dialogs,$timeout) {
+playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $dialogs,$timeout, fSharedService) {
 
   $scope.range_style = {
     width:'80%'
@@ -10,13 +10,7 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
   $scope.show_list = false;
   $scope.current_audio = null;
 
-  $scope.songs = [     
-    {title:'Moi nguoi mot qua khu',url:'http://st01.freesocialmusic.com/mp3/2011/03/24/1408055534/13009529743_499.mp3'},
-    {title:'Phan Duyen Hai No Phan Duyen Hai No Phan Duyen Hai No',url:'http://data12.chiasenhac.com/downloads/1318/5/1317988-8c2e338c/320/Phai%20Duyen%20Hay%20No%20-%20Hamlet%20Truong%20[MP3%20320kbps].mp3'},
-    {title:'Rieng mot goc roi',url:'http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY3JTJGZSUyRjdlM2I4MjRiY2Q4ZTU0MjU4YzMxNmM4OGYwMjQ1NGQ2Lm1wMyU3QzI'},
-    {title:'Le da',url:'http://mp3.zing.vn/xml/load-song/MjAxMCUyRjExJTJGMjYlMkY1JTJGMyUyRjUzM2NiODdlNDQwYzIwNGU2MzcwOTc0YThmNzI5MzBmLm1wMyU3QzI'},
-    {title:'Saigon Den do',url:'http://st02.freesocialmusic.com/mp3/2014/09/12/1178050012/141050406314_1679.mp3'}
-  ];
+  $scope.songs = [];
 
   $scope.escape = function(str){
 
@@ -24,6 +18,34 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
     return str;
   };
 
+
+ $scope.$on('handleBroadcast', function() {
+
+    log("listen broad cast on player page");
+
+    var broadcast_data = fSharedService.message.data;
+    switch(fSharedService.message.cmd){
+
+      case 'play-songs':
+        $scope.songs = broadcast_data.songs;
+        $scope.song_index = broadcast_data.index;
+        log("broadcast_data", broadcast_data);
+
+        if ( !angular.isDefined($scope.audio)  ){
+          //Should init intance audio first
+          var as = audiojs.createAll($scope.audiojs_setting);
+          $scope.audio =  as[0];
+          $timeout(function(){
+            $scope.setSong();
+          });
+        }
+        else{
+          $scope.setSong( );
+        }
+        
+        break;
+    }
+  });
 
   $scope.changeVolume = function(event){
     //log(event);
@@ -72,13 +94,12 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
       }
     };  
 
-    $timeout(function(){
+    /*$timeout(function(){
       var as = audiojs.createAll($scope.audiojs_setting);
       $scope.audio =  as[0];
       $scope.audio.play();
 
-      //current_audio = as[0];
-    },500);
+    },500);*/
 
   }
 
@@ -117,6 +138,10 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
   }
 
   $scope.setSong = function(index){
+
+    
+    //$scope.audio.play();
+
     $scope.animateLogo();
     $scope.song_index == typeof(index) != "undefined" ? index: $scope.song_index;
     $scope.current_song = $scope.songs[ $scope.song_index ];
@@ -124,7 +149,7 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
 //    $scope.removeOld();
     //var as = audiojs.createAll($scope.audiojs_setting);
   //  $scope.audio =  as[0];
-    $scope.audio.load( $scope.current_song.url );
+    $scope.audio.load( $scope.current_song.link );
 
     $timeout(function(){
       $scope.audio.play();
