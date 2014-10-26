@@ -13,7 +13,6 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
   $scope.songs = [];
 
   $scope.escape = function(str){
-
     str.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
     return str;
   };
@@ -30,7 +29,10 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
         $scope.songs = broadcast_data.songs;
         $scope.song_index = broadcast_data.index;
         log("broadcast_data", broadcast_data);
-
+        if ( broadcast_data.album_cover_id ){
+          $scope.album_cover_id = broadcast_data.album_cover_id
+        }
+        
         if ( !angular.isDefined($scope.audio)  ){
           //Should init intance audio first
           var as = audiojs.createAll($scope.audiojs_setting);
@@ -75,7 +77,7 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
 
   $scope.init = function(){
     $scope.current_song = $scope.songs[ $scope.song_index ];
-
+    $scope.album_cover_id = null;
     $scope.audiojs_setting = {
       callbackError:function(error){
         console.log(error);

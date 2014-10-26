@@ -25,15 +25,22 @@ app.directive('loadImage', function($parse) {
   return {
     restrict: 'EA',
     scope: {
-        source: '=',       
+        source: '=',
+        class: '='     
     },
     template: '<img />',
     link: function(scope, iElement, iAttrs) {
-      
+      var class_   = angular.isDefined(iAttrs.extraClass )  ? iAttrs.extraClass: "";
+      log("class_", class_);
       scope.$watch('source', function(value) {
         var img = iElement.find('img');
         
         img.attr('src',  value);
+
+      
+        if ( class_ != "" ){
+          img[0].className += ' ' + class_;
+        }
       }, true);
     }
 }

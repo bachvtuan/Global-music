@@ -32,6 +32,11 @@ app.run(function($rootScope, $window,$http, $cookies, $dialogs, $location, $temp
     }
   }
 
+  $rootScope.mediaLink = function(media_id){
+    return "/media/" + media_id;
+  }
+
+
   //Find item in the list by id and remove it
   $rootScope.removeItemInList = function(list,id){
     for ( var i=0 ; i<  list.length; i++ ){

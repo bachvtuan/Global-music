@@ -13,7 +13,7 @@
     <div class="song-list">
       <ul  type="1">
         <li ng-repeat="song in songs">
-          <span>{{ $index +1 }}</span> <a>{{song.title}}</a>
+          <span>{{ $index +1 }}</span> <a ng-click="playSong($index)">{{song.title}}</a>
           <!-- Single button -->
           <div class="btn-group">
             <button type="button" class="btn btn-default transparent dropdown-toggle" data-toggle="dropdown">
@@ -23,6 +23,7 @@
               <li><a ng-click="editSong(song)"><i class="fa fa-pencil"></i> Edit</a></li>
               <li><a ng-click="deleteSong(song)"><i class="fa fa-remove"></i> Delete</a></li>
               <li><a ng-click="playSong($index)"><i class="fa fa-play"></i> Play</a></li>
+              <li><a ng-click="downloadSong(song)"><i class="fa fa-download"></i> Download</a></li>
             </ul>
           </div>
         </li>

@@ -1,33 +1,39 @@
 <div class="wrap-player-zone">
-  <div class="player-zone">
-    <img class="cover" src="frontend/images/album.png" />
-    <p class="title">{{ current_song.title }}</p>
-    <load-audio source="current_song.link" ></load-audio>
-    <div class="volume-tune">
-      <p>Volume</p>
-      <div class="wrap-range" ng-click="changeVolume($event)" >
-        <div class="range" ng-style="range_style" ></div>
+  <div ng-hide="songs.length == 0">
+    <div class="player-zone">
+      
+      <img class="cover" ng-if="album_cover_id == null" src="frontend/images/album.png">
+      <load-image ng-if="album_cover_id != null" source="mediaLink(album_cover_id)" extra-class="cover" ></load-image>
+      <p class="title">{{ current_song.title }}</p>
+      <load-audio source="current_song.link" ></load-audio>
+      <div class="volume-tune">
+        <p>Volume</p>
+        <div class="wrap-range" ng-click="changeVolume($event)" >
+          <div class="range" ng-style="range_style" ></div>
+        </div>
       </div>
+
+      <i id="current-list" class="fa fa-th-list" ng-class="{active:show_list}" ng-click="show_list=!show_list;"></i>
+      <i id="prev-song" ng-click="prev()" class="fa fa-step-backward"></i>
+      <i id="next-song" ng-click="next()" class="fa fa-step-forward"></i>
     </div>
+    
+    <div class="playlist animate-if" ng-if="show_list">
+      <h3>Playlist</h3>
+      <i class="fa fa-close" ng-click="$parent.show_list =  false;"></i>
+      <div class="scroll" ng-if="songs.length > 0">
+        <ul>
+          <li ng-repeat="song in songs">
+            <a ng-class="{active:song_index == $index}" ng-click="playSong($index)">
+              {{$index + 1}}: {{song.title}}
+            </a>
+          </li>
+        </ul>      
+      </div>
 
-    <i id="current-list" class="fa fa-th-list" ng-class="{active:show_list}" ng-click="show_list=!show_list;"></i>
-    <i id="prev-song" ng-click="prev()" class="fa fa-step-backward"></i>
-    <i id="next-song" ng-click="next()" class="fa fa-step-forward"></i>
-  </div>
-  
-  <div class="playlist animate-if" ng-if="show_list">
-    <h3>Playlist</h3>
-    <i class="fa fa-close" ng-click="$parent.show_list =  false;"></i>
-    <div class="scroll" ng-if="songs.length > 0">
-      <ul>
-        <li ng-repeat="song in songs">
-          <a ng-class="{active:song_index == $index}" ng-click="playSong($index)">
-            {{$index + 1}}: {{song.title}}
-          </a>
-        </li>
-      </ul>      
     </div>
-
   </div>
-
+  <!-- <div ng-if="songs.length == 0"> 
+    <p>Current queue is empty</p>
+  </div> -->
 </div>

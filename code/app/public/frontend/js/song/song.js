@@ -119,7 +119,18 @@ songApp.controller('SongCtrl',
       index: song_index,
       songs: angular.copy( $scope.songs )
     }
+    if ( $scope.current_album.feature_id ){
+      broadcast_data.album_cover_id = $scope.current_album.feature_id;
+    }
     log("pre data", broadcast_data);
     fSharedService.prepForBroadcast({cmd:'play-songs',data: broadcast_data });
+  }
+
+  $scope.downloadSong = function(song){
+    var pom = document.createElement('a');
+    pom.setAttribute('href', song.link);
+    pom.setAttribute('download', song.title);
+    pom.click();
+    $dialogs.success("The song is in the download progress");
   }
 });

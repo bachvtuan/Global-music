@@ -22,9 +22,6 @@ function($resource,$cookies){
 albumApp.controller('AlbumCtrl', 
   function ($scope, $http, $location,$window, $dialogs, Albums,$timeout) {
   
-  $scope.mediaLink = function(media_id){
-    return "/media/" + media_id;
-  }
 
   $scope.init = function(){
     
