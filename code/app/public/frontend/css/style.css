@@ -340,13 +340,26 @@ input {
       font-size: 14px;
       line-height: 30px; }
   #wrapper .content-list {
-    height: 400px;
+    height: 500px;
+    -webkit-transition: height 0.5s;
+    /* For Safari 3.1 to 6.0 */
+    transition: height 0.5s;
     overflow: auto; }
+    #wrapper .content-list.playing {
+      height: 400px; }
     #wrapper .content-list .album {
       clear: both;
       margin: 0px 0px 20px 0px;
-      overflow: hidden;
-      position: relative; }
+      position: relative;
+      display: inline-block;
+      width: 100%; }
+      #wrapper .content-list .album .right {
+        float: left;
+        display: table; }
+      #wrapper .content-list .album .btn-group {
+        position: absolute;
+        top: 0px;
+        right: 10px; }
       #wrapper .content-list .album img {
         float: left;
         margin: 0px 10px 0px 0px;
@@ -361,12 +374,13 @@ input {
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        display: inline-block; }
+        /* display: inline-block; */ }
         #wrapper .content-list .album a.title:hover, #wrapper .content-list .album a.title.active {
           color: #008fd5; }
+      #wrapper .content-list .album p {
+        color: #cccccc; }
       #wrapper .content-list .album p.tag {
         /* background: url("../images/tag_blue.png") no-repeat left center; */
-        color: #cccccc;
         margin: 0px;
         display: inline-block;
         width: 300px;
@@ -374,9 +388,9 @@ input {
         white-space: nowrap;
         text-overflow: ellipsis; }
       #wrapper .content-list .album .number-songs {
-        /* margin-bottom:0px; */ }
+        margin-top: 5px; }
       #wrapper .content-list .album p.tag span, #wrapper .content-list .album .number-songs span {
-        color: #cccccc; }
+        color: white; }
   #wrapper .wrap-song-list .group-song {
     margin-bottom: 20px; }
   #wrapper .wrap-song-list h4 {

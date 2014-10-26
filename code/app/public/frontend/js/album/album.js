@@ -60,14 +60,16 @@ albumApp.controller('AlbumCtrl',
     
   }
 
-  $scope.removeAlbum = function(){
-    var title = "Are you sure to remove the album: " + $scope.current_album.title;
+  $scope.removeAlbum = function(remove_album){
+    var title = "Are you sure to remove the album: " + remove_album.title;
     $dialogs.confirm( title, function(){
-      Albums.remove({id:$scope.current_album._id},function(res){
+      Albums.remove({id:remove_album._id},function(res){
         $scope.processRetrieveData(res,function(data){
-          $scope.removeItemInList( $scope.albums, $scope.current_album._id );
-          $scope.current_album_id = null;
-          $scope.current_album = null;
+          $scope.removeItemInList( $scope.albums, remove_album._id );
+          if ( $scope.current_album && $scope.current_album._id == remove_album._id ){
+            $scope.current_album_id = null;
+            $scope.current_album = null;            
+          }
         });
       })
     });
@@ -113,17 +115,18 @@ albumApp.controller('AlbumCtrl',
     });
   }
 
-  $scope.editAlbum = function(){
+  $scope.editAlbum = function(edit_album){
     $scope.show_form = true;
     $scope.is_edit_album = true;
-    $scope.album_title = $scope.current_album.title;
-    $scope.album_tags =  _.map( $scope.current_album.tags, function(tag){ return tag.name });
+    $scope.album_title = edit_album.title;
+    $scope.edit_album = angular.copy(edit_album);
+    $scope.album_tags =  _.map( edit_album.tags, function(tag){ return tag.name });
     log( $scope.album_tags );
     //$scope.initTag();
   }
   $scope.doEditAlbum = function(post_data){
     log("post_data in editAlbum", post_data );
-    var copy_album = angular.copy( $scope.current_album );
+    var copy_album = angular.copy( $scope.edit_album );
     //$scope.is_edit_album = null;
     $scope.pending_edit_album = true;
     
@@ -134,7 +137,7 @@ albumApp.controller('AlbumCtrl',
       $scope.pending_edit_album = false;
       $scope.processRetrieveData(res,function(data){
         $scope.updateItemInList( $scope.albums, data );
-        $scope.current_album = data;
+        //$scope.current_album = data;
         $dialogs.success("The album is updated");
         log( $scope.albums );
         $scope.resetValue();

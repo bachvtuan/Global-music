@@ -32,7 +32,7 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
         if ( broadcast_data.album_cover_id ){
           $scope.album_cover_id = broadcast_data.album_cover_id
         }
-        
+        $('.content-list').addClass("playing");
         if ( !angular.isDefined($scope.audio)  ){
           //Should init intance audio first
           var as = audiojs.createAll($scope.audiojs_setting);

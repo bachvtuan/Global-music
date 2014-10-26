@@ -375,15 +375,28 @@ input{
     }
   }
   .content-list{
-    height: $horizontal_height;
+    height: 500px;
+    -webkit-transition: height 0.5s; /* For Safari 3.1 to 6.0 */
+    transition: height 0.5s;
+    &.playing{
+      height:$horizontal_height;
+    }
+    
     overflow:auto;
     .album{
       clear: both;
       margin: 0px 0px 20px 0px;
-      overflow:hidden;
       position:relative;
-      &:hover{
-        
+      display: inline-block;
+      width: 100%;
+      .right{
+        float: left;
+        display: table;
+      }
+      .btn-group{
+        position:absolute;
+        top: 0px;
+        right: 10px;
       }
       img{
         float: left;
@@ -400,14 +413,17 @@ input{
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        display: inline-block;
+        /* display: inline-block; */
         &:hover,&.active{
           color: $blue;
         }
       }
+      p{
+        color: $gray;
+      }
       p.tag{
         /* background: url("../images/tag_blue.png") no-repeat left center; */
-        color: $gray;
+        
         margin: 0px;
         display: inline-block;
         width: 300px;
@@ -416,11 +432,13 @@ input{
         text-overflow: ellipsis;
       }
       .number-songs{
-        /* margin-bottom:0px; */
+        margin-top:5px;
       }
+
       p.tag, .number-songs{
+
         span{
-          color: $gray;
+          color: $white;
         }
       }
     }

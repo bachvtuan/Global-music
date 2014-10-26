@@ -7,7 +7,7 @@
     <ng-include src="navigation_template" ng-init="init('album')"></ng-include>
   </div>
   <div class="col-md-6">
-    <div class="content-list">
+    <div class="content-list" >
       <div ng-if="albums === null"  >
         <ng-include src="'loading.html'" ng-init="text='Loading your albums'"></ng-include>
       </div>
@@ -18,18 +18,28 @@
         <div class="album" ng-repeat="album in albums  track by album._id">
           <img ng-if="!album.feature_id" src="frontend/images/album.png">
           <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)" ></load-image>
-          <a class="title" title="{{album.title}}"  data-placement="bottom"
-            ng-click="activeAlbum(album)" ng-class="{active:album == current_album}" >
-            {{album.title}}
-          </a>
-          <p class="number-songs">Number songs: <span>{{album.song_numbers}}</span></p>
+          <div class="right">
+            <a class="title" title="{{album.title}}"  data-placement="bottom"
+              ng-click="activeAlbum(album)" ng-class="{active:album == current_album}" >
+              {{album.title}}
+            </a>
+            <p class="number-songs">Songs: <span>{{album.song_numbers}}</span></p>
 
-          <p class="tag" ng-if="album.tags.length > 0 ">Tags: 
-            <span>
-              <a ng-repeat="tag in album.tags track by tag._id" ng-href="#/tag/{{tag.name}}">
-                {{tag.name}}
-              </a>
-            </span></p>
+            <p class="tag" ng-if="album.tags.length > 0 ">Tags: 
+              <span>
+                <a ng-repeat="tag in album.tags track by tag._id" ng-click="setTagFilter(tag.name)">{{tag.name}}&nbsp;</a>
+              </span>
+            </p>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default transparent dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-gear fa-lg"></i>
+            </button>
+            <ul class="dropdown-menu pull-right" role="menu">
+              <li><a ng-click="editAlbum(album)"><i class="fa fa-pencil"></i> Edit</a></li>
+              <li><a ng-click="removeAlbum(album)"><i class="fa fa-remove"></i> Delete</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -42,10 +52,10 @@
 </div>
 
 <div class="quick-buttons">
-  <button class="btn" ng-if="current_album" ng-click="editAlbum()">
+  <button class="btn" ng-if="current_album" ng-click="editAlbum(current_album)">
     <i class="fa fa-pencil"></i> Edit 
   </button>
-  <button class="btn" ng-if="current_album" ng-click="removeAlbum()">
+  <button class="btn" ng-if="current_album" ng-click="removeAlbum(current_album)">
     <i class="fa fa-remove"></i> Delete
   </button>
   <button class="btn" ng-click="showAddModel()">

@@ -6,7 +6,7 @@
   <div ng-if="loading_songs"   class="clear">
     <ng-include src="'loading.html'" ng-init="text='Loading songs in the album'"></ng-include>
   </div>
-  <p  class="clear alert" ng-if="song !== null && songs.length == 0">Album doesn't have any song, you can add more</p>
+  <p  class="clear alert" ng-if="song !== null && songs.length == 0">There is no song in this album, You can add more</p>
   
   <div ng-if="song !== null && songs.length > 0">
     <h4><i class="fa fa-music"></i> Song in album</h4>
@@ -17,7 +17,7 @@
           <!-- Single button -->
           <div class="btn-group">
             <button type="button" class="btn btn-default transparent dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-gear"></i>
+              <i class="fa fa-gear fa-lg"></i>
             </button>
             <ul class="dropdown-menu pull-right" role="menu">
               <li><a ng-click="editSong(song)"><i class="fa fa-pencil"></i> Edit</a></li>
