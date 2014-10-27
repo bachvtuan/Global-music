@@ -591,13 +591,13 @@ body.playing .content-list {
     position: relative; }
     .tuan-modal .body input, .tuan-modal .body div.tagsinput {
       background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.8);
       color: white !important; }
     .tuan-modal .body ol {
       list-style-type: upper-hexadecimal; }
       .tuan-modal .body ol pre {
         margin-top: 10px;
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.8);
         color: black; }
     .tuan-modal .body div.tagsinput span.tag {
       background: rgba(0, 0, 0, 0.5);
@@ -608,7 +608,7 @@ body.playing .content-list {
         color: #008fd5; }
     .tuan-modal .body .btn {
       background: rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.5); }
+      border: 1px solid rgba(255, 255, 255, 0.8); }
 
 body.playing .wrap-theme {
   height: 350px !important; }
@@ -631,7 +631,7 @@ body.playing .wrap-theme {
       margin: 0px 10px 10px 0px;
       background: transparent;
       border-radius: 0px;
-      border-color: rgba(255, 255, 255, 0.5);
+      border-color: rgba(255, 255, 255, 0.8);
       padding: 0px;
       position: relative; }
       .my-profile .wrap-theme .thumbnail.active {
