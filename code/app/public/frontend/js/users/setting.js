@@ -206,8 +206,9 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
 
 
 usersApp.controller('UserSettingCtrl', 
-  function ($scope, $http, $location,$window, Users, $dialogs, $userStyle) {
+  function ($scope, $http, $location,$window, Users, $dialogs, $userStyle, Page) {
     $scope.init = function(){
+      Page.setTitle("Edit your setting");
       $scope.current_tab = "general";
       $scope.$userStyle = $userStyle;
 

@@ -37,3 +37,10 @@ app.factory('fSharedService', function($rootScope) {
 
     return sharedService;
 });
+
+app.factory('Page', function($rootScope) {
+   return {
+     title: function() { return $rootScope.page_title; },
+     setTitle: function(newTitle) { $rootScope.page_title = newTitle }
+   };
+});

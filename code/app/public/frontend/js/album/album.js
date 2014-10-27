@@ -5,7 +5,11 @@ albumApp.config(['$routeProvider',function($routeProvider) {
     when('/albums', {
       templateUrl:  templateVersion('frontend/js/album/album.html'),
       controller: 'AlbumCtrl'
-    });
+    }).
+    when('/albums/:type', {
+      templateUrl:  templateVersion('frontend/js/album/album.html'),
+      controller: 'AlbumCtrl'
+    })
 }]);
 
 albumApp.factory('Albums', ['$resource','$cookies',
@@ -20,7 +24,7 @@ function($resource,$cookies){
 
 
 albumApp.controller('AlbumCtrl', 
-  function ($scope, $http, $location,$window, $dialogs, Albums,$timeout) {
+  function ($scope, $http, $location,$window, $dialogs, Albums,$timeout, $routeParams, Page) {
   
 
   $scope.init = function(){
@@ -29,6 +33,15 @@ albumApp.controller('AlbumCtrl',
     $scope.resetValue();
     $scope.albums = null;
     $scope.current_album_id = null;
+    $scope.type = $routeParams.type;
+    if ($scope.type == "public"){
+      $scope.filter_album = "!";
+      $scope.navigation_name ="public_album";
+    }
+    else{
+     $scope.navigation_name ="album"; 
+    }
+    Page.setTitle("Browse album");
     Albums.get({}, function(res){
       $scope.processRetrieveData(res,function(data){
         log("Data", data);

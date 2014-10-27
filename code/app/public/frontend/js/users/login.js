@@ -1,9 +1,10 @@
 usersApp.controller('LoginCtrl', 
-  function ($scope, $http, $location,$window, Users, $dialogs, $location, $cookieStore, $rootScope, $userStyle) {
+  function ($scope, $http, $location,$window, Users, $dialogs, $location, $cookieStore, $rootScope, $userStyle, Page) {
 
   $scope.init = function(){
     $scope.pending_login = false;
     $scope.resetValue();
+    Page.setTitle("Login to app");
     Users.get({tail:'info'}, function(res){
       log(res);
       if (res.status == "ok"){

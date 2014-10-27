@@ -4,7 +4,7 @@
 
 <div class="main row album-page" ng-init="init()">
   <div class="col-md-2" ng-controller="NavigationCtrl">
-    <ng-include src="navigation_template" ng-init="init('album')"></ng-include>
+    <ng-include src="navigation_template" ng-init="init(navigation_name)"></ng-include>
   </div>
   <div class="col-md-6">
     <div class="content-list" >
@@ -52,15 +52,24 @@
 </div>
 
 <div class="quick-buttons">
-  <button class="btn" ng-if="current_album" ng-click="editAlbum(current_album)">
-    <i class="fa fa-pencil"></i> Edit 
-  </button>
-  <button class="btn" ng-if="current_album" ng-click="removeAlbum(current_album)">
-    <i class="fa fa-remove"></i> Delete
-  </button>
-  <button class="btn" ng-click="showAddModel()">
-    <i class="fa fa-plus"></i> New album
-  </button>
+  <div class="pull-left">
+    <div class="wrap-search">
+      <input type="search" class="search-box form-control" placeHolder="Tên album" ng-model="filter_album"  />
+      <i class="fa fa-question-circle cursor" ng-click="show_help_search=true"></i>
+    </div>
+  </div>
+  <div class="pull-right">
+    <button class="btn" ng-if="current_album" ng-click="editAlbum(current_album)">
+      <i class="fa fa-pencil"></i> Edit 
+    </button>
+    <button class="btn" ng-if="current_album" ng-click="removeAlbum(current_album)">
+      <i class="fa fa-remove"></i> Delete
+    </button>
+    <button class="btn" ng-click="showAddModel()">
+      <i class="fa fa-plus"></i> New album
+    </button>
+  </div>
+
 </div>
 
 <div class="tuan-modal animate-if" ng-if="show_form">
@@ -97,4 +106,41 @@
         </form>
       </div>
   </div>
+</div>
+
+
+<div class="tuan-modal animate-if" ng-if="show_help_search">
+  <div class="body">
+    <i class="fa fa-close" ng-click="$parent.show_help_search = false;" ></i>
+    <h3>Search an album</h3>
+    <hr/>
+    <div class="content">
+      <p>There are some rules that you can know about</p>
+      <ol>
+        <li>
+          Search your album that has the string "foo"
+          <pre>foo</pre> 
+        </li>
+        <li>
+          Search all public album from user john
+          <pre>@john</pre> 
+        </li>
+        <li>
+          Search your album that has tag is Pop
+          <pre>#Pop</pre> 
+        </li>
+        <li>
+          Search all public albums
+          <pre>!</pre>
+        </li>
+        <li>
+          You can combine them, such as Search all public album from user john that has tag is Pop
+          <pre>@join #Pop</pre>
+        </li>
+        <li>
+          Or search all public album that has foo in the title
+          <pre>!foo</pre>
+        </li>
+      </ol>
+    </div>
 </div>

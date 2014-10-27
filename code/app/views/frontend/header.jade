@@ -1,7 +1,7 @@
 doctype html
 html( ng-app="app" )
   head
-    title!= page_title
+    title(ng-bind="page_title")!= page_title
     meta(name="descrition",content=page_description)
     link(rel="Shortcut Icon",href="frontend/images/mobile.png",type="image/x-icon")
     script( src="frontend/js/dependencies.min.js")

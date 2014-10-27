@@ -322,31 +322,29 @@ input{
   -webkit-animation-name: flip;
           animation-name: flip;
 }
+
+body.playing{
+  .content-list{
+    height:$horizontal_height !important;
+  }
+}
 #wrapper{
   width: 950px;
-  height:620px;
+  height:610px;
   background:$fade_background;
-  margin: 30px auto 0px auto;
-  padding: $wide_pading;
+  margin: 25px auto 0px auto;
+  padding: 20px $wide_pading;
   position:relative;
 
   #header{
     margin-bottom: 20px;
     position:relative;
     #logo{
-      position:absolute;
-      left: 10px;
-      top: -18px;
       img{
         width: 60px;
       }
     }
-    input[type="search"]{
-      background: transparent;
-      border-radius: 0px;
-      border:1px solid $very_fade_background;
-      color: $white;
-    }
+
   }
   .navigation{
     ul{
@@ -378,12 +376,10 @@ input{
     }
   }
   .content-list{
-    height: 500px;
+    height: 480px;
     -webkit-transition: height 0.5s; /* For Safari 3.1 to 6.0 */
     transition: height 0.5s;
-    &.playing{
-      height:$horizontal_height;
-    }
+    
     
     overflow:auto;
     .album{
@@ -454,6 +450,7 @@ input{
       margin:10px 0px 10px 0px;
       font-weight: normal;
       display: inline-block;
+      color: $blue;
     }
     .song-list{
       height:370px;
@@ -490,52 +487,28 @@ input{
     left:$wide_pading;
     right:$wide_pading;
 
+  }
 
-    .playlist{
-      position: absolute;
-      right: 0px;
-      bottom: 130px;
-      background: $dark;
-      width: 300px;
-      height: 401px;
-      &:before{
-        position: absolute;
-        bottom: -30px;
-        width: 0;
-        height: 0;
-        content: '';
-        border-style: solid;
-        border-width: 15px;
-        left: 120px;
-        border-color: $dark transparent transparent transparent;
-
-      }
-      .fa-close{
-        @extend .fa-close;
-        right: 10px;
-        top: 10px;
-      }
-      h3{
-        padding: 10px 20px;
-        margin: 0px;
-      }
-      .scroll{
-        overflow-y:auto;
-        max-height: 354px;
-        padding:20px;
-        ul{
-          li{
-            a{
-              line-height: 2em;
+  .playlist{
+    
+    .scroll{
+      overflow-y:auto;
+      max-height: 354px;
+      padding:20px;
+      ul{
+        li{
+          a{
+            line-height: 2em;
+            &.active,&:hover{
+              color: $blue;
               &.active{
-                color: $blue;
+                font-weight: bold;
               }
             }
           }
         }
       }
-    }      
-
+    }
   }
 
   .player-zone{
@@ -694,11 +667,26 @@ input{
   }
 }
 
-
 .quick-buttons{
   position:absolute;
-  top: $wide_pading;
+  top: 50px;
   right: $wide_pading;
+  left: 186px;
+  .wrap-search{
+    position:relative;
+    input[type="search"]{
+      background: transparent;
+      border-radius: 0px;
+      border:1px solid $very_fade_background;
+      color: $white;
+      width: 300px;
+    }
+    i.fa{
+      position:absolute;
+      right: -25px;
+      top: 10px;
+    }
+  }
 }
 
 #lean_overlay {
@@ -731,8 +719,9 @@ input{
   .body{
 
     width: 600px;
-    margin: $wide_pading auto;
+    margin: 30px auto;
 
+    /* background:$dark; */
     background:$dark;
     /* background: 
       linear-gradient(
@@ -748,6 +737,14 @@ input{
       background:$fade_background;
       border:1px solid $fade_bright;
       color: $white !important;
+    }
+    ol{
+      list-style-type:upper-hexadecimal;
+      pre{
+        margin-top:10px;
+        background: $fade_bright;
+        color: $black;
+      }
     }
     div.tagsinput{
       span.tag{
@@ -770,6 +767,9 @@ input{
   }
 }
 
+body.playing .wrap-theme{
+  height: 350px !important;
+}
 .my-profile{
 /*   #preview-avatar{
     max-width: 300px;
@@ -781,7 +781,7 @@ input{
     margin: 10px 0px;
   } */
   .wrap-theme{
-    height: $horizontal_height;
+    height: 440px;
     overflow:auto;
     .thumbnail{
       float: left;

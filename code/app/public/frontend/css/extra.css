@@ -22,7 +22,8 @@
   padding: 5px 10px 6px;
   margin-right: 0;
   display: inline-block;
-  width: 100%; }
+  width: 100%;
+  border-radius: 0px; }
 
 .tab-vertical {
   margin: 0 !important;

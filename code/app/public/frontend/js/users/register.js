@@ -1,8 +1,9 @@
 
 usersApp.controller('RegisterCtrl', 
-  function ($scope, $http, $location,$window, Users, $dialogs) {
+  function ($scope, $http, $location,$window, Users, $dialogs, Page) {
 
   $scope.init = function(){
+    Page.setTitle("Register new account");
     $scope.pending_register = false;
     $scope.resetValue();
   }
