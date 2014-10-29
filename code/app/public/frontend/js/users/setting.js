@@ -163,16 +163,19 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
     getUserStyle:function(){
       var user = this.getUser();
 
-      if ( !angular.isDefined(user['theme']) ){
-        log("Set as default theme to cookie");
-        user['theme'] = "Default";
-        $cookieStore.put('user', user);
+      if (user){
+        if ( !angular.isDefined(user.theme) ){
+          log("Set as default theme to cookie");
+          user.theme = "Default";
+          $cookieStore.put('user', user);
+        }
+        var theme =  this.get( user.theme);
+        log("theme is", theme,user.theme );
+        return theme ? theme: this.get('Default');
       }
-
-      var theme =  this.get( user['theme'] );
-      log("theme is", theme,user['theme'] );
-      return theme ? theme: this.get('Default');
-      
+      else{
+        return this.get('Default');
+      }
     },
     setUserStyle:function(style_name){
       var user = this.getUser();

@@ -12,7 +12,8 @@
     <ul>
       <li ng-class="{active:current_page == 'album'}"><a href="#/albums">Your album</a></li>
       <li ng-class="{active:current_page == 'user-setting'}"><a href="#/edit-profile">Setting</a></li>
-      <li><a href="#/logout">Log out</a></li>
+      <li ng-if="user"><a href="#/logout">Log out</a></li>
+      <li ng-if="!user"><a href="#/login">Login</a></li>
     </ul>
   </div>
 </div>
