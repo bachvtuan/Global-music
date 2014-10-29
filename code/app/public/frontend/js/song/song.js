@@ -26,6 +26,16 @@ songApp.controller('SongCtrl',
         $scope.loading_songs = false;
         $scope.processRetrieveData(res,function(data){
           $scope.songs = data;
+          //Tell to album controller
+          var broadcast_data = {
+            album_id:$scope.current_album_id,
+            index: 0,
+            songs: angular.copy( $scope.songs )
+          }
+          if ( $scope.current_album.feature_id ){
+            broadcast_data.album_cover_id = $scope.current_album.feature_id;
+          }
+          fSharedService.prepForBroadcast({cmd:'load-songs-done',data: broadcast_data });
         });
       });
     };

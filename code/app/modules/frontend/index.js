@@ -46,7 +46,7 @@ module.exports = function( app ){
     MediaController.index( req, res, next );
   });
 
-  app.get('/albums', checkUser, function (req, res,next) {
+  app.get('/albums', attachDB, function (req, res,next) {
     AlbumController.index( req, res, next );
   });
 
@@ -63,7 +63,7 @@ module.exports = function( app ){
   });
   /* end album */
 
-  app.get('/songs', checkUser, function (req, res,next) {
+  app.get('/songs', attachDB, function (req, res,next) {
     SongController.index(req, res, next );
   });
 

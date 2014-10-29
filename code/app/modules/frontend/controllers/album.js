@@ -200,14 +200,31 @@ module.exports = function(BaseController){
  return BaseController.extend({ 
     name: "album",
     index: function(req, res, next) {
+      var album_id = req.query.id;
+
+      if (album_id){
+        Album.findById(album_id, function(err, album){
+          if ( !album ){
+            return res.json( jsonErr("not found album") );
+          }
+          //Own user and public state
+          if ( (req.session.user && req.session.user._id == album.user_id) || album.is_public ){
+            return res.json( jsonSucc([album]) );
+          }
+          else{
+            return res.json( jsonErr("This album is private") );
+          }
+        });
+      }else{
+        var user_id = mongoose.Types.ObjectId(req.session.user._id);
+        var filter = {user_id:user_id};
+        
+        Album.find(filter, function(err, albums){
+          return res.json( jsonSucc(albums) );
+        });        
+      }
       
-      //res.json( jsonSucc( req.body ) );
-      var user_id = mongoose.Types.ObjectId(req.session.user._id);
-      var filter = {user_id:user_id};
-      
-      Album.find(filter, function(err, albums){
-        return res.json( jsonSucc(albums) );
-      });
+
     },
 
 

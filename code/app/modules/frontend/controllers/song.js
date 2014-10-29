@@ -23,11 +23,25 @@ module.exports = function(BaseController){
  return BaseController.extend({ 
     name: "song",
     index: function(req, res, next) {
-      var filter = {album_id: req.query.album_id};
-      
-      Song.find(filter, function(err, songs){
-        return res.json( jsonSucc(songs) );
+      var album_id = req.query.album_id;
+
+      Album.findById(album_id, function(err, album){
+        if ( !album ){
+          return res.json( jsonErr("not found album") );
+        }
+
+        if ( (req.session.user && req.session.user._id == album.user_id) || album.is_public ){
+          var filter = {album_id:album_id };
+          
+          Song.find(filter, function(err, songs){
+            return res.json( jsonSucc(songs) );
+          });
+        }
+        else{
+          return res.json( jsonErr("This album is private, So you can not show all songs inside") );
+        }
       });
+
     },
     add: function(req, res, next){
       var body = req.body;

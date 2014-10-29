@@ -28,7 +28,8 @@ function($resource,$cookies){
 
 
 albumApp.controller('AlbumCtrl', 
-  function ($scope, $http, $location,$window, $dialogs, Albums,$timeout, $routeParams, Page) {
+  function ($scope, $http, $location,$window, $dialogs, 
+    Albums,$timeout, $routeParams, Page, fSharedService) {
   
 
   $scope.init = function(){
@@ -51,21 +52,43 @@ albumApp.controller('AlbumCtrl',
     var get_params = {};
 
     if ( $routeParams.album_id ){
+      $scope.share_album_id = $routeParams.album_id;
       get_params.id = $routeParams.album_id;
-      console.error("tai sao", get_params.album_id);
     }
 
     Albums.get(get_params, function(res){
       $scope.processRetrieveData(res,function(data){
         log("Data", data);
         $scope.albums = data;
-        
+        if ( $routeParams.album_id ){
+          //Active share album
+          $scope.activeAlbum($scope.albums[0]);
+        }
       });
     });
   }
 
+ $scope.$on('handleBroadcast', function() {
+
+    log("listen broad cast on player page");
+
+    var broadcast_data = fSharedService.message.data;
+    switch(fSharedService.message.cmd){
+
+      case 'load-songs-done':
+        var album_id = broadcast_data.album_id;
+        if ( angular.isDefined($scope.share_album_id)  && $scope.share_album_id ==album_id){
+          log("let play it");
+          //Prevent auto play later
+          delete $scope.share_album_id;
+          //Send to player controler
+          fSharedService.prepForBroadcast({cmd:'play-songs',data: broadcast_data });
+        }
+        break;
+    }
+  });
+
   $scope.activeAlbum = function(album){
-    log("tai sao", album);
     $scope.current_album = album;
     $scope.current_album_id = $scope.current_album._id;
   }
