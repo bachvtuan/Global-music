@@ -237,8 +237,11 @@ module.exports = function(BaseController){
         return res.json( jsonErr(validator_error) );
       }
 
-
       //res.json( jsonSucc( req.body ) );
+
+      if (req.session.user.status != "actived"){
+        return res.json( jsonErr("Please active your account before add new album") );
+      }
       
       var user_id = mongoose.Types.ObjectId(req.session.user._id);
       

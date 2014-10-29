@@ -7,5 +7,11 @@
   "page_title": "Mobile app",
   "asset_version":2,
   "template_version":1,
-  "page_description":"Listen to music at everywhere"
+  "page_description":"Listen to music at everywhere",
+  "domain":"audio.dethoima.com",
+  "admin_email":"admin@dethoima.com",
+  "smtp_host":"smtp.mandrillapp.com",
+  "smtp_port":25,
+  "smtp_user":"bachvtuan@gmail.com",
+  "smtp_pass":"yyPsFU9QdKAonJjlU8gipA",
 }

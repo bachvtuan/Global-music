@@ -45,7 +45,7 @@ usersApp.controller('RegisterCtrl',
       $scope.processRetrieveData(res,function(data){
         $scope.user_name = "";
         $scope.resetValue();
-        $dialogs.message("success :Please check your email");
+        $dialogs.message("success :Please check your email for activation, The email may take about 1 minute to arrive");
       });
     });
   }

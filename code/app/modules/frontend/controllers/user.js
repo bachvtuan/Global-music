@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var User     = mongoose.model( 'User' );
+var sendEmail = require('../../../tools/send_mail').sendEmail;
+var uuid = require('node-uuid');
 
 function validateRegister(body){
 
@@ -90,8 +92,6 @@ module.exports = function(BaseController){
         return res.json( jsonErr(validator_error) );
       }
 
-      
-
       //res.json( jsonSucc( req.body ) );
       
       var filter = {"$or":[{user_name:body.user_name}, {email:body.email} ]}
@@ -120,13 +120,27 @@ module.exports = function(BaseController){
           }
 
           body.password = hash;
+          body.status   = "unactive";
+          body.hash_register = uuid.v4();
 
           new User( body ).save( function( err, user, count ){
             if (err){
               return res.jsonErr(err);
             }
             //showLog(user);
-            res.json(user)
+            res.json(user);
+
+            var subject = "Active your account at website: "+config.domain;
+            var active_link = "http://{0}/users/active?hash={1}&user_id={2}";
+            active_link = active_link.format( config.domain, user.hash_register, user._id );
+
+            var html_content  = "<p>Hi, you registered an account on our website at address http://{0}</p>".format(config.domain);
+            html_content += "<p>To active your account, Please click  <a href='{0}'>here</a></p>".format(active_link);
+            html_content += "<p>If you don't see the link, Please copy below link:</p>";
+
+            html_content += "<p>{0}</p>".format(active_link);
+            showLog(html_content);
+            //sendEmail(config.admin_email,user.email,subject,html_content,config);
           });
 
         });
@@ -149,6 +163,32 @@ module.exports = function(BaseController){
       res.json("ok");
       
     },
+
+    active:function(req, res, next){
+      var hash = req.query.hash;
+      var user_id = req.query.user_id;
+      //http://localhost:3000/users/active?hash=f37dfbbd-b06b-4b23-93a5-d0113bf7598a&user_id=54510f3774760efb1e88a04d
+      if (!hash && user_id){
+        return res.send("Invalid request");
+      }
+      User.findById(user_id, function(err,user){
+        if ( err){
+          return res.send("Happended error while active your account");
+        }
+        if (user.status == "actived"){
+          return res.send("Your account has already actived"); 
+        }
+        if ( user.hash_register != hash){
+         return res.send("Invalid hash to active your account");
+        }
+        user.status = "actived";
+        user.save();
+        var return_text = "Your account is actived, Please click <a href='{0}'>here</a> to go to homepage";
+        return_text = return_text.format("http://"+config.domain);
+        return res.send(return_text);
+      });
+    },
+
     update: function( req, res, next ){
       var action = req.query.action;
       if (!action){

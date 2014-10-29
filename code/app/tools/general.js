@@ -79,6 +79,20 @@ String.prototype.rtrim=function(){return this.replace(/\s+$/,'');};
 
 String.prototype.fulltrim=function(){return this.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,' ');};
 
+//Format string
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) { 
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
+
+
 global.showLog    = showLog;
 global.showWarn   = showWarn;
 global.showError  = showError;

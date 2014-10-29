@@ -528,8 +528,12 @@ body.playing .content-list {
 
 .alertify-notifier.ajs-right .ajs-message {
   word-wrap: break-word;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
   color: white; }
+  .alertify-notifier.ajs-right .ajs-message.ajs-success {
+    background: rgba(0, 252, 59, 0.7); }
+  .alertify-notifier.ajs-right .ajs-message.ajs-error {
+    background: rgba(255, 30, 30, 0.89); }
   .alertify-notifier.ajs-right .ajs-message a {
     color: #008fd5;
     text-shadow: none; }

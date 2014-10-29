@@ -631,7 +631,6 @@ body.playing{
           height: 100%;
         }        
       }
-
     }
 
     i#next-song, i#prev-song, i#current-list{
@@ -659,8 +658,14 @@ body.playing{
 }
 .alertify-notifier.ajs-right .ajs-message{
   word-wrap: break-word;
-  background: $fade_background;
+  background: $very_dark_fade_background;
   color: $white;
+  &.ajs-success{
+    background:rgba(0, 252, 59, 0.7);
+  }
+  &.ajs-error{
+    background:rgba(255, 30, 30, 0.89);
+  }
   a{
     color: $blue;
     text-shadow: none;

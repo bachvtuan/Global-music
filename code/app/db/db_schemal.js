@@ -5,6 +5,7 @@ var userSchema = mongoose.Schema({
   user_name: String,
   email: String,
   password: String,
+  hash_register: String,
   theme:String,
   created_date:{ type: Date, default: Date.now() },
   status:{ type: String, default: 'actived' }

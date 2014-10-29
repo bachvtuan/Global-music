@@ -13,12 +13,16 @@ module.exports = function( app ){
 
   app.get('/', attachDB, function (req, res,next) {
     HomeController.index( req, res, next );
-  })
+  });
 
   app.post('/users/login', attachDB, function (req, res,next) {
     UserController.login( req, res, next );
   });
 
+  app.get('/users/active', attachDB, function (req, res,next) {
+    UserController.active( req, res, next );
+  });
+  
   app.post('/users/logout', attachDB, function (req, res,next) {
     UserController.logout( req, res, next );
   });
