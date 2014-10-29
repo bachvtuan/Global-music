@@ -152,7 +152,7 @@ input {
   border-radius: 0px;
   border: none; }
   .alertify-notifier .ajs-message.ajs-success {
-    background-color: rgba(0, 0, 0, 0.5); }
+    background-color: rgba(0, 0, 0, 0.9); }
   .alertify-notifier .ajs-message.ajs-error {
     background: rgba(114, 31, 59, 0.7);
     /* color: #721F3B; */ }
@@ -358,8 +358,8 @@ body.playing .content-list {
       #wrapper .content-list .album img {
         float: left;
         margin: 0px 10px 0px 0px;
-        width: 80px;
-        height: 80px; }
+        width: 100px;
+        height: 100px; }
       #wrapper .content-list .album a.title {
         margin: 0px 0px 0px 0px;
         font-size: 15px;
@@ -597,8 +597,9 @@ body.playing .content-list {
       list-style-type: upper-hexadecimal; }
       .tuan-modal .body ol pre {
         margin-top: 10px;
-        background: rgba(255, 255, 255, 0.8);
-        color: black; }
+        background: white;
+        color: black;
+        border-radius: 0px; }
     .tuan-modal .body div.tagsinput span.tag {
       background: rgba(0, 0, 0, 0.5);
       border-radius: 0px;

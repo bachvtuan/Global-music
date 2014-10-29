@@ -294,7 +294,12 @@ module.exports = function(BaseController){
       //res.json( jsonSucc( req.body ) );
       var user_id = req.session.user._id;
       var album_id = update_album._id;
-      showLog(album_id);
+
+      var action = req.query.action;
+
+      showLog(album_id,action);
+
+
 
       Album.findById(album_id, function(err, album){
 
@@ -308,6 +313,22 @@ module.exports = function(BaseController){
         if ( album.user_id != user_id ){
           return res.json( jsonErr("You can't update this album") );
         }
+
+        if ( action && action == "share"){
+          showWarn("user shared this album "+album.title);
+          album.is_public = true;
+          album.save();
+          return res.json( jsonSucc(album) );
+        }
+
+        if ( action && action == "unshare"){
+          showWarn("user unshared this album "+album.title);
+          album.is_public = false;
+          album.save();
+          return res.json( jsonSucc(album) );
+        }
+
+
         album.title = update_album.title;
 
         if ( update_album.tags && update_album.tags.trim() != "" ){

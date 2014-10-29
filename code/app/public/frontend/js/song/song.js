@@ -126,6 +126,10 @@ songApp.controller('SongCtrl',
     fSharedService.prepForBroadcast({cmd:'play-songs',data: broadcast_data });
   }
 
+  $scope.addToQueue = function(song){
+   fSharedService.prepForBroadcast({cmd:'add-to-queue',data: song }); 
+  }
+
   $scope.downloadSong = function(song){
     var pom = document.createElement('a');
     pom.setAttribute('href', song.link);

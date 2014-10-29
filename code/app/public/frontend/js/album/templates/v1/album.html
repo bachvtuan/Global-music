@@ -30,14 +30,27 @@
                 <a ng-repeat="tag in album.tags track by tag._id" ng-click="setTagFilter(tag.name)">{{tag.name}}&nbsp;</a>
               </span>
             </p>
+            <p ng-if="album.is_public">
+              <i class="fa fa-globe fa-lg cursor" ng-click="showPublicLink(album)" title="Click here to show public link" ></i>
+            </p>
           </div>
           <div class="btn-group">
             <button type="button" class="btn btn-default transparent dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-gear fa-lg"></i>
             </button>
             <ul class="dropdown-menu pull-right" role="menu">
-              <li><a ng-click="editAlbum(album)"><i class="fa fa-pencil"></i> Edit</a></li>
-              <li><a ng-click="removeAlbum(album)"><i class="fa fa-remove"></i> Delete</a></li>
+              <li>
+                <a ng-click="editAlbum(album)"><i class="fa fa-pencil"></i> Edit</a>
+              </li>
+              <li>
+                <a ng-click="removeAlbum(album)"><i class="fa fa-remove"></i> Delete</a>
+              </li>
+              <li ng-if="album.is_public">
+                <a ng-click="unShareAlbum(album)"><i class="fa fa-globe"></i> Unshare</a>
+              </li>
+              <li ng-if="!album.is_public">
+                <a ng-click="shareAlbum(album)"><i class="fa fa-globe"></i> Share</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -108,7 +121,6 @@
   </div>
 </div>
 
-
 <div class="tuan-modal animate-if" ng-if="show_help_search">
   <div class="body">
     <i class="fa fa-close" ng-click="$parent.show_help_search = false;" ></i>
@@ -143,4 +155,14 @@
         </li>
       </ol>
     </div>
+  </div>
+</div>
+
+<div class="tuan-modal animate-if" ng-if="show_public_link">
+  <div class="body">
+    <i class="fa fa-close" ng-click="$parent.show_public_link = false;" ></i>
+    <h3>Public link for album : {{share_album.title}}</h3>
+    <hr/>
+    <p>Please copy link below: <a>{{public_link}}</a></p>
+  </div>
 </div>

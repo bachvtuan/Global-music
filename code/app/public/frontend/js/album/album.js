@@ -9,6 +9,10 @@ albumApp.config(['$routeProvider',function($routeProvider) {
     when('/albums/:type', {
       templateUrl:  templateVersion('frontend/js/album/album.html'),
       controller: 'AlbumCtrl'
+    }).
+    when('/album/:album_id', {
+      templateUrl:  templateVersion('frontend/js/album/album.html'),
+      controller: 'AlbumCtrl'
     })
 }]);
 
@@ -42,7 +46,16 @@ albumApp.controller('AlbumCtrl',
      $scope.navigation_name ="album"; 
     }
     Page.setTitle("Browse album");
-    Albums.get({}, function(res){
+
+    
+    var get_params = {};
+
+    if ( $routeParams.album_id ){
+      get_params.id = $routeParams.album_id;
+      console.error("tai sao", get_params.album_id);
+    }
+
+    Albums.get(get_params, function(res){
       $scope.processRetrieveData(res,function(data){
         log("Data", data);
         $scope.albums = data;
@@ -86,6 +99,35 @@ albumApp.controller('AlbumCtrl',
         });
       })
     });
+  }
+
+  $scope.shareAlbum = function(album){
+    var title = "After you share this album, other user can browse this album and listen to, Do you want to continue ?";
+    $dialogs.confirm( title, function(){
+      Albums.update({action:"share"}, album,function(res){
+        $scope.processRetrieveData(res,function(data){
+          $dialogs.success("Your album is shared to public, You can unshare it whenever you want")
+          $scope.updateItemInList( $scope.albums, data );
+        });
+      });
+    });  
+  }
+
+  $scope.unShareAlbum = function(album){
+    Albums.update({action:"unshare"}, album,function(res){
+      $scope.processRetrieveData(res,function(data){
+        $scope.updateItemInList( $scope.albums, data );
+        $dialogs.success("Your album is unshared")
+      });
+    });
+  }
+
+  $scope.showPublicLink = function(album){
+    log("tasi sao");
+    $scope.show_public_link = true;
+    log($scope.show_public_link);
+    $scope.share_album = album;
+    $scope.public_link = document.location.origin +"#/album/"+album._id;
   }
 
   $scope.resetValue = function(){

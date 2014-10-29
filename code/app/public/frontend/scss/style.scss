@@ -131,7 +131,7 @@ input{
     border-radius:0px;
     border:none;
     &.ajs-success{
-      background-color:$very_dark_fade_background;
+      background-color:$dark;
     }
     &.ajs-error{
       background:rgba(114,31,59,0.7);
@@ -400,8 +400,8 @@ body.playing{
       img{
         float: left;
         margin:0px 10px 0px 0px;
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
       }
       a.title{
         margin: 0px 0px 0px 0px;
@@ -742,8 +742,9 @@ body.playing{
       list-style-type:upper-hexadecimal;
       pre{
         margin-top:10px;
-        background: $fade_bright;
+        background: $white;
         color: $black;
+        border-radius:0px;
       }
     }
     div.tagsinput{

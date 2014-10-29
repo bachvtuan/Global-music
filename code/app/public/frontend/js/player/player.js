@@ -32,22 +32,44 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
         if ( broadcast_data.album_cover_id ){
           $scope.album_cover_id = broadcast_data.album_cover_id
         }
-        $('body').addClass("playing");
-        if ( !angular.isDefined($scope.audio)  ){
-          //Should init intance audio first
-          var as = audiojs.createAll($scope.audiojs_setting);
-          $scope.audio =  as[0];
-          $timeout(function(){
-            $scope.setSong();
-          });
-        }
-        else{
-          $scope.setSong( );
-        }
+
+        $scope.initPlayer();
         
+        break;
+
+      case 'add-to-queue':
+        //Check duplicate song
+        var song =broadcast_data;
+        for( var i =0; i < $scope.songs.length; i++ ){
+          log("songs",$scope.songs);
+          if ( $scope.songs[i]._id == song._id ){
+            return $dialogs.message("This song has already in the playlist");
+          }
+        }
+        $scope.songs.push( song );
+        //This is the first song in the list, so init player
+        if ($scope.songs.length == 1){
+          $scope.song_index = 0;
+          $scope.initPlayer();
+        }
         break;
     }
   });
+
+  $scope.initPlayer = function(){
+    $('body').addClass("playing");
+    if ( !angular.isDefined($scope.audio)  ){
+      //Should init intance audio first
+      var as = audiojs.createAll($scope.audiojs_setting);
+      $scope.audio =  as[0];
+      $timeout(function(){
+        $scope.setSong();
+      });
+    }
+    else{
+      $scope.setSong( );
+    }
+  }
 
   $scope.changeVolume = function(event){
     //log(event);
