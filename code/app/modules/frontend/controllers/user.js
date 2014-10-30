@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var User     = mongoose.model( 'User' );
 var sendEmail = require('../../../tools/send_mail').sendEmail;
 var uuid = require('node-uuid');
+var _     = require('underscore');
 
 function validateRegister(body){
 
@@ -54,6 +55,7 @@ module.exports = function(BaseController){
       }
 
       var filter = {"$or":[{user_name:body.login_name}, {email:body.login_name} ]}
+      var _this = this;
 
       User.find(filter, function(err, users){
 
@@ -72,6 +74,8 @@ module.exports = function(BaseController){
         bcrypt.compare( body.password, hash, function(err, result) {
           if (result){
             req.session.user = first_user;
+            first_user = _this.removeSecretFields(first_user.toObject());
+            showLog("first_user", first_user);
             return res.json( jsonSucc( first_user ) );
           }
           else{
@@ -84,7 +88,6 @@ module.exports = function(BaseController){
     register: function(req, res, next) {
       console.log("req.body");
       var body = req.body;
-      
 
       var validator_error = validateRegister( body );
 
@@ -92,6 +95,7 @@ module.exports = function(BaseController){
         return res.json( jsonErr(validator_error) );
       }
 
+      var _this = this;
       //res.json( jsonSucc( req.body ) );
       
       var filter = {"$or":[{user_name:body.user_name}, {email:body.email} ]}
@@ -112,7 +116,6 @@ module.exports = function(BaseController){
           }
         }
 
-
         var bcrypt = require('bcrypt-nodejs');
         bcrypt.hash(body.password, null, null, function(err, hash) {
           if (err){
@@ -127,8 +130,9 @@ module.exports = function(BaseController){
             if (err){
               return res.jsonErr(err);
             }
+            req.session.user = user;
             //showLog(user);
-            res.json(user);
+            
 
             var subject = "Active your account at website: "+config.domain;
             var active_link = "http://{0}/users/active?hash={1}&user_id={2}";
@@ -140,7 +144,11 @@ module.exports = function(BaseController){
 
             html_content += "<p>{0}</p>".format(active_link);
             showLog(html_content);
-            //sendEmail(config.admin_email,user.email,subject,html_content,config);
+
+            user = _this.removeSecretFields(user.toObject());
+            res.json(user);
+
+            sendEmail(config.admin_email,user.email,subject,html_content,config);
           });
 
         });
@@ -148,10 +156,18 @@ module.exports = function(BaseController){
       });
 
     },
+    removeSecretFields:function(user){
+      showLog( typeof(user) );
+      delete user.hash_register;
+      delete user.password;
+      return user;
+    },
     //end register
     info: function(req, res, next) {
       if (req.session.user){
-        res.json( jsonSucc( req.session.user ) );
+        var user = req.session.user;
+        user = this.removeSecretFields(user);
+        res.json( jsonSucc( user ) );
       }
       else{
         res.json( jsonErr("You are not login") );  

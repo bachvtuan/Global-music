@@ -1,6 +1,7 @@
 
 usersApp.controller('RegisterCtrl', 
-  function ($scope, $http, $location,$window, Users, $dialogs, Page) {
+  function ($scope, $rootScope, $http, $location,$window, Users, $dialogs, 
+    Page, $location, $cookieStore, $userStyle) {
 
   $scope.init = function(){
     Page.setTitle("Register new account");
@@ -46,6 +47,12 @@ usersApp.controller('RegisterCtrl',
         $scope.user_name = "";
         $scope.resetValue();
         $dialogs.message("success :Please check your email for activation, The email may take about 1 minute to arrive");
+
+        $cookieStore.put('user', data);
+        $rootScope.user = data;
+        $userStyle.setBodyStyle();
+        $location.path('/albums');
+
       });
     });
   }
