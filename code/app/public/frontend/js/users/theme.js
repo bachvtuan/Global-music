@@ -140,6 +140,10 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
     ];
 
   return {
+    setUser:function(user){
+      $rootScope.user = user;
+      $cookieStore.put('user',user);
+    },
     getUser: function(){
       var user = $rootScope.user;
       if (!user){

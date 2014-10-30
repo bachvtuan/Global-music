@@ -1,11 +1,17 @@
 
 usersApp.controller('UserSettingCtrl', 
-  function ($scope, $http, $location,$window, Users, $dialogs, $userStyle, Page) {
+  function ($scope, $rootScope, $http, $location,$window, Users, $dialogs, $userStyle, Page) {
 
     $scope.init = function(){
+
       Page.setTitle("Edit your setting");
+
       $scope.current_tab = "general";
+
       $scope.$userStyle = $userStyle;
+
+      $scope.edit_user = angular.copy($userStyle.getUser());
+      log('$scope.edit_user 2',$scope.edit_user);
 
       $scope.list_style = $userStyle.getList();
       $scope.current_style = $userStyle.getUserStyle();
@@ -15,6 +21,22 @@ usersApp.controller('UserSettingCtrl',
       log(style);
       $scope.current_style = style;
       $userStyle.setUserStyle(style.name);
+    }
+
+    $scope.updateBasic = function(){
+
+      $scope.working_basic = true;
+
+      var post_data = angular.copy( $scope.edit_user );
+
+      Users.update({tail:'update',action:'update_basic'}, post_data, function(res){
+        $scope.working_basic = false;
+
+        $scope.processRetrieveData(res,function(data){
+          $userStyle.setUser(data);
+          $dialogs.success("Your basic information have been changed");
+        });
+      });
     }
 
     $scope.updatePassword = function(){
@@ -45,10 +67,14 @@ usersApp.controller('UserSettingCtrl',
 
       $scope.working_password = true;
 
+
       Users.update({tail:'update',action:'change_password'},post_data, function(res){
         $scope.working_password = false;
 
         $scope.processRetrieveData(res,function(data){
+          $scope.current_password = "";
+          $scope.new_password = "";
+          $scope.confirm_password ="";
           $dialogs.success("Your password have been changed");
         });
       });

@@ -144,7 +144,6 @@ module.exports = function(BaseController){
             req.session.user = user;
             //showLog(user);
             
-
             var subject = "Active your account at website: "+config.domain;
             var active_link = "http://{0}/users/active?hash={1}&user_id={2}";
             active_link = active_link.format( config.domain, user.hash_register, user._id );
@@ -239,7 +238,28 @@ module.exports = function(BaseController){
         case 'change_password'  : this.changePassword(body,current_user, req, res);
                                   break;
 
+        case 'update_basic'     : this.UpdateBasic(body,current_user, req, res);
+                                  break;                                  
       }
+    },
+    UpdateBasic: function(body,current_user, req, res){
+      
+      var user_id           = req.session.user._id;
+      var _this = this;
+
+      User.findById(user_id, function(err,user){
+        if (body.first_name){
+          user.first_name = body.first_name;
+        }
+
+        if (body.last_name){
+          user.last_name = body.last_name;
+        }
+
+        user.save();
+        return res.json( jsonSucc( _this.removeSecretFields(user.toObject())) );
+
+      });
     },
     changePassword: function(body,current_user, req, res){
       
