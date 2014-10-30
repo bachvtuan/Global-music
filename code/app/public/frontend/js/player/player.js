@@ -92,12 +92,23 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
   }
 
   $scope.animateLogo = function(){
+    if ( $('.player-zone img.cover').length > 0 && $('#logo img').length >0  ){
+      $scope.doAnimateLogo();      
+    }
+    else{
+      //waiting for DOM
+      $timeout(function(){
+        $scope.doAnimateLogo();
+      },500);      
+    }
+  }
+
+  $scope.doAnimateLogo = function(){
     $('.player-zone img.cover').removeClass('playing');
     $('#logo img').addClass('animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
       $(this).removeClass('animated');
       $('.player-zone img.cover').addClass('playing');
-    });
-
+    });    
   }
 
   $scope.init = function(){
@@ -109,7 +120,10 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
         console.clear();
         var msg = $dialogs.error(error);
         //
-        $('.player-zone img.cover').removeClass('playing');
+        $timeout(function(){
+          $('.player-zone img.cover').removeClass('playing');
+        },1000);
+        
       },
       callbackPlay:function(){
         console.log("callbackPlay");

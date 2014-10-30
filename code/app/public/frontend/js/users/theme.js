@@ -144,15 +144,25 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       $rootScope.user = user;
       $cookieStore.put('user',user);
     },
-    getUser: function(){
+    setUserAlbum:function(user_album){
+      $rootScope.user_album = user_album;
+    },
+    getUser: function(is_redirect){
       var user = $rootScope.user;
+      is_redirect = angular.isDefined(is_redirect) ? is_redirect : false;
       if (!user){
         user = $cookieStore.get('user');
       }
 
       if ( !user ){
         log("not found user information at cookie");
-        $location.path('/login');
+        if (is_redirect){
+          $location.path('/login');
+        }
+        else{
+          return null;
+        }
+        
       }
 
       return user;
@@ -178,6 +188,9 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
         return theme ? theme: this.get('Default');
       }
       else{
+        if ( $rootScope.user_album && $rootScope.user_album.theme ){
+          return this.get($rootScope.user_album.theme);
+        }
         return this.get('Default');
       }
     },

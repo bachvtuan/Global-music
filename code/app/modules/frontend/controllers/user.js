@@ -262,6 +262,14 @@ module.exports = function(BaseController){
         return res.json( jsonErr(parse_result) );
       }
 
+      if (current_user.avatar_id){
+        var Media     = mongoose.model( 'Media' );
+        Media.findById( current_user.avatar_id, function(err, media){
+          media.remove();
+          showLog("removed old media");
+        });
+      }
+
       image_tool.convertBase64ToFile( parse_result.data, parse_result.extension, null, function(image_path){
         showLog("Call back", image_path);
 

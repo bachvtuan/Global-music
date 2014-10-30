@@ -29,7 +29,7 @@ function($resource,$cookies){
 
 albumApp.controller('AlbumCtrl', 
   function ($scope, $http, $location,$window, $dialogs, 
-    Albums,$timeout, $routeParams, Page, fSharedService) {
+    Albums,$timeout, $routeParams, Page, fSharedService, $userStyle) {
   
 
   $scope.init = function(){
@@ -61,7 +61,15 @@ albumApp.controller('AlbumCtrl',
         log("Data", data);
         $scope.albums = data;
         if ( $routeParams.album_id ){
+          //Set share album varriable;
+          var current_user = $userStyle.getUser(false);
+          if (!current_user){
+            $userStyle.setUserAlbum($scope.albums[0].user);
+            $userStyle.setBodyStyle();
+          }
+          
           //Active share album
+
           $scope.activeAlbum($scope.albums[0]);
         }
       });

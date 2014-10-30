@@ -167,7 +167,27 @@ module.exports = function(BaseController){
           }
           //Own user and public state
           if ( (req.session.user && req.session.user._id == album.user_id) || album.is_public ){
-            return res.json( jsonSucc([album]) );
+            //Attach user info to album
+            album = album.toObject();
+            if ( !req.session.user || req.session.user._id != album.user_id){
+              var User      = mongoose.model( 'User' );
+              User.findById(album.user_id, function(err,user_album){
+                user_album = user_album.toObject();
+                album.user = {};
+                if (user_album.theme){
+                  album.user.theme = user_album.theme;
+                }
+                if (user_album.avatar_id){
+                  album.user.avatar_id = user_album.avatar_id;
+                }
+                return res.json( jsonSucc([album]) );
+              });
+            }
+            else{
+              //Owner user
+              return res.json( jsonSucc([album]) );
+            }
+            
           }
           else{
             return res.json( jsonErr("This album is private") );
