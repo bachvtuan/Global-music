@@ -79,7 +79,6 @@ app.directive('avatar', function($parse, $rootScope, $compile) {
       if ( angular.isDefined(value) && value != null ){
         avatar_url = "/media/" + value;
       }
-      console.error(value);
       
       img.attr('src',  avatar_url);        
       
