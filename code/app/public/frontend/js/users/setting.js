@@ -1,215 +1,7 @@
-usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $location) {
-  var list = [{
-      name:"Default",
-      class:"default",
-      preview:'frontend/images/backgrounds/thumb-sunset.jpg',
-      style:{"background-image":'url(frontend/images/backgrounds/sunset.jpg)'}
-    },
-    {
-      name:"Brown wood",
-      class:"brown-wood",
-      preview:'frontend/images/backgrounds/brown-wood.jpg',
-      style:{
-        "background-attachment":"initial",
-        "background-size":"initial",
-        "background-image":'url(frontend/images/backgrounds/brown-wood.jpg)'
-      }
-    },
-    {
-      name:"yellow",
-      class:"yellow",
-      preview:'frontend/images/backgrounds/thumb-yellow.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/yellow.jpg)'
-      }
-    },
-    {
-      name:"violate",
-      class:"violate",
-      preview:'frontend/images/backgrounds/thumb-violate.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/violate.jpg)'
-      }
-    },
-    {
-      name:"sunny",
-      class:"sunny",
-      preview:'frontend/images/backgrounds/thumb-sunny.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/sunny.jpg)'
-      }
-    },
-    {
-      name:"sailfish",
-      class:"sailfish",
-      preview:'frontend/images/backgrounds/thumb-sailfish.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/sailfish.jpg)'
-      }
-    },
-    {
-      name:"ocean",
-      class:"ocean",
-      preview:'frontend/images/backgrounds/thumb-ocean.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/ocean.jpg)'
-      }
-    },
-    {
-      name:"night",
-      class:"night",
-      preview:'frontend/images/backgrounds/thumb-night.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/night.jpg)'
-      }
-    },
-    {
-      name:"nexus",
-      class:"nexus",
-      preview:'frontend/images/backgrounds/thumb-nexus.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/nexus.jpg)'
-      }
-    },
-    {
-      name:"lights",
-      class:"lights",
-      preview:'frontend/images/backgrounds/thumb-lights.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/lights.jpg)'
-      }
-    },
-    {
-      name:"kiwi",
-      class:"kiwi",
-      preview:'frontend/images/backgrounds/thumb-kiwi.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/kiwi.jpg)'
-      }
-    },
-    {
-      name:"greenish",
-      class:"greenish",
-      preview:'frontend/images/backgrounds/thumb-greenish.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/greenish.jpg)'
-      }
-    },
-    {
-      name:"city",
-      class:"city",
-      preview:'frontend/images/backgrounds/thumb-city.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/city.jpg)'
-      }
-    },
-    {
-      name:"chrome",
-      class:"chrome",
-      preview:'frontend/images/backgrounds/thumb-chrome.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/chrome.jpg)'
-      }
-    },
-    {
-      name:"blue",
-      class:"blue",
-      preview:'frontend/images/backgrounds/thumb-blue.jpg',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/blue.jpg)'
-      }
-    },
-    {
-      name:"tectile",
-      class:"tectile",
-      preview:'frontend/images/backgrounds/tectile.png',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/tectile.png)',
-        'background-size' :'inherit'
-      }
-    },
-    {
-      name:"cloth",
-      class:"cloth",
-      preview:'frontend/images/backgrounds/cloth.png',
-      style:{
-        'background-image':'url(frontend/images/backgrounds/cloth.png)',
-        'background-size' :'inherit'
-      }
-    },
-    ];
-
-  return {
-    getUser: function(){
-      var user = $rootScope.user;
-      if (!user){
-        user = $cookieStore.get('user');
-      }
-
-      if ( !user ){
-        log("not found user information at cookie");
-        $location.path('/login');
-      }
-
-      return user;
-    },
-    getList: function(){
-      return list;
-    },
-    get:function( name ){
-       return _.find( list , function(style){ return style.name == name; });
-    },
-    //Get from localstorage
-    getUserStyle:function(){
-      var user = this.getUser();
-
-      if (user){
-        if ( !angular.isDefined(user.theme) ){
-          log("Set as default theme to cookie");
-          user.theme = "Default";
-          $cookieStore.put('user', user);
-        }
-        var theme =  this.get( user.theme);
-        log("theme is", theme,user.theme );
-        return theme ? theme: this.get('Default');
-      }
-      else{
-        return this.get('Default');
-      }
-    },
-    setUserStyle:function(style_name){
-      var user = this.getUser();
-
-      user['theme'] = style_name;
-      
-      var current_fac = this;
-      
-      Users.update({tail:'update',action:'extra'},user, function(res){
-        $rootScope.processRetrieveData(res,function(data){
-          $rootScope.user = data;
-          $cookieStore.put('user', data);
-          log("theme is updated");
-          //Apply to body style
-          current_fac.setBodyStyle();
-
-        });
-      });
-    },
-    getBodyStyle:function(){
-      var style = this.getUserStyle();
-      return style.style;
-    },
-    setBodyStyle:function(){
-      $rootScope.body_style = this.getBodyStyle();
-      log("$rootScope.user",$rootScope.user);
-      log("$rootScope.body_style",$rootScope.body_style);
-    }
-  };
-});
-
 
 usersApp.controller('UserSettingCtrl', 
   function ($scope, $http, $location,$window, Users, $dialogs, $userStyle, Page) {
+
     $scope.init = function(){
       Page.setTitle("Edit your setting");
       $scope.current_tab = "general";
@@ -218,9 +10,48 @@ usersApp.controller('UserSettingCtrl',
       $scope.list_style = $userStyle.getList();
       $scope.current_style = $userStyle.getUserStyle();
     }
+
     $scope.setStyle = function(style){
       log(style);
       $scope.current_style = style;
       $userStyle.setUserStyle(style.name);
+    }
+
+    $scope.updatePassword = function(){
+      
+      if (!$scope.current_password){
+        return $dialogs.error("Please input your current password");
+      }
+      if (!$scope.new_password){
+        return $dialogs.error("Please input new password");
+      }
+      if (!$scope.confirm_password){
+        return $dialogs.error("Please confirm password");
+      }
+
+      if ( $scope.confirm_password != $scope.new_password ){
+        return $dialogs.error("The new password doesn't match with the confirm password");
+      }
+
+      if ( $scope.current_password == $scope.new_password ){
+       return $dialogs.error("The new password is duplicated with your current password");
+      }
+      log("Great, let change the password");
+      
+      var post_data = {
+        current_password  : $scope.current_password,
+        new_password      : $scope.new_password
+      };
+
+      $scope.working_password = true;
+
+      Users.update({tail:'update',action:'change_password'},post_data, function(res){
+        $scope.working_password = false;
+
+        $scope.processRetrieveData(res,function(data){
+          $dialogs.success("Your password have been changed");
+        });
+      });
+
     }
 });

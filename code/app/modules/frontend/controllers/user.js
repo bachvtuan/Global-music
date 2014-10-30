@@ -1,12 +1,12 @@
-var mongoose = require('mongoose');
-var User     = mongoose.model( 'User' );
+
+var mongoose  = require('mongoose');
+var User      = mongoose.model( 'User' );
 var sendEmail = require('../../../tools/send_mail').sendEmail;
-var uuid = require('node-uuid');
-var _     = require('underscore');
+var uuid      = require('node-uuid');
+var _         = require('underscore');
+var validator = require('validator');
 
 function validateRegister(body){
-
-  var validator = require('validator');
 
   if ( !body.email || !validator.isEmail( body.email )){
     return "Your email is invalid";
@@ -16,10 +16,21 @@ function validateRegister(body){
     return "User name must have length from 3->30";
   }
 
-  if ( !body.password || !validator.isLength(body.password, 6,30) ){
-    return "Password have length from 6->30";
+  var validate_password = validatePassword(body.password);
+  
+  if (validate_password !== true ){
+    return validate_password;
   }
 
+  return true;
+}
+
+function validatePassword(password){
+
+
+  if ( !password || !validator.isLength(password, 6,30) ){
+    return "Password have length from 6->30";
+  }
   return true;
 }
 
@@ -219,10 +230,55 @@ module.exports = function(BaseController){
 
       showLog("body",body);
       showLog("action",action);
+
       switch( action){
-        case 'extra':this.updateExtra(body,current_user, req, res);break;
+
+        case 'extra'            : this.updateExtra(body,current_user, req, res);
+                                  break;
+
+        case 'change_password'  : this.changePassword(body,current_user, req, res);
+                                  break;
+
       }
     },
+    changePassword: function(body,current_user, req, res){
+      
+      if ( !body.current_password || !body.new_password ){
+        return res.json( jsonErr("Invalid request") );
+      }
+
+      var current_password  = body.current_password;
+      var new_password      = body.new_password;
+      var user_id           = req.session.user._id;
+
+      var validate_password =  validatePassword(new_password);
+
+      if ( validate_password !== true){
+        return res.json( jsonErr( validate_password ) );
+      }
+
+      var _this = this;
+
+      User.findById(user_id, function(err,user){
+        //Check current password
+        var bcrypt = require('bcrypt-nodejs');
+        bcrypt.compare( current_password, user.password, function(err, result) {
+
+          if (!result){
+            return res.json( jsonErr("The current password isn't correct") );
+          }
+
+          bcrypt.hash(new_password, null, null, function(err, hash) {
+            //Update new password
+            user.password = hash;
+            user.save();
+
+            return res.json( jsonSucc( _this.removeSecretFields(user.toObject())) );
+          });
+        });
+      });
+    },
+
     updateExtra: function(body,current_user, req, res){
       if (body.theme){
         User.findById(current_user._id, function(err, user){
