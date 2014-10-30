@@ -306,9 +306,19 @@ input {
   -webkit-animation-name: flip;
   animation-name: flip; }
 
-body.playing .content-list {
+body.show-playlist .content-list {
   height: 400px !important; }
 
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg); } }
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
 #wrapper {
   width: 950px;
   height: 610px;
@@ -321,7 +331,8 @@ body.playing .content-list {
     margin-bottom: 20px;
     position: relative; }
     #wrapper #header #logo img {
-      width: 60px; }
+      width: 100px;
+      border-radius: 0%; }
   #wrapper .navigation ul {
     margin-bottom: 30px; }
     #wrapper .navigation ul li.active {
@@ -419,7 +430,7 @@ body.playing .content-list {
         top: 0px; }
   #wrapper .wrap-player-zone {
     position: absolute;
-    bottom: 0px;
+    bottom: 15px;
     left: 35px;
     right: 35px; }
   #wrapper .playlist .scroll {
@@ -433,16 +444,21 @@ body.playing .content-list {
         #wrapper .playlist .scroll ul li a.active.active, #wrapper .playlist .scroll ul li a:hover.active {
           font-weight: bold; }
   #wrapper .player-zone {
-    margin-top: 20px;
+    margin-top: 0px;
     height: 80px;
     position: relative;
     /* override audiojs */
     /*end .audio-js */ }
     #wrapper .player-zone img.cover {
-      width: 60px;
-      height: 60px;
+      width: 80px;
+      height: 80px;
       float: left;
-      margin: 0px 20px 0px 0px; }
+      margin: 0px 15px 0px 0px;
+      border-radius: 100%; }
+      #wrapper .player-zone img.cover.playing {
+        -webkit-animation: spin 6s linear infinite;
+        -moz-animation: spin 6s linear infinite;
+        animation: spin 6s linear infinite; }
     #wrapper .player-zone p.title {
       color: #cccccc;
       font-size: 13pt; }
@@ -545,10 +561,12 @@ body.playing .content-list {
     text-shadow: none; }
 
 .quick-buttons {
-  position: absolute;
+  /* position:absolute;
   top: 50px;
-  right: 35px;
-  left: 186px; }
+  right: $wide_pading;
+  left: 186px; */
+  margin-bottom: 20px;
+  overflow: hidden; }
   .quick-buttons .wrap-search {
     position: relative; }
     .quick-buttons .wrap-search input[type="search"] {
@@ -621,7 +639,7 @@ body.playing .content-list {
       background: rgba(0, 0, 0, 0.5);
       border: 1px solid rgba(255, 255, 255, 0.8); }
 
-body.playing .wrap-theme {
+body.show-playlist .wrap-theme {
   height: 350px !important; }
 
 .my-profile {

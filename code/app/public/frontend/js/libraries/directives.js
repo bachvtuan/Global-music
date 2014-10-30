@@ -31,12 +31,11 @@ app.directive('loadImage', function($parse) {
     template: '<img />',
     link: function(scope, iElement, iAttrs) {
       var class_   = angular.isDefined(iAttrs.extraClass )  ? iAttrs.extraClass: "";
-      
+      console.error(class_);
       scope.$watch('source', function(value) {
         var img = iElement.find('img');
         
         img.attr('src',  value);
-
       
         if ( class_ != "" ){
           img[0].className += ' ' + class_;
@@ -73,16 +72,15 @@ app.directive('avatar', function($parse, $rootScope, $compile) {
     
     scope.$watch('extraId', function(value) {
       
-      
-      console.error("tai sao " + value);
       element.html(image_template).show();
       
       var img = element.find('img');
       var avatar_url = "/frontend/images/radio.png";
 
       if ( angular.isDefined(value) && value != null ){
-        avatar_url = "/" + value;
+        avatar_url = "/media/" + value;
       }
+      console.error(value);
       
       img.attr('src',  avatar_url);        
       

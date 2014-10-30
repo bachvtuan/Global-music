@@ -9,8 +9,10 @@ usersApp.controller('UserSettingCtrl',
       $scope.current_tab = "general";
 
       $scope.$userStyle = $userStyle;
+      $scope.user = $userStyle.getUser();
+      
+      $scope.edit_user = angular.copy($scope.user);
 
-      $scope.edit_user = angular.copy($userStyle.getUser());
       log('$scope.edit_user 2',$scope.edit_user);
 
       $scope.list_style = $userStyle.getList();
@@ -134,6 +136,8 @@ usersApp.controller('UserSettingCtrl',
       Users.update({tail:'update',action:'change_avatar'}, {src:src} , function(res){
         $scope.working_avatar = false;
         $scope.processRetrieveData(res,function(data){
+          $userStyle.setUser(data);
+          $scope.user = data;
           $dialogs.success("Success",'Your avatar is updated');
         });
       });

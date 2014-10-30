@@ -1,4 +1,8 @@
 <div class="navigation">
+  <div ng-controller="HeaderCtrl">
+    <ng-include src="header_template" ng-init="init('album')"></ng-include>
+  </div>
+  
   <div class="online-section nav-item">
     <h3>Online</h3>
     <ul>

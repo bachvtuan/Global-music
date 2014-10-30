@@ -1,7 +1,3 @@
-<div ng-controller="HeaderCtrl">
-  <ng-include src="header_template" ng-init="init('album')"></ng-include>
-</div>
-
 <div class="main row my-profile" ng-init="init()">
   <div class="col-md-2" ng-controller="NavigationCtrl">
     <ng-include src="navigation_template" ng-init="init('user-setting')"></ng-include>
@@ -80,9 +76,6 @@
             <div class="current-avatar"> 
               <p><strong>Your current avatar</strong></p>
               <avatar extra-id="user.avatar_id"></avatar>
-              <!-- <div class="wrap-avatar">
-                <img id="current-avatar" />
-              </div>         -->
             </div>
             <p>&nbsp;</p>
             <input type="file"   onchange="angular.element(this).scope().readURL(this)" />

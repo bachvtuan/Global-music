@@ -330,11 +330,17 @@ input{
           animation-name: flip;
 }
 
-body.playing{
+body.show-playlist{
   .content-list{
     height:$horizontal_height !important;
   }
 }
+
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
 #wrapper{
   width: 950px;
   height:610px;
@@ -348,7 +354,8 @@ body.playing{
     position:relative;
     #logo{
       img{
-        width: 60px;
+        width: 100px;
+        border-radius:0%;
       }
     }
 
@@ -490,7 +497,7 @@ body.playing{
   }
   .wrap-player-zone{
     position:absolute;
-    bottom:0px;
+    bottom:15px;
     left:$wide_pading;
     right:$wide_pading;
 
@@ -519,15 +526,21 @@ body.playing{
   }
 
   .player-zone{
-    margin-top: 20px;
+    margin-top: 0px;
     height: 80px;
     position:relative;
     
     img.cover{
-      width: 60px;
-      height: 60px;
+      width: 80px;
+      height: 80px;
       float: left;
-      margin:0px 20px 0px 0px;
+      margin:0px 15px 0px 0px;
+      border-radius:100%;
+      &.playing{
+        -webkit-animation:spin 6s linear infinite;
+        -moz-animation:spin 6s linear infinite;
+        animation:spin 6s linear infinite;          
+      }
     }
     p.title{
       color: $gray;
@@ -680,10 +693,12 @@ body.playing{
 }
 
 .quick-buttons{
-  position:absolute;
+  /* position:absolute;
   top: 50px;
   right: $wide_pading;
-  left: 186px;
+  left: 186px; */
+  margin-bottom: 20px;
+  overflow:hidden;
   .wrap-search{
     position:relative;
     input[type="search"]{
@@ -780,7 +795,7 @@ body.playing{
   }
 }
 
-body.playing .wrap-theme{
+body.show-playlist .wrap-theme{
   height: 350px !important;
 }
 .my-profile{

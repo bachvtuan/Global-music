@@ -1,89 +1,91 @@
-<div ng-controller="HeaderCtrl">
-  <ng-include src="header_template" ng-init="init('album')"></ng-include>
-</div>
 
 <div class="main row album-page" ng-init="init()">
   <div class="col-md-2" ng-controller="NavigationCtrl">
     <ng-include src="navigation_template" ng-init="init(navigation_name)"></ng-include>
   </div>
-  <div class="col-md-6">
-    <div class="content-list" >
-      <div ng-if="albums === null"  >
-        <ng-include src="'loading.html'" ng-init="text='Loading your albums'"></ng-include>
-      </div>
-      <div ng-if="albums.length == 0">
-        <p>You don't have any album, You can add more by clicking the button at the top right corner</p>
-      </div>
-      <div ng-if="albums.length > 0">
-        <div class="album" ng-repeat="album in albums  track by album._id">
-          <img ng-if="!album.feature_id" src="frontend/images/album.png">
-          <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)" ></load-image>
-          <div class="right">
-            <a class="title" title="{{album.title}}"  data-placement="bottom"
-              ng-click="activeAlbum(album)" ng-class="{active:album == current_album}" >
-              {{album.title}}
-            </a>
-            <p class="number-songs">Songs: <span>{{album.song_numbers}}</span></p>
+  <div class="col-md-10">
 
-            <p class="tag" ng-if="album.tags.length > 0 ">Tags: 
-              <span>
-                <a ng-repeat="tag in album.tags track by tag._id" ng-click="setTagFilter(tag.name)">{{tag.name}}&nbsp;</a>
-              </span>
-            </p>
-            <p ng-if="album.is_public">
-              <i class="fa fa-globe fa-lg cursor" ng-click="showPublicLink(album)" title="Click here to show public link" ></i>
-            </p>
+    <div class="quick-buttons">
+      <div class="pull-left">
+        <div class="wrap-search">
+          <input type="search" class="search-box form-control" placeHolder="Tên album" ng-model="filter_album"  />
+          <i class="fa fa-question-circle cursor" ng-click="show_help_search=true"></i>
+        </div>
+      </div>
+      <div class="pull-right">
+        <button class="btn" ng-if="current_album" ng-click="editAlbum(current_album)">
+          <i class="fa fa-pencil"></i> Edit 
+        </button>
+        <button class="btn" ng-if="current_album" ng-click="removeAlbum(current_album)">
+          <i class="fa fa-remove"></i> Delete
+        </button>
+        <button class="btn" ng-click="showAddModel()">
+          <i class="fa fa-plus"></i> New album
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="content-list" >
+          <div ng-if="albums === null"  >
+            <ng-include src="'loading.html'" ng-init="text='Loading your albums'"></ng-include>
           </div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-default transparent dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-gear fa-lg"></i>
-            </button>
-            <ul class="dropdown-menu pull-right" role="menu">
-              <li>
-                <a ng-click="editAlbum(album)"><i class="fa fa-pencil"></i> Edit</a>
-              </li>
-              <li>
-                <a ng-click="removeAlbum(album)"><i class="fa fa-remove"></i> Delete</a>
-              </li>
-              <li ng-if="album.is_public">
-                <a ng-click="unShareAlbum(album)"><i class="fa fa-globe"></i> Unshare</a>
-              </li>
-              <li ng-if="!album.is_public">
-                <a ng-click="shareAlbum(album)"><i class="fa fa-globe"></i> Share</a>
-              </li>
-            </ul>
+          <div ng-if="albums.length == 0">
+            <p>You don't have any album, You can add more by clicking the button at the top right corner</p>
           </div>
+          <div ng-if="albums.length > 0">
+            <div class="album" ng-repeat="album in albums  track by album._id">
+              <img ng-if="!album.feature_id" src="frontend/images/album.png">
+              <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)" ></load-image>
+              <div class="right">
+                <a class="title" title="{{album.title}}"  data-placement="bottom"
+                  ng-click="activeAlbum(album)" ng-class="{active:album == current_album}" >
+                  {{album.title}}
+                </a>
+                <p class="number-songs">Songs: <span>{{album.song_numbers}}</span></p>
+
+                <p class="tag" ng-if="album.tags.length > 0 ">Tags: 
+                  <span>
+                    <a ng-repeat="tag in album.tags track by tag._id" ng-click="setTagFilter(tag.name)">{{tag.name}}&nbsp;</a>
+                  </span>
+                </p>
+                <p ng-if="album.is_public">
+                  <i class="fa fa-globe fa-lg cursor" ng-click="showPublicLink(album)" title="Click here to show public link" ></i>
+                </p>
+              </div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default transparent dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-gear fa-lg"></i>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                  <li>
+                    <a ng-click="editAlbum(album)"><i class="fa fa-pencil"></i> Edit</a>
+                  </li>
+                  <li>
+                    <a ng-click="removeAlbum(album)"><i class="fa fa-remove"></i> Delete</a>
+                  </li>
+                  <li ng-if="album.is_public">
+                    <a ng-click="unShareAlbum(album)"><i class="fa fa-globe"></i> Unshare</a>
+                  </li>
+                  <li ng-if="!album.is_public">
+                    <a ng-click="shareAlbum(album)"><i class="fa fa-globe"></i> Share</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div ng-controller="SongCtrl" >
+          <ng-include src="song_template" ></ng-include>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-4">
-    <div ng-controller="SongCtrl" >
-      <ng-include src="song_template" ></ng-include>
-    </div>
-  </div>
 </div>
 
-<div class="quick-buttons">
-  <div class="pull-left">
-    <div class="wrap-search">
-      <input type="search" class="search-box form-control" placeHolder="Tên album" ng-model="filter_album"  />
-      <i class="fa fa-question-circle cursor" ng-click="show_help_search=true"></i>
-    </div>
-  </div>
-  <div class="pull-right">
-    <button class="btn" ng-if="current_album" ng-click="editAlbum(current_album)">
-      <i class="fa fa-pencil"></i> Edit 
-    </button>
-    <button class="btn" ng-if="current_album" ng-click="removeAlbum(current_album)">
-      <i class="fa fa-remove"></i> Delete
-    </button>
-    <button class="btn" ng-click="showAddModel()">
-      <i class="fa fa-plus"></i> New album
-    </button>
-  </div>
-
-</div>
 
 <div class="tuan-modal animate-if" ng-if="show_form">
   <div class="body">

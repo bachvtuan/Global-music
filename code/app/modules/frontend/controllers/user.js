@@ -285,7 +285,9 @@ module.exports = function(BaseController){
             showLog("media is created");
             current_user.avatar_id = media._id;
             current_user.save();
-            return res.json( jsonSucc( _this.removeSecretFields(current_user.toObject())) );
+            var short_user = _this.removeSecretFields(current_user.toObject());
+            req.session.user = short_user;
+            return res.json( jsonSucc( short_user ) );
           });
         });
       });

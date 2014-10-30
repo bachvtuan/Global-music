@@ -635,7 +635,12 @@
       }
     },
     playPause: function() {
-      if (this.playing) this.pause();
+      if (this.playing){
+        this.pause();
+        if ( this.settings.callbackPause ){
+          this.settings.callbackPause();
+        }
+      }
       else{
         this.play();
         if ( this.settings.callbackPlay ){

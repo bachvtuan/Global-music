@@ -57,7 +57,7 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
   });
 
   $scope.initPlayer = function(){
-    $('body').addClass("playing");
+    $('body').addClass("show-playlist");
     if ( !angular.isDefined($scope.audio)  ){
       //Should init intance audio first
       var as = audiojs.createAll($scope.audiojs_setting);
@@ -92,9 +92,12 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
   }
 
   $scope.animateLogo = function(){
+    $('.player-zone img.cover').removeClass('playing');
     $('#logo img').addClass('animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
       $(this).removeClass('animated');
+      $('.player-zone img.cover').addClass('playing');
     });
+
   }
 
   $scope.init = function(){
@@ -105,10 +108,16 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
         console.log(error);
         console.clear();
         var msg = $dialogs.error(error);
+        //
+        $('.player-zone img.cover').removeClass('playing');
       },
       callbackPlay:function(){
         console.log("callbackPlay");
         $scope.animateLogo();
+      },
+      callbackPause:function(){
+        console.log("stop");
+        $('.player-zone img.cover').removeClass('playing');
         
       },
       trackEnded: function() {
