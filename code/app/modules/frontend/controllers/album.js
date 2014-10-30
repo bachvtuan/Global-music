@@ -5,6 +5,7 @@ var Album     = mongoose.model( 'Album' );
 var Media     = mongoose.model( 'Media' );
 var Tag       = mongoose.model( 'Tag' );
 var Song      = mongoose.model( 'Song' );
+var image_tool = require('../../../tools/image');
 
 function validateAlbum(body){
 
@@ -21,54 +22,11 @@ function validateAlbum(body){
 }
 
 
-function getImageDataFromUrl(image_url, callback){
-  //shoudl check
-  //showLog( body.cover );
-
-  var request = require('request').defaults({ encoding: null });
-  var easyimg = require('easyimage');
-  var tmp = require('tmp');
-  var fs = require('fs');
-
-  tmp.file(function _tempFileCreated(err, path, fd) {
-    if (err) throw err;
-
-    console.log("File: ", path);
-    console.log("Filedescriptor: ", fd);
-    easyimg.thumbnail({
-         src:image_url, dst:path,
-         width:200, height:200,
-         x:0, y:0
-      }).then(
-      function(image) {
-          console.log(image);
-          console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
-          console.log(image);
-         
-          fs.readFile(path, 'binary', function(err, original_data){
-              
-            var base64Image = new Buffer(original_data, 'binary').toString('base64');
-            //Remove temp file
-            fs.unlink(path);
-            
-            callback(image,base64Image);
-
-          });
-      },
-      function (err) {
-        console.log(err);
-        callback(null);
-      }
-    );
-  });
-}
-
-
 function generalAddAlbum(body, res, req){
   
   if ( body.cover ){
 
-    getImageDataFromUrl( body.cover,function(image,base64_data){
+    image_tool.resizeImageDataFromUrl( body.cover,function(image,base64_data){
 
       if ( image == null ){
         return res.json( jsonErr("Album image is error, Please try other") );

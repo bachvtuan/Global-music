@@ -18,6 +18,9 @@
       <li ng-class="{active:current_tab =='background'}">
         <a ng-click="current_tab ='background'" role="tab" data-toggle="tab">Background</a>
       </li>
+      <li ng-class="{active:current_tab =='avatar'}">
+        <a ng-click="current_tab ='avatar'" role="tab" data-toggle="tab">Avatar</a>
+      </li>
     </ul>
 
     <!-- Tab panes -->
@@ -71,6 +74,31 @@
           </div>
         </div>
       </div>
+      <div class="tab-pane" ng-class="{active:current_tab =='avatar'}" >
+        <div class="row">
+          <div class="col-md-6">
+            <div class="current-avatar"> 
+              <p><strong>Your current avatar</strong></p>
+              <avatar extra-id="user.avatar_id"></avatar>
+              <!-- <div class="wrap-avatar">
+                <img id="current-avatar" />
+              </div>         -->
+            </div>
+            <p>&nbsp;</p>
+            <input type="file"   onchange="angular.element(this).scope().readURL(this)" />
+            <hr/>
+            <p>Allow types: <strong>(JPEG,PNG,GIF) </strong> Maximum size: <strong>500kb</strong></p>
+            <p>
+            <button type="button" ng-click="uploadAvatar()" ng-class="{'working': working_avatar}" 
+            ng-disabled="working_avatar"  class="btn btn-default">Submit</button>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <img id="preview-avatar" />
+          </div>
+        </div>
+      </div>
+      <!-- end tab avatar -->
     </div>
 
   </div>

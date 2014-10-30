@@ -82,6 +82,9 @@ body {
   color: #eeeeee;
   background-size: cover; }
 
+input[type=file] {
+  background-color: transparent !important; }
+
 a, p {
   font-size: 14px;
   line-height: 1.2em; }
@@ -92,6 +95,9 @@ a {
   a:hover {
     text-decoration: none;
     color: #008fd5; }
+
+button[disabled] {
+  background-color: rgba(0, 0, 0, 0.9) !important; }
 
 .cursor {
   cursor: pointer; }
@@ -660,6 +666,10 @@ body.playing .wrap-theme {
         .my-profile .wrap-theme .thumbnail .caption h3 {
           font-size: 10pt;
           margin: 5px 0px 0px 0px; }
+
+#preview-avatar {
+  max-width: 300px;
+  max-height: 300px; }
 
 /* Tabs */
 .nav-tabs {

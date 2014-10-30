@@ -49,6 +49,9 @@ body{
   background-size:cover;
   
 }
+input[type=file]{
+  background-color: transparent !important;
+}
 a,p{
   
   font-size: 14px;
@@ -62,6 +65,10 @@ a{
     text-decoration: none;
     color: $blue;
   }
+}
+
+button[disabled]{
+  background-color:$dark !important;
 }
 
 .cursor{
@@ -832,6 +839,11 @@ body.playing .wrap-theme{
       }
     }
   }
+}
+
+#preview-avatar{
+  max-width: 300px;
+  max-height: 300px;
 }
 
 @import 'extra';

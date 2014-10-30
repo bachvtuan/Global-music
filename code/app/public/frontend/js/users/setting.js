@@ -80,4 +80,62 @@ usersApp.controller('UserSettingCtrl',
       });
 
     }
+    //End update password
+
+    $scope.updateCurrentAvatar = function(){
+      var extra = $avatar_list.getValue( $scope.edit_user['info:user_name'] );
+      var avatar_src =  prependTemplateUrl('users/avatar/') + $scope.edit_user['info:user_name']+'/'+extra;
+      //$('#current-avatar').attr('src', avatar_src);
+    }
+
+
+
+    $scope.readURL = function(input){
+      if (input.files && input.files[0]) {
+        var filePath = $(input).val();
+        
+
+        var reader = new FileReader();
+          
+        //attach event handlers here...
+       
+        reader.readAsDataURL(input.files[0]);
+        $scope.addEventHandler(reader, 'loadend', function(e) {
+          var result = e.target.result;
+          var checking_image_pattern  = 'data:image/';
+          if ( result.substr(0, checking_image_pattern.length ) !=  checking_image_pattern ) {
+            return $dialogs.notify('Error', "Please select image file");
+          }
+          $('#preview-avatar').attr('src',result);
+        });
+
+      }
+    }
+    $scope.addEventHandler = function(obj, evt, handler) {
+      if(obj.addEventListener) {
+        // W3C method
+        obj.addEventListener(evt, handler, false);
+      } else if(obj.attachEvent) {
+        // IE method.
+        obj.attachEvent('on'+evt, handler);
+      } else {
+        // Old school method.
+        obj['on'+evt] = handler;
+      }
+    }
+
+    $scope.uploadAvatar = function( ){
+      var src = $('#preview-avatar').attr('src');
+      if ( !angular.isDefined( src ) ){
+        return $dialogs.error( "Please select image file before upload");
+      }
+      
+      $scope.working_avatar = true;
+      Users.update({tail:'update',action:'change_avatar'}, {src:src} , function(res){
+        $scope.working_avatar = false;
+        $scope.processRetrieveData(res,function(data){
+          $dialogs.success("Success",'Your avatar is updated');
+        });
+      });
+    }
 });

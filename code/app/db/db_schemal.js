@@ -9,6 +9,7 @@ var userSchema = mongoose.Schema({
   password: String,
   hash_register: String,
   theme:String,
+  avatar_id: mongoose.Schema.ObjectId,
   created_date:{ type: Date, default: Date.now() },
   status:{ type: String, default: 'actived' }
 })

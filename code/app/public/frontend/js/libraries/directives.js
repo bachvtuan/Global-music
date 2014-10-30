@@ -63,3 +63,55 @@ app.directive('loadAudio', function($parse) {
     }
   }
 });
+
+app.directive('avatar', function($parse, $rootScope, $compile) {
+  var image_template = '<img class="avatar" tooltip="{{userName}}" />';
+  
+  var linker = function(scope, element, iAttrs) {
+    
+    var class_              = angular.isDefined(iAttrs.extraClass )  ? iAttrs.extraClass: "";
+    
+    scope.$watch('extraId', function(value) {
+      
+      
+      console.error("tai sao " + value);
+      element.html(image_template).show();
+      
+      var img = element.find('img');
+      var avatar_url = "/frontend/images/radio.png";
+
+      if ( angular.isDefined(value) && value != null ){
+        avatar_url = "/" + value;
+      }
+      
+      img.attr('src',  avatar_url);        
+      
+      
+      if ( class_ != "" ){
+        
+        var imgs = element.find('img');
+        if (imgs.length >0){
+          imgs[0].className += ' ' + class_;
+        }
+        
+      }
+
+      $compile(element.contents())(scope);
+
+    }, true);
+
+  }
+
+  var result =  {
+    restrict: 'EA',
+    rep1ace: true,
+    scope: {
+      extraId: '=',       
+      class: '='
+    },
+    //template: image_template ,
+    link: linker
+  }
+  return result;
+
+});

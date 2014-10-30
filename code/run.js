@@ -147,9 +147,14 @@ function boot(db){
 
   //Allow get body in the request
   var bodyParser = require('body-parser');
-  app.use(bodyParser.urlencoded({ extended: false }));
-  app.use( bodyParser.json() );       // to support JSON-encoded bodies
-  //app.use( bodyParser.urlencoded() ); // to support URL-encoded bodies
+    
+  //Limit is 1mb
+  app.use(bodyParser.urlencoded({ extended: false, limit: '1mb' }));
+  app.use( bodyParser.json( {limit: '1mb'}) );       // to support JSON-encoded bodies
+  
+
+  /*app.use(bodyParser.json({limit: '1mb'}));
+  app.use(bodyParser.urlencoded({extended: false,limit: '1mb'}));*/
 
   var methodOverride = require('method-override');
   app.use(methodOverride());

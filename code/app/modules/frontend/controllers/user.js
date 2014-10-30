@@ -2,6 +2,7 @@
 var mongoose  = require('mongoose');
 var User      = mongoose.model( 'User' );
 var sendEmail = require('../../../tools/send_mail').sendEmail;
+var image_tool = require('../../../tools/image');
 var uuid      = require('node-uuid');
 var _         = require('underscore');
 var validator = require('validator');
@@ -221,29 +222,76 @@ module.exports = function(BaseController){
         return res.json( jsonErr("Expect action param") );
       }
       var body = req.body;
-      var current_user = req.session.user;
-      
-      if ( !current_user ){
-        res.json( jsonErr("You are not login") );  
-      }
+      var user_id           = req.session.user._id;
+      var _this = this;
 
-      showLog("body",body);
+      //showLog("body",body);
       showLog("action",action);
 
-      switch( action){
+      User.findById(user_id, function(err,user){
+        switch( action){
 
-        case 'extra'            : this.updateExtra(body,current_user, req, res);
-                                  break;
+          case 'extra'            : _this.updateExtra(body,user, req, res);
+                                    break;
 
-        case 'change_password'  : this.changePassword(body,current_user, req, res);
-                                  break;
+          case 'change_password'  : _this.changePassword(body,user, req, res);
+                                    break;
 
-        case 'update_basic'     : this.UpdateBasic(body,current_user, req, res);
-                                  break;                                  
+          case 'update_basic'     : _this.UpdateBasic(body,user, req, res);
+                                    break;
+
+          case 'change_avatar'     : _this.changeAvatar(body,user, req, res);
+                                    break;
+        }
+      });
+
+    },
+    changeAvatar: function(body,current_user, req, res){
+
+      if ( !body.src ){
+        return res.json( jsonErr("Invalid request") );
       }
+
+      var _this = this;
+
+      var src = body.src;
+      
+      var parse_result = image_tool.parseBase64(src);
+
+      if ( typeof(parse_result) == "string" ){
+        return res.json( jsonErr(parse_result) );
+      }
+
+      image_tool.convertBase64ToFile( parse_result.data, parse_result.extension, null, function(image_path){
+        showLog("Call back", image_path);
+
+        image_tool.resizeImageDataFromUrl( image_path,function(image,base64_data){
+
+          if ( image == null ){
+            return res.json( jsonErr("Album image is error, Please try other") );
+          }
+          var media_data = {
+            user_id: body.user_id,
+            data:base64_data,
+            mime_type :parse_result.image_type
+          }
+
+          //Remove temp file
+          require('fs').unlink(image_path);
+
+          var Media     = mongoose.model( 'Media' );
+
+          new Media( media_data ).save( function( err, media, count ){
+            showLog("media is created");
+            current_user.avatar_id = media._id;
+            current_user.save();
+            return res.json( jsonSucc( _this.removeSecretFields(current_user.toObject())) );
+          });
+        });
+      });
     },
     UpdateBasic: function(body,current_user, req, res){
-      
+
       var user_id           = req.session.user._id;
       var _this = this;
 
