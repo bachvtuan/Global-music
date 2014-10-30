@@ -195,7 +195,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       }
     },
     setUserStyle:function(style_name){
-      var user = this.getUser();
+      var user = this.getUser(true);
 
       user['theme'] = style_name;
       

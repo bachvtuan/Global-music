@@ -27,7 +27,7 @@ module.exports = function( app ){
     UserController.logout( req, res, next );
   });
 
-  app.put('/users/update', attachDB, function (req, res,next) {
+  app.put('/users/update', checkUser, function (req, res,next) {
     UserController.update( req, res, next );
   });
 
