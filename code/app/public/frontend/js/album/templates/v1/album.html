@@ -1,6 +1,6 @@
 
 <div class="main row album-page" ng-init="init()">
-  <div class="col-md-2" ng-controller="NavigationCtrl">
+  <div class="col-md-2" ng-controller="NavigationCtrl" ng-if="navigation_name">
     <ng-include src="navigation_template" ng-init="init(navigation_name)"></ng-include>
   </div>
   <div class="col-md-10">

@@ -28,7 +28,7 @@ function($resource,$cookies){
 
 
 albumApp.controller('AlbumCtrl', 
-  function ($scope, $http, $location,$window, $dialogs, 
+  function ($scope, $http, $location,$window, $dialogs, $rootScope,
     Albums,$timeout, $routeParams, Page, fSharedService, $userStyle) {
   
 
@@ -39,9 +39,21 @@ albumApp.controller('AlbumCtrl',
     $scope.albums = null;
     $scope.current_album_id = null;
     $scope.type = $routeParams.type;
+
+    var get_params = {};
+
+    if ( $routeParams.album_id ){
+      $scope.share_album_id = $routeParams.album_id;
+      get_params.id = $routeParams.album_id;
+    }
+
+
     if ($scope.type == "public"){
       $scope.filter_album = "!";
       $scope.navigation_name ="public_album";
+    }
+    if (get_params.id){
+     $scope.navigation_name ="share_album";  
     }
     else{
      $scope.navigation_name ="album"; 
@@ -49,12 +61,6 @@ albumApp.controller('AlbumCtrl',
     Page.setTitle("Browse album");
 
     
-    var get_params = {};
-
-    if ( $routeParams.album_id ){
-      $scope.share_album_id = $routeParams.album_id;
-      get_params.id = $routeParams.album_id;
-    }
 
     Albums.get(get_params, function(res){
       $scope.processRetrieveData(res,function(data){
@@ -67,10 +73,13 @@ albumApp.controller('AlbumCtrl',
             $userStyle.setUserAlbum($scope.albums[0].user);
             $userStyle.setBodyStyle();
           }
-          
-          //Active share album
 
-          $scope.activeAlbum($scope.albums[0]);
+          if ( !$rootScope.share_album_id || $rootScope.share_album_id != get_params.id){
+            $rootScope.share_album_id = get_params.id;
+            //Active share album
+            $scope.activeAlbum($scope.albums[0]);
+          }
+          
         }
       });
     });

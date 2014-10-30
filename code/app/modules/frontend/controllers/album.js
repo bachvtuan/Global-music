@@ -194,15 +194,15 @@ module.exports = function(BaseController){
           }
         });
       }else{
-        var user_id = mongoose.Types.ObjectId(req.session.user._id);
-        var filter = {user_id:user_id};
-        
-        Album.find(filter, function(err, albums){
-          return res.json( jsonSucc(albums) );
-        });        
+        checkUser(req, res, function(){
+          var user_id = mongoose.Types.ObjectId(req.session.user._id);
+          var filter = {user_id:user_id};
+          
+          Album.find(filter, function(err, albums){
+            return res.json( jsonSucc(albums) );
+          });        
+        });
       }
-      
-
     },
 
 
