@@ -28,13 +28,13 @@
     <div class="row">
       <div class="col-md-8">
         <div class="content-list" >
-          <div ng-if="albums === null"  >
+          <div ng-if="search_albums === null"  >
             <ng-include src="'loading.html'" ng-init="text='Loading your albums'"></ng-include>
           </div>
-          <div ng-if="albums.length == 0">
+          <div ng-if="search_albums.length == 0">
             <p>You don't have any album, You can add more by clicking the button at the top right corner</p>
           </div>
-          <div ng-if="albums.length > 0">
+          <div ng-if="search_albums.length > 0">
             <div class="album" ng-repeat="album in search_albums  track by album._id">
               <img ng-if="!album.feature_id" src="frontend/images/album.png">
               <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)" ></load-image>

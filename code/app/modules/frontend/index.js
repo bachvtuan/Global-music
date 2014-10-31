@@ -54,6 +54,10 @@ module.exports = function( app ){
     AlbumController.index( req, res, next );
   });
 
+  app.get('/albums/search', attachDB, function (req, res,next) {
+    AlbumController.search( req, res, next );
+  });
+
   app.post('/albums', checkUser, function (req, res,next) {
     AlbumController.add( req, res, next );
   });

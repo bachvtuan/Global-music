@@ -32,6 +32,7 @@ mongoose.model('Tag', tagSchema)
 
 var albumSchema = mongoose.Schema({
   user_id: mongoose.Schema.ObjectId,
+  user_name: String,
   title: String,
   feature_id: mongoose.Schema.ObjectId,
   song_numbers:{ type: Number, default: 0 },

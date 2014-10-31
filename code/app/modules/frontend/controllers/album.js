@@ -236,6 +236,7 @@ module.exports = function(BaseController){
         }
 
         body.user_id = req.session.user._id;
+        body.user_name = req.session.user.user_name;
         
         if ( body.tags && body.tags.trim() != "" ){
           generalDoTags(body.tags, req, function(arr_tags){
@@ -344,7 +345,39 @@ module.exports = function(BaseController){
         }
         
       });
+    },
+    //End update
+
+    search:function(req, res, next) {
+      showLog(req.query);
+      var query = req.query;
+      var user_name = query.user;
+      //Only search public album
+      var search_query = {is_public:true};
+      if (query.user){
+        search_query.user_name = query.user;
+      }
+      if (query.keyword){
+        //search_query.title = {'$regex': query.keyword};
+        //search_query.title = {'$search': query.keyword};
+        search_query.title = {'$regex': new RegExp(query.keyword, 'i')};
+         
+      }
+      if (query.tag){
+        search_query.tags  = { 
+          $elemMatch : 
+           { 
+             name : {'$regex': new RegExp(query.tag, 'i')}
+           } 
+        } 
+      }
+      showLog("search_query",search_query,search_query.tags);
+      Album.find(search_query, function (err, albums) {
+        return res.json( jsonSucc(albums) );
+      });
+      
     }
+    //End search
   });
 }
  

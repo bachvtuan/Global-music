@@ -18,7 +18,7 @@ albumApp.config(['$routeProvider',function($routeProvider) {
 
 albumApp.factory('Albums', ['$resource','$cookies',
 function($resource,$cookies){
-  return $resource( 'albums' , {}, {
+  return $resource( 'albums/:tail' , {}, {
     query: {method:'GET'},
     post: { method:'POST', headers: {'x-csrf-token': csrf}},
     update: {method:'PUT'}
@@ -135,7 +135,7 @@ albumApp.controller('AlbumCtrl',
       Albums.remove({id:remove_album._id},function(res){
         $scope.processRetrieveData(res,function(data){
           $scope.removeItemInList( $scope.albums, remove_album._id );
-          $scope.updateItemInList( $scope.search_albums, remove_album._id );
+          $scope.removeItemInList( $scope.search_albums, remove_album._id );
 
           if ( $scope.current_album && $scope.current_album._id == remove_album._id ){
             $scope.current_album_id = null;
@@ -216,6 +216,11 @@ albumApp.controller('AlbumCtrl',
       $scope.pending_add_album = false;
       $scope.processRetrieveData(res,function(data){
         $scope.albums.push(data);
+
+        if ( $scope.isMatch(data, $scope.search_result) ){
+          $scope.search_albums.push( angular.copy(data) );
+        }
+
         $dialogs.success("You added new album");
         $scope.resetValue();
       });
@@ -261,13 +266,31 @@ albumApp.controller('AlbumCtrl',
       if ( !result.search_online ){
         $scope.filterOffline(result);
       }
+      else{
+       $scope.filterOnline(result); 
+      }
     });
+  }
+
+  $scope.filterOnline = function(search_result){
+    console.error("filter online");
+    $scope.do_searching_online = true;
+
+    var query_data = angular.copy(search_result);
+    query_data.tail = 'search';
+
+    Albums.get(query_data, search_result, function(res){
+      $scope.do_searching_online = false;
+      $scope.processRetrieveData(res, function(albums){
+        $scope.search_albums = albums;
+      })
+    });
+
   }
 
   $scope.filterOffline = function( result ){
 
-    log("result local", result);
-    
+    $scope.search_result = result;
 
     if (result.full == "" || result.full == null){
       log("nothing to search");
@@ -289,6 +312,10 @@ albumApp.controller('AlbumCtrl',
   };
 
   $scope.isMatch = function( album, search_result ){
+
+    if (!angular.isDefined(search_result)){
+      return true;
+    }
 
     if (search_result.keyword && album.title.toLowerCase().search(search_result.keyword) == -1){
       //Skip on this album
@@ -315,7 +342,7 @@ albumApp.controller('AlbumCtrl',
 
   $scope.parseSearch = function(keyword, callback){
     keyword = $.trim(angular.copy( keyword ));
-    if ( $scope.is_searching ){
+    if ( $scope.is_searching || $scope.do_searching_online ){
       log("ignore");
       return;
     }
@@ -369,6 +396,7 @@ albumApp.controller('AlbumCtrl',
       result.is_public = true;
       result.search_online = true;
       log("search public");
+      callback(result);
     }
     else{
       result.search_online = false;
