@@ -153,6 +153,7 @@ albumApp.controller('AlbumCtrl',
         $scope.processRetrieveData(res,function(data){
           $dialogs.success("Your album is shared to public, You can unshare it whenever you want")
           $scope.updateItemInList( $scope.albums, data );
+          $scope.updateItemInList( $scope.search_albums, data );
         });
       });
     });  
