@@ -51,7 +51,8 @@
                   </span>
                 </p>
                 <p ng-if="album.is_public">
-                  <i class="fa fa-globe fa-lg cursor" ng-click="showPublicLink(album)" title="Click here to show public link" ></i>
+                  <i class="fa fa-globe fa-lg cursor" ng-click="showPublicLink(album)" title="Click here to show public link" ></i> 
+                  <a ng-click="setUserFilter(album.user_name)" ng-if="!isOwn(album.user_id)">{{album.user_name}}</a>
                 </p>
               </div>
               <div class="btn-group">

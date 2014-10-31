@@ -98,7 +98,7 @@ albumApp.controller('AlbumCtrl',
         if ( angular.isDefined($scope.share_album_id)  && $scope.share_album_id ==album_id){
           log("let play it");
           //Prevent auto play later
-          delete $scope.share_album_id;
+          $scope.share_album_id = null;
           //Send to player controler
           fSharedService.prepForBroadcast({cmd:'play-songs',data: broadcast_data });
         }
@@ -190,6 +190,13 @@ albumApp.controller('AlbumCtrl',
     $scope.filter_album = "#" + tag_name;
     $scope.doSearch();
   }
+
+  $scope.setUserFilter = function(user_name){
+    $scope.filter_album = "@" + user_name;
+    $scope.doSearch();
+  }
+
+  
 
   $scope.submitAlbum = function(){
 
@@ -340,6 +347,14 @@ albumApp.controller('AlbumCtrl',
 
   }
 
+  $scope.isOwn = function(user_id){
+    if (!$scope.user){
+      //user not login
+      return false;
+    }
+    return $scope.user._id == user_id;
+  }
+
   $scope.parseSearch = function(keyword, callback){
     keyword = $.trim(angular.copy( keyword ));
     if ( $scope.is_searching || $scope.do_searching_online ){
@@ -392,11 +407,19 @@ albumApp.controller('AlbumCtrl',
 
     log("result is", result);
 
-    if ( $scope.user &&  result.user != null && result.user != $scope.user.user_name ){
-      result.is_public = true;
-      result.search_online = true;
-      log("search public");
-      callback(result);
+    if ( result.user != null ){
+      if ( !$scope.user || ($scope.user && result.user != $scope.user.user_name ) ){
+        result.is_public = true;
+        result.search_online = true;
+        log("search public");
+        return callback(result);        
+      }
+      else{
+        result.search_online = false;
+        log("Search local1");
+        callback(result);
+      }
+
     }
     else{
       result.search_online = false;
