@@ -60,14 +60,13 @@ albumApp.controller('AlbumCtrl',
     }
     Page.setTitle("Browse album");
 
-    
-
     Albums.get(get_params, function(res){
       $scope.processRetrieveData(res,function(data){
         log("Data", data);
         //Sort by created date
         data = _.sortBy( data, function(album){ return album.created_date; });
         $scope.albums = data;
+        $scope.search_albums = angular.copy( $scope.albums );
         if ( $routeParams.album_id ){
           //Set share album varriable;
           var current_user = $userStyle.getUser(false);
@@ -136,6 +135,8 @@ albumApp.controller('AlbumCtrl',
       Albums.remove({id:remove_album._id},function(res){
         $scope.processRetrieveData(res,function(data){
           $scope.removeItemInList( $scope.albums, remove_album._id );
+          $scope.updateItemInList( $scope.search_albums, remove_album._id );
+
           if ( $scope.current_album && $scope.current_album._id == remove_album._id ){
             $scope.current_album_id = null;
             $scope.current_album = null;            
@@ -186,6 +187,7 @@ albumApp.controller('AlbumCtrl',
 
   $scope.setTagFilter = function(tag_name){
     $scope.filter_album = "#" + tag_name;
+    $scope.doSearch();
   }
 
   $scope.submitAlbum = function(){
@@ -241,11 +243,136 @@ albumApp.controller('AlbumCtrl',
       $scope.pending_edit_album = false;
       $scope.processRetrieveData(res,function(data){
         $scope.updateItemInList( $scope.albums, data );
+        $scope.updateItemInList( $scope.search_albums, data );
         //$scope.current_album = data;
         $dialogs.success("The album is updated");
         log( $scope.albums );
         $scope.resetValue();
       });
     });
+  }
+  //end doEditAlbum
+
+  $scope.doSearch = function(){
+    log("filter_album",$scope.filter_album);
+    $scope.parseSearch($scope.filter_album, function(result){
+      log("result is ", result);
+      if ( !result.search_online ){
+        $scope.filterOffline(result);
+      }
+    });
+  }
+
+  $scope.filterOffline = function( result ){
+
+    log("result local", result);
+    
+
+    if (result.full == "" || result.full == null){
+      log("nothing to search");
+      return $scope.search_albums = angular.copy( $scope.albums );
+    }
+
+    var temp_albums = [];
+
+    for ( var i=0; i < $scope.albums.length; i++ ){
+      log("llop");
+      var album = $scope.albums[i];
+
+      if ( $scope.isMatch( album, result ) ){
+        temp_albums.push( angular.copy(album) );
+      }      
+    }
+
+    $scope.search_albums = temp_albums;
+  };
+
+  $scope.isMatch = function( album, search_result ){
+
+    if (search_result.keyword && album.title.toLowerCase().search(search_result.keyword) == -1){
+      //Skip on this album
+      return false;
+    }
+
+    if (search_result.tag){
+
+      var j = 0;
+      for ( j=0; j < album.tags.length;j++ ){
+        if (album.tags[j].name.toLowerCase().search( search_result.tag ) != -1){
+          break;
+        }
+      }
+      if (j == album.tags.length){
+        //Skip on this album
+        return false;
+      }
+    }
+
+    return true;
+
+  }
+
+  $scope.parseSearch = function(keyword, callback){
+    keyword = $.trim(angular.copy( keyword ));
+    if ( $scope.is_searching ){
+      log("ignore");
+      return;
+    }
+
+    var public_indicator = "~public";
+
+    var result = {
+      keyword:null,
+      tag:null,
+      user: null,
+      is_public:false,
+      full:keyword
+    };
+
+    if ( keyword == "" ){
+      log("Stop here");
+      return callback(keyword);
+    }
+
+
+    if (keyword.search( public_indicator ) != -1 ){
+      result.is_public = true;
+      keyword = keyword.replace( public_indicator,"");
+    }
+
+    var regex = keyword.match(/@[\w]*/i);
+    
+    if ( regex ){
+      log("res", regex);
+      keyword = keyword.substr(0,regex.index -1)  + keyword.substr( regex.index + regex[0].length );
+      
+      var search_user = regex[0].substr(1);
+
+      if ( search_user != "" ){
+        result.user = search_user;
+      }
+    }
+
+    regex = keyword.match(/#[\w]*/i);
+
+    if ( regex  ){
+      result.tag = regex[0].substr(1).toLowerCase();
+      keyword = keyword.substr(0,regex.index -1)  + keyword.substr( regex.index + regex[0].length );
+    }
+
+    result.keyword = $.trim(keyword).toLowerCase();
+
+    log("result is", result);
+
+    if ( $scope.user &&  result.user != null && result.user != $scope.user.user_name ){
+      result.is_public = true;
+      result.search_online = true;
+      log("search public");
+    }
+    else{
+      result.search_online = false;
+      callback(result);
+      log("Search local");
+    }
   }
 });

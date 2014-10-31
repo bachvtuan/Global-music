@@ -8,7 +8,7 @@
     <div class="quick-buttons">
       <div class="pull-left">
         <div class="wrap-search">
-          <input type="search" class="search-box form-control" placeHolder="Tim album" ng-model="filter_album"  />
+          <input type="search" class="search-box form-control" placeHolder="Tim album" ng-model="filter_album" ng-change="doSearch()"  />
           <i class="fa fa-question-circle cursor" ng-click="show_help_search=true"></i>
         </div>
       </div>
@@ -35,7 +35,7 @@
             <p>You don't have any album, You can add more by clicking the button at the top right corner</p>
           </div>
           <div ng-if="albums.length > 0">
-            <div class="album" ng-repeat="album in albums  track by album._id">
+            <div class="album" ng-repeat="album in search_albums  track by album._id">
               <img ng-if="!album.feature_id" src="frontend/images/album.png">
               <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)" ></load-image>
               <div class="right">
@@ -73,6 +73,9 @@
                   </li>
                 </ul>
               </div>
+            </div>
+            <div ng-if="search_albums.length ==0">
+              <p>Not found appropriate album</p>
             </div>
           </div>
         </div>
@@ -145,7 +148,7 @@
         </li>
         <li>
           Search all public albums
-          <pre>!</pre>
+          <pre> ~public</pre>
         </li>
         <li>
           You can combine them, such as Search all public album from user john that has tag is Pop
@@ -153,7 +156,7 @@
         </li>
         <li>
           Or search all public album that has foo in the title
-          <pre>!foo</pre>
+          <pre> ~public @foo</pre>
         </li>
       </ol>
     </div>
