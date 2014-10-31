@@ -22,41 +22,49 @@
     <!-- Tab panes -->
     <div class="tab-content">
       <div class="tab-pane" ng-class="{active:current_tab =='general'}">
-        <form  role="form" ng-submit="updateBasic()">
-          <div class="form-group">
-            <label class="control-label">First Name</label>
-            <input type="text" class="form-control"  placeholder="First name" ng-model="edit_user.first_name">
-          </div>
+        <div class="row">
+          <div class="col-md-6">
+            <form  role="form" ng-submit="updateBasic()">
+              <div class="form-group">
+                <label class="control-label">First Name</label>
+                <input type="text" class="form-control"  placeholder="First name" ng-model="edit_user.first_name">
+              </div>
 
-          <div class="form-group">
-            <label class="control-label">Last Name</label>
-            <input type="text" class="form-control"  placeholder="Last name" ng-model="edit_user.last_name">
-          </div>
+              <div class="form-group">
+                <label class="control-label">Last Name</label>
+                <input type="text" class="form-control"  placeholder="Last name" ng-model="edit_user.last_name">
+              </div>
 
-          <div class="form-group">
-            <label class="control-label">Email Address</label>
-            <input type="email" class="form-control"  placeholder="Email" ng-model="edit_user.email" ng-disabled="true">
+              <div class="form-group">
+                <label class="control-label">Email Address</label>
+                <input type="email" class="form-control"  placeholder="Email" ng-model="edit_user.email" ng-disabled="true">
+              </div>
+                         
+              <button type="submit" class="btn btn-default" ng-class="{'working': working_basic}" ng-disabled="working_basic" >Save</button>
+            </form>
           </div>
-                     
-          <button type="submit" class="btn btn-default" ng-class="{'working': working_basic}" ng-disabled="working_basic" >Save</button>
-        </form>
+        </div>
       </div>
       <div class="tab-pane" ng-class="{active:current_tab =='password'}">
-        <form  role="form" ng-submit="updatePassword()">
-          <div class="form-group">
-            <label class="control-label">Old password</label>
-            <input type="password" class="form-control"  placeholder="Current password" ng-model="current_password">
+        <div class="row">
+          <div class="col-md-6">
+            <form  role="form" ng-submit="updatePassword()">
+              <div class="form-group">
+                <label class="control-label">Old password</label>
+                <input type="password" class="form-control"  placeholder="Current password" ng-model="current_password">
+              </div>
+              <div class="form-group">
+                <label class="control-label">New password</label>
+                <input type="password" class="form-control"  placeholder="New password" ng-model="new_password">
+              </div>
+              <div class="form-group">
+                <label class="control-label">Confirm password</label>
+                <input type="password" class="form-control"  placeholder="Confirm password" ng-model="confirm_password">
+              </div>
+              <button type="submit" class="btn btn-default"  ng-class="{'working': working_password}" ng-disabled="working_password" >Save</button>
+            </form>
           </div>
-          <div class="form-group">
-            <label class="control-label">New password</label>
-            <input type="password" class="form-control"  placeholder="New password" ng-model="new_password">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Confirm password</label>
-            <input type="password" class="form-control"  placeholder="Confirm password" ng-model="confirm_password">
-          </div>
-          <button type="submit" class="btn btn-default"  ng-class="{'working': working_password}" ng-disabled="working_password" >Save</button>
-        </form>
+        </div>
       </div>
       <div class="tab-pane" ng-class="{active:current_tab =='background'}" >
         <div class="wrap-theme ">
@@ -74,7 +82,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="current-avatar"> 
-              <p><strong>Your current avatar</strong></p>
+              <p><strong>Current avatar</strong></p>
               <avatar extra-id="user.avatar_id"></avatar>
             </div>
             <p>&nbsp;</p>
