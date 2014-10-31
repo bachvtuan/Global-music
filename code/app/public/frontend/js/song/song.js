@@ -45,6 +45,7 @@ songApp.controller('SongCtrl',
 
 
   $scope.addSong = function(){
+    $scope.resetValue();
     $scope.show_song_form = true;
   }
 

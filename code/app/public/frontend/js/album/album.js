@@ -65,6 +65,8 @@ albumApp.controller('AlbumCtrl',
     Albums.get(get_params, function(res){
       $scope.processRetrieveData(res,function(data){
         log("Data", data);
+        //Sort by created date
+        data = _.sortBy( data, function(album){ return album.created_date; });
         $scope.albums = data;
         if ( $routeParams.album_id ){
           //Set share album varriable;
@@ -113,6 +115,8 @@ albumApp.controller('AlbumCtrl',
   $scope.showAddModel = function(){
     $scope.resetValue();
     $scope.show_form = true;
+    log("weird", $scope.is_edit_album);
+
     //$scope.initTag();
   }
 
@@ -179,6 +183,11 @@ albumApp.controller('AlbumCtrl',
     $scope.is_edit_album  = null;
 
   }
+
+  $scope.setTagFilter = function(tag_name){
+    $scope.filter_album = "#" + tag_name;
+  }
+
   $scope.submitAlbum = function(){
 
 
