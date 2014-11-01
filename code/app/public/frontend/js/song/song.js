@@ -130,9 +130,9 @@ songApp.controller('SongCtrl',
       index: song_index,
       songs: angular.copy( $scope.songs )
     }
-    if ( $scope.current_album.feature_id ){
-      broadcast_data.album_cover_id = $scope.current_album.feature_id;
-    }
+    
+    broadcast_data.album_cover_id = $scope.current_album.feature_id;
+    
     log("pre data", broadcast_data);
     fSharedService.prepForBroadcast({cmd:'play-songs',data: broadcast_data });
   }

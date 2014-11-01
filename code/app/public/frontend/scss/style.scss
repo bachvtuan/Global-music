@@ -42,6 +42,15 @@ button.working, a.working, input.working {
              color-stop(.5, transparent), to(transparent));
 }
 
+
+.message-box{
+  background:$fade_background;
+  padding:10px;
+  a{
+    color: $bootstrap_blue;
+  }
+}
+
 body{
   background:url("../images/backgrounds/sunset.jpg");
   font-family: $body_font;
@@ -710,6 +719,10 @@ body.show-playlist{
       position:absolute;
       right: -25px;
       top: 10px;
+      &.fa-spin{
+        right: 10px;
+        color: $bootstrap_blue;
+      }
     }
   }
 }

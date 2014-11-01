@@ -21,6 +21,10 @@ usersApp.config(['$routeProvider',function($routeProvider) {
       templateUrl: templateVersion('frontend/js/users/register.html'),
       controller: 'RegisterCtrl'
     }).
+    when('/forgot-password', {
+      templateUrl: templateVersion('frontend/js/users/forgot.html'),
+      controller: 'ForgotPasswordCtrl'
+    }).
     when('/logout', {
       //This template is cached before
       templateUrl: templateVersion('frontend/js/users/logout.html'),

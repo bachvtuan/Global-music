@@ -35,12 +35,16 @@ function validatePassword(password){
   return true;
 }
 
-function validateLogin(body){
+function validateLogin(body, only_login_name){
 
   var validator = require('validator');
 
   if ( !body.login_name || !validator.isLength(body.login_name, 3,30) ){
     return "Login name must have length from 3 -> 30";
+  }
+
+  if (only_login_name){
+    return true;
   }
 
   if ( !body.password || !validator.isLength(body.password, 6,30) ){
@@ -169,8 +173,12 @@ module.exports = function(BaseController){
     },
     removeSecretFields:function(user){
       showLog( typeof(user) );
+      
       delete user.hash_register;
       delete user.password;
+      delete user.reset_password;
+      delete user.hash_reset;
+
       return user;
     },
     //end register
@@ -198,6 +206,9 @@ module.exports = function(BaseController){
       if (!hash && user_id){
         return res.send("Invalid request");
       }
+
+      var _this = this;
+
       User.findById(user_id, function(err,user){
         if ( err){
           return res.send("Happended error while active your account");
@@ -210,9 +221,15 @@ module.exports = function(BaseController){
         }
         user.status = "actived";
         user.save();
+
+        //If user alredy login
+        if (req.session.user){
+          delete req.session.user;
+        }
+        
         var return_text = "Your account is actived, Please click <a href='{0}'>here</a> to go to homepage";
         return_text = return_text.format("http://"+config.domain);
-        return res.send(return_text);
+        _this.render( res,'well', {text:return_text} )
       });
     },
 
@@ -377,7 +394,95 @@ module.exports = function(BaseController){
         return res.json( jsonSucc(current_user)  );
       }
       
+    },
+    //
+
+
+    //End udpate extra:
+    resetPassword:function( req, res, next ){
+      console.log("req.body");
+      var body = req.body;
+
+      var validator_error = validateLogin( body, true );
+
+      if ( typeof(validator_error) == "string" ){
+        return res.json( jsonErr(validator_error) );
+      }
+
+      var filter = {"$or":[{user_name:body.login_name}, {email:body.login_name} ]}
+      var _this = this;
+
+      User.find(filter, function(err, users){
+        if (err){
+          return res.json(err);
+        }
+
+        if ( users.length == 0){
+          return res.json( jsonErr("Not found your login name") );
+        }
+
+        var first_user = users[0];
+
+        var bcrypt = require('bcrypt-nodejs');
+        var reset_password = "foobar";
+        bcrypt.hash(reset_password, null, null, function(err, hash) {
+          if (err){
+            return res.json( jsonErr( err ) );
+          }
+          showLog("reset hash", hash);
+          first_user.reset_password = hash;
+          first_user.hash_reset = uuid.v4();
+          first_user.save();
+
+          var subject = "Reset your account at website: " + config.domain;
+          var reset_link = "http://{0}/users/reset-password?hash={1}&user_id={2}";
+          reset_link = reset_link.format( config.domain, first_user.hash_reset, first_user._id );
+
+          var html_content  = "<p>Hi {0}, Someone have just reseted password on your account on our website  http://{1}, ".format( first_user.user_name, config.domain);
+          html_content += "We set new password is <strong>{0}</strong>. If that was you,Please click  <a href='{1}'>here</a> to apply new password, ".format(reset_password, reset_link);
+          html_content += "If you don't see the link, Please copy below link:</p>";
+          html_content += "<p>{0}</p>".format(reset_link);
+          html_content += "<p>If that wasn't you, Just ignore this email</p>"
+          showLog(html_content);
+
+          sendEmail(config.admin_email,user.email,subject,html_content,config);
+
+          return res.json( jsonSucc("ok"));
+
+        });
+      });
+    },
+    doResetPassword:function(req, res, next){
+      var hash = req.query.hash;
+      var user_id = req.query.user_id;
+      //http://localhost:3000/users/reset-password?hash=f37dfbbd-b06b-4b23-93a5-d0113bf7598a&user_id=54510f3774760efb1e88a04d
+      if (!hash && user_id){
+        return res.send("Invalid request");
+      }
+
+      var _this = this;
+
+      User.findById(user_id, function(err,user){
+        if ( err || !user){
+          return res.send("Happended error while reset your account");
+        }
+        
+        if ( user.hash_reset != hash){
+         return res.send("Invalid hash to reset your account");
+        }
+        
+        user.password = user.reset_password;
+        /*delete user.hash_reset;
+        delete user.reset_password;*/
+        user.save();
+        var return_text = "<p>Your password have been reseted, Please click <a href='{0}'>here</a> to go to homepage</p>";
+        return_text = return_text.format("http://"+config.domain);
+        return_text += "<p>Remember the new password in your email inbox</p>";
+        //return res.send(return_text);
+        _this.render( res,'well', {text:return_text} )
+      });
     }
+
   });
 }
  

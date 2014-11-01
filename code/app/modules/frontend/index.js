@@ -22,6 +22,14 @@ module.exports = function( app ){
   app.get('/users/active', attachDB, function (req, res,next) {
     UserController.active( req, res, next );
   });
+
+  app.get('/users/reset-password', attachDB, function (req, res,next) {
+    UserController.doResetPassword( req, res, next );
+  });
+
+  app.post('/users/reset-password', attachDB, function (req, res,next) {
+    UserController.resetPassword( req, res, next );
+  });
   
   app.post('/users/logout', attachDB, function (req, res,next) {
     UserController.logout( req, res, next );

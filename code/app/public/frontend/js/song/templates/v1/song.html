@@ -20,8 +20,8 @@
               <i class="fa fa-gear fa-lg"></i>
             </button>
             <ul class="dropdown-menu pull-right" role="menu">
-              <li><a ng-click="editSong(song)"><i class="fa fa-pencil"></i> Edit</a></li>
-              <li><a ng-click="deleteSong(song)"><i class="fa fa-remove"></i> Delete</a></li>
+              <li ng-if="isOwn(current_album.user_id)" ><a ng-click="editSong(song)"><i class="fa fa-pencil"></i> Edit</a></li>
+              <li ng-if="isOwn(current_album.user_id)"><a ng-click="deleteSong(song)"><i class="fa fa-remove"></i> Delete</a></li>
               <li><a ng-click="playSong($index)"><i class="fa fa-play"></i> Play</a></li>
               <li><a ng-click="addToQueue(song)"><i class="fa fa-play"></i> Add to queue</a></li>
               <li><a ng-click="downloadSong(song)"><i class="fa fa-download"></i> Download</a></li>
@@ -47,6 +47,7 @@
           <p>
             <label>Song link</label>
             <input type="url" class="form-control"  ng-model="$parent.$parent.song_link" placeHolder="The url for song" />
+            <small>Begin with http(s)</small>
           </p>
           
           <button type="submit" class="btn btn-default"  ng-disabled="!song_title || !song_link || pending_add_song"  class="btn btn-default"  ng-class="{'working': pending_add_song || pending_edit_song}">

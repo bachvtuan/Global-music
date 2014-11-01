@@ -32,6 +32,9 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
         if ( broadcast_data.album_cover_id ){
           $scope.album_cover_id = broadcast_data.album_cover_id
         }
+        else{
+          $scope.album_cover_id = null;
+        }
 
         $scope.initPlayer();
         
