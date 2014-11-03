@@ -169,7 +169,6 @@ albumApp.controller('AlbumCtrl',
   }
 
   $scope.showPublicLink = function(album){
-    log("tasi sao");
     $scope.show_public_link = true;
     log($scope.show_public_link);
     $scope.share_album = album;
@@ -419,12 +418,19 @@ albumApp.controller('AlbumCtrl',
         log("Search local1");
         callback(result);
       }
-
     }
     else{
-      result.search_online = false;
-      callback(result);
-      log("Search local");
+      if (result.is_public){
+        result.search_online = true;
+        log("search public");
+        return callback(result);
+      }
+      else{
+        result.search_online = false;
+        callback(result);
+        log("Search local");
+      }
+
     }
   }
 });
