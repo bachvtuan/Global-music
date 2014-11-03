@@ -19,6 +19,7 @@ html( ng-app="app" )
     script(type='text/javascript').
       var is_debug = #{is_debug};
       var asset_version = #{asset_version};
+      var maximum_file_upload = #{maximum_file_upload};
       var template_version_string = "v#{template_version}";
       $(document).ready(function(){
         window.csrf = $('input[type="hidden"][name="_csrf"]').val();

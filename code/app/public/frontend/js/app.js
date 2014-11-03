@@ -36,6 +36,12 @@ app.run(function($rootScope, $window,$http, $cookies, $dialogs, $location, $temp
     return "/media/" + media_id;
   }
 
+  $rootScope.convertToSizeString = function( byte_number ){
+    var mega_byte = byte_number / 1024/ 1024;
+    var return_string = mega_byte * 1000;
+    return return_string +"kb";
+  }
+
 
   //Find item in the list by id and remove it
   $rootScope.removeItemInList = function(list,id){

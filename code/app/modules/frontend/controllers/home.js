@@ -7,7 +7,8 @@ module.exports = function(BaseController){
         page_description:"you can override this",
         is_debug:global.is_debug,
         asset_version: global.config.asset_version,
-        template_version: global.config.template_version
+        template_version: global.config.template_version,
+        maximum_file_upload: global.config.maximum_file_upload
       };
 
       /*showLog("is asset_version", global.asset_version);*/

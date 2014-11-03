@@ -88,7 +88,9 @@
             <p>&nbsp;</p>
             <input type="file"   onchange="angular.element(this).scope().readURL(this)" />
             <hr/>
-            <p>Allow types: <strong>(JPEG,PNG,GIF) </strong> Maximum size: <strong>500kb</strong></p>
+            <p>Allow types: <strong>(JPEG,PNG,GIF) </strong> 
+            Maximum size: <strong>{{convertToSizeString(maximum_file_upload)}}</strong>
+            </p>
             <p>
             <button type="button" ng-click="uploadAvatar()" ng-class="{'working': working_avatar}" 
             ng-disabled="working_avatar"  class="btn btn-default">Submit</button>

@@ -272,6 +272,10 @@ module.exports = function(BaseController){
       var _this = this;
 
       var src = body.src;
+
+      if ( src.length > global.config.maximum_file_upload ){
+        return res.json( jsonErr("Maxium file size") );
+      }
       
       var parse_result = image_tool.parseBase64(src);
 

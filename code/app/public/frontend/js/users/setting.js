@@ -4,6 +4,8 @@ usersApp.controller('UserSettingCtrl',
 
     $scope.init = function(){
 
+      $scope.maximum_file_upload = $window.maximum_file_upload;
+
       Page.setTitle("Edit your setting");
 
       $scope.current_tab = "general";
@@ -104,13 +106,20 @@ usersApp.controller('UserSettingCtrl',
         reader.readAsDataURL(input.files[0]);
         $scope.addEventHandler(reader, 'loadend', function(e) {
           var result = e.target.result;
+          
+          if ( e.total > $scope.maximum_file_upload ){
+            var alert_string = "Please select an image has capacity below "+ $scope.convertToSizeString(maximum_file_upload);
+            return $dialogs.error( alert_string ); 
+          }
+          
           var checking_image_pattern  = 'data:image/';
           if ( result.substr(0, checking_image_pattern.length ) !=  checking_image_pattern ) {
-            return $dialogs.notify('Error', "Please select image file");
+            return $dialogs.error("Please select an image file");
           }
+
+
           $('#preview-avatar').attr('src',result);
         });
-
       }
     }
     $scope.addEventHandler = function(obj, evt, handler) {
