@@ -16,8 +16,6 @@ app.use(express.static('app/public'));
 
 
 
-
-
 //production or development
 //process.env.NODE_ENV = 'production';
 

@@ -172,7 +172,7 @@ albumApp.controller('AlbumCtrl',
     $scope.show_public_link = true;
     log($scope.show_public_link);
     $scope.share_album = album;
-    $scope.public_link = document.location.origin +"#/album/"+album._id;
+    $scope.public_link = document.location.origin +"/album/"+album._id;
   }
 
   $scope.resetValue = function(){
@@ -284,7 +284,7 @@ albumApp.controller('AlbumCtrl',
   }
 
   $scope.filterOnline = function(search_result){
-    console.error("filter online");
+    
     $scope.do_searching_online = true;
 
     var query_data = angular.copy(search_result);

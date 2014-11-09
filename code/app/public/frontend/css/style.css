@@ -313,6 +313,9 @@ body.show-playlist .content-list {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
+.tooltip {
+  min-width: 100px; }
+
 #wrapper {
   width: 950px;
   height: 610px;
@@ -397,10 +400,15 @@ body.show-playlist .content-list {
   #wrapper .wrap-song-list .group-song {
     margin-bottom: 20px; }
   #wrapper .wrap-song-list h4 {
-    margin: 10px 0px 10px 0px;
+    margin: 0px 0px 20px 0px;
     font-weight: normal;
-    display: inline-block;
-    color: #008fd5; }
+    display: block;
+    color: #008fd5;
+    position: relative; }
+    #wrapper .wrap-song-list h4 button {
+      position: absolute;
+      right: 0px;
+      top: -5px; }
   #wrapper .wrap-song-list .song-list {
     height: 370px;
     padding-right: 0px;

@@ -10,7 +10,7 @@
         <div class="wrap-search">
           <input type="search" class="search-box form-control" placeHolder="Search album" ng-model="filter_album" ng-change="doSearch()"  />
           <i class="fa fa-question-circle cursor" ng-tooltip title="Help for searching" data-placement="right"  ng-click="show_help_search=true"></i>
-          <i class="fa fa-spinner fa-spin" ng-if="do_searching_online"></i>
+          <i class="fa fa-spinner fa-spin" disable-animate ng-hide="!do_searching_online"></i>
         </div>
       </div>
       <div class="pull-right">
@@ -38,7 +38,7 @@
 
           <div ng-if="search_albums.length > 0">
             <div class="album" ng-repeat="album in search_albums  track by album._id">
-              <img ng-if="!album.feature_id" src="frontend/images/album.png" >
+              <img ng-if="!album.feature_id" src="frontend/images/album.jpg" >
               <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)"  ></load-image>
               <div class="right">
                 <a class="title" title="{{album.title}}" ng-tooltip  data-placement="bottom"

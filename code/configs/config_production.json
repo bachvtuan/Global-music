@@ -4,8 +4,15 @@
   "secret_key": "SD(idkfsgf4",
   "mongo_uri": "mongodb://127.0.0.1:27017/music_app",
   "mongo_name": "music_app",
-  "page_title": "Mobile app",
+  "page_title": "Music app",
   "asset_version":2,
   "template_version":1,
-  "page_description":"Listen to music at everywhere"
+  "page_description":"Listen to your favorite audio",
+  "domain":"localhost:3000",
+  "admin_email":"admin@dethoima.com",
+  "smtp_host":"smtp.mandrillapp.com",
+  "smtp_port":25,
+  "smtp_user":"bachvtuan@gmail.com",
+  "smtp_pass":"yyPsFU9QdKAonJjlU8gipA",
+  "maximum_file_upload":524288
 }

@@ -15,6 +15,11 @@ module.exports = function( app ){
     HomeController.index( req, res, next );
   });
 
+  app.get('/album/:id', attachDB, function (req, res,next) {
+    HomeController.index( req, res, next );
+  });
+
+
   app.post('/users/login', attachDB, function (req, res,next) {
     UserController.login( req, res, next );
   });

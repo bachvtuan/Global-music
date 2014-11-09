@@ -350,6 +350,10 @@ body.show-playlist{
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
+.tooltip{
+  min-width: 100px;
+}
+
 #wrapper{
   width: 950px;
   height:610px;
@@ -467,10 +471,18 @@ body.show-playlist{
       margin-bottom: 20px;
     }
     h4{
-      margin:10px 0px 10px 0px;
+      margin:0px 0px 20px 0px;
       font-weight: normal;
-      display: inline-block;
+      display: block;
       color: $blue;
+      position:relative;
+
+      button{
+        position:absolute;
+        right: 0px;
+        top: -5px;
+      }
+
     }
     .song-list{
       height:370px;

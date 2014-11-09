@@ -3,10 +3,19 @@ html( ng-app="app" )
   head
     title(ng-bind="page_title")!= page_title
     meta(name="descrition",content=page_description)
-    link(rel="Shortcut Icon",href="frontend/images/mobile.png",type="image/x-icon")
+    meta( property="og:url", itemprop="url", content=full_url )
+    meta( property="og:image", itemprop="thumbnailUrl", content=page_image) 
+    meta( content="news", itemprop="genre", name="medium")
+    meta( content="vi-VN", itemprop="inLanguage")
+    meta( content=page_description, itemprop="headline", property="og:title")
+    meta( content=page_description, itemprop="keywords", name="keywords")
+    
+    meta( content=page_title, property="og:site_name")
+    meta( content=page_description, itemprop="description", property="og:description")
+
+    link(rel="Shortcut Icon",href="/frontend/images/logo.png",type="image/x-icon")
     script( src="/frontend/js/dependencies.min.js")
     script( src="/share/js/alertifyjs/alertify.min.js")
-    script( src="/share/js/jquery.tagsinput.js")
     script( src="/share/js/audiojs/audio.js")
     script( src="/share/js/underscore-min.js")
     script( src="/share/js/angular-1.2.25/angular.min.js")
@@ -17,13 +26,18 @@ html( ng-app="app" )
     script( src="/share/js/angular-1.2.25/angular-animate.min.js")
 
     script(type='text/javascript').
-      var is_debug = #{is_debug};
-      var asset_version = #{asset_version};
-      var maximum_file_upload = #{maximum_file_upload};
-      var template_version_string = "v#{template_version}";
+      var is_debug                  = #{is_debug};
+      var asset_version             = #{asset_version};
+      var maximum_file_upload       = #{maximum_file_upload};
+      var template_version_string   = "v#{template_version}";
+      var public_album_id           = "#{public_album_id}"
       $(document).ready(function(){
         window.csrf = $('input[type="hidden"][name="_csrf"]').val();
       })
+
+      if ( public_album_id ){
+        location.href = "/#/album/" + public_album_id;
+      }
 
     script(src="/frontend/js/app.js")
     script(src="/frontend/js/libraries/factories.js")

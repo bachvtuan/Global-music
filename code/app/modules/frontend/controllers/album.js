@@ -21,8 +21,8 @@ function validateAlbum(body){
     return "Please input a valid url for album cover";
   }
 
-  if ( !body.description || !validator.isLength(body.description, 10,100) ){
-    return "Album title must have length from 10 -> 100";
+  if ( body.description && !validator.isLength(body.description, 10,100) ){
+    return "Album description must have length from 10 -> 100";
   }
 
   return true;

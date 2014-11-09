@@ -76,6 +76,15 @@ app.directive('ngTooltip', function () {
   }
 });
 
+app.directive('disableAnimate', function ($animate) { 
+  return{
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+     $animate.enabled(false, element)
+    }
+  }
+});
+
 
 app.directive('avatar', function($parse, $rootScope, $compile) {
   var image_template = '<img class="avatar" />';
@@ -89,7 +98,7 @@ app.directive('avatar', function($parse, $rootScope, $compile) {
       element.html(image_template).show();
       
       var img = element.find('img');
-      var avatar_url = "/frontend/images/radio.png";
+      var avatar_url = "/frontend/images/logo.png";
 
       if ( angular.isDefined(value) && value != null ){
         avatar_url = "/media/" + value;

@@ -1,7 +1,5 @@
 <div class="wrap-song-list clear" >
-  <div class="btn-group group-song pull-right" ng-if="songs !== null">
-    <button type="button" class="btn" ng-click="addSong()"><i class="fa fa-plus"></i> Add song</button>
-  </div>
+  
   <p class="clear alert" ng-if="songs == null && !loading_songs">The song list is empty</p>
   <div ng-if="loading_songs"   class="clear">
     <ng-include src="'loading.html'" ng-init="text='Loading songs in the album'"></ng-include>
@@ -9,7 +7,10 @@
   <p  class="clear alert" ng-if="song !== null && songs.length == 0">There is no song in this album, You can add more</p>
   
   <div ng-if="song !== null && songs.length > 0">
-    <h4><i class="fa fa-music"></i> Album: {{current_album.title}}</h4>
+    <h4>
+      {{current_album.title}}
+      <button type="button" ng-tooltip title="Add new song" class="btn pull-right" ng-click="addSong()"><i class="fa fa-plus"></i></button> 
+    </h4>
     <div class="song-list">
       <ul  type="1">
         <li ng-repeat="song in songs">

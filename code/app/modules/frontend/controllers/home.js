@@ -1,15 +1,20 @@
+var mongoose  = require('mongoose');
+var Album     = mongoose.model( 'Album' );
+
 module.exports = function(BaseController){
  return BaseController.extend({ 
     name: "home",
     index: function(req, res, next) {
       var public_data = { 
         message: 'Hello there!',
-        page_description:"you can override this",
         is_debug:global.is_debug,
         asset_version: global.config.asset_version,
         template_version: global.config.template_version,
         maximum_file_upload: global.config.maximum_file_upload
       };
+
+      var pre_url  = req.protocol + '://' + req.get('host');
+      public_data.full_url =  pre_url + req.originalUrl;
 
       /*showLog("is asset_version", global.asset_version);*/
 
@@ -19,8 +24,43 @@ module.exports = function(BaseController){
       else{
         public_data.csrfToken = "sometest";
       }
+
+      var _this = this;
+
+      if ( req.params.id  ){
+        //Request album
+        var id = req.params.id;
+
+        Album.findById(id, function(err, album){
+          if (err || !album){
+            return _this.render( res,'index', public_data );
+          }
+
+          showLog("description", album.description);
+          
+          if (album.description && album.description != ""){
+            public_data.page_description = album.description;
+          }
+          
+          public_data.page_title = "Listen album: " + album.title;
+          public_data.public_album_id = id;
+
+          if ( album.feature_id ){
+            public_data.page_image =  pre_url + "/media/" + album.feature_id;
+          }
+          else{
+            public_data.page_image = pre_url + "/frontend/images/album.jpg";
+          }
+
+          _this.render( res,'index', public_data );
+
+        });
+
+      }
+      else{
+        this.render( res,'index', public_data );
+      }
       
-      this.render( res,'index', public_data )
     }
   });
 }
