@@ -62,8 +62,23 @@ app.directive('loadAudio', function($parse) {
   }
 });
 
+app.directive('ngTooltip', function () { 
+  return{
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+    
+      scope.$watch('title', function(value) {
+        attrs.$set('tooltip', value);
+        attrs.$set('data-toggle', 'tooltip');
+        $( element ).tooltip();
+      });
+    }
+  }
+});
+
+
 app.directive('avatar', function($parse, $rootScope, $compile) {
-  var image_template = '<img class="avatar" tooltip="{{userName}}" />';
+  var image_template = '<img class="avatar" />';
   
   var linker = function(scope, element, iAttrs) {
     

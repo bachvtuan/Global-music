@@ -8,8 +8,8 @@
     <div class="quick-buttons">
       <div class="pull-left">
         <div class="wrap-search">
-          <input type="search" class="search-box form-control" placeHolder="Tim album" ng-model="filter_album" ng-change="doSearch()"  />
-          <i class="fa fa-question-circle cursor" ng-click="show_help_search=true"></i>
+          <input type="search" class="search-box form-control" placeHolder="Search album" ng-model="filter_album" ng-change="doSearch()"  />
+          <i class="fa fa-question-circle cursor" ng-tooltip title="Help for searching" data-placement="right"  ng-click="show_help_search=true"></i>
           <i class="fa fa-spinner fa-spin" ng-if="do_searching_online"></i>
         </div>
       </div>
@@ -35,12 +35,13 @@
           <div ng-if="search_albums.length == 0">
             <p>You don't have any album, You can add more by clicking the button at the top right corner</p>
           </div>
+
           <div ng-if="search_albums.length > 0">
             <div class="album" ng-repeat="album in search_albums  track by album._id">
               <img ng-if="!album.feature_id" src="frontend/images/album.png">
               <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)" ></load-image>
               <div class="right">
-                <a class="title" title="{{album.title}}"  data-placement="bottom"
+                <a class="title" title="{{album.title}}" ng-tooltip  data-placement="bottom"
                   ng-click="activeAlbum(album)" ng-class="{active:album == current_album}" >
                   {{album.title}}
                 </a>
@@ -52,7 +53,7 @@
                   </span>
                 </p>
                 <p ng-if="album.is_public">
-                  <i class="fa fa-globe fa-lg cursor" ng-click="showPublicLink(album)" title="Click here to show public link" ></i> 
+                  <i class="fa fa-globe fa-lg cursor" ng-click="showPublicLink(album)" ng-tooltip title="Click here to the show public link" ></i> 
                   <a ng-click="setUserFilter(album.user_name)" ng-if="!isOwn(album.user_id)">{{album.user_name}}</a>
                 </p>
               </div>
@@ -94,7 +95,7 @@
 
 <div class="tuan-modal animate-if" ng-if="show_form">
   <div class="body">
-      <i class="fa fa-close" ng-click="$parent.show_form = false;" ></i>
+      <i class="fa fa-close" ng-hide="pending_add_album || pending_edit_album" ng-click="$parent.show_form = false;" ></i>
       <h3>Add new album</h3>
       <hr/>
       <div class="content">

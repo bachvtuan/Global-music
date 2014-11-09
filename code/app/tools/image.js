@@ -32,16 +32,14 @@ function resizeImageDataFromUrl(image_url, callback){
 
     console.log("File: ", path);
     console.log("Filedescriptor: ", fd);
+
     easyimg.thumbnail({
          src:image_url, dst:path,
          width:200, height:200,
          x:0, y:0
       }).then(
       function(image) {
-          console.log(image);
-          console.log('Resized and cropped: ' + image.width + ' x ' + image.height);
-          console.log(image);
-         
+          
           fs.readFile(path, 'binary', function(err, original_data){
               
             var base64Image = new Buffer(original_data, 'binary').toString('base64');

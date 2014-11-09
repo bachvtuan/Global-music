@@ -120,7 +120,7 @@ function generalDoTags(tags_string, req, callback){
 function generalUpdateAlbum(current_ablum, update_album,req, res){
   if ( update_album.cover ){
 
-    getImageDataFromUrl( update_album.cover,function(image,base64_data){
+    image_tool.resizeImageDataFromUrl( update_album.cover,function(image,base64_data){
 
       if ( image == null ){
         return res.json( jsonErr("Album image is error, Please try other") );

@@ -85,7 +85,7 @@ button.working, a.working, input.working {
 body {
   background: url("../images/backgrounds/sunset.jpg");
   font-family: "Myriad Pro", "Helvetica Neue", Arial, sans-serif;
-  color: #eeeeee;
+  color: #eee;
   background-size: cover; }
 
 input[type=file] {
@@ -96,7 +96,7 @@ a, p {
   line-height: 1.2em; }
 
 a {
-  color: white;
+  color: #fff;
   cursor: pointer; }
   a:hover {
     text-decoration: none;
@@ -109,7 +109,7 @@ button[disabled] {
   cursor: pointer; }
 
 h1, h2, h3, h4 {
-  color: #cccccc; }
+  color: #ccc; }
 
 ul, ol {
   list-style: none;
@@ -120,14 +120,14 @@ h3 {
   font-weight: normal;
   font-size: 18pt;
   margin: 5px 0px;
-  color: white; }
+  color: #fff; }
 
 .fa-close, .tuan-modal .body .fa-close {
   position: absolute;
   top: 20px;
   right: 20px;
   font-size: 15pt;
-  color: white;
+  color: #fff;
   cursor: pointer; }
 
 .form-control {
@@ -136,22 +136,22 @@ h3 {
 .btn {
   background-color: rgba(0, 0, 0, 0.35);
   border: none;
-  color: white; }
+  color: #fff; }
   .btn:hover {
     background: rgba(0, 0, 0, 0.5);
     border: none;
-    color: white; }
+    color: #fff; }
   .btn.transparent {
     padding: 0px;
     background: none !important; }
     .btn.transparent:hover {
       background: none;
       border: none;
-      color: white; }
+      color: #fff; }
 
 input {
   background-color: rgba(0, 0, 0, 0.3) !important;
-  color: white !important; }
+  color: #fff !important; }
 
 .alert {
   background: rgba(0, 0, 0, 0.3);
@@ -172,15 +172,15 @@ input {
 .alertify .ajs-dialog {
   background: rgba(0, 0, 0, 0.9); }
   .alertify .ajs-dialog .ajs-header {
-    color: white; }
+    color: #fff; }
   .alertify .ajs-dialog .ajs-header, .alertify .ajs-dialog .ajs-body, .alertify .ajs-dialog .ajs-footer {
-    color: white;
+    color: #fff;
     background-color: transparent; }
   .alertify .ajs-dialog .ajs-body .ajs-content {
     padding-left: 0px; }
   .alertify .ajs-dialog .ajs-footer .ajs-buttons .ajs-button {
     background-color: rgba(0, 0, 0, 0.3);
-    color: white; }
+    color: #fff; }
 .alertify .ajs-commands button.ajs-close {
   font: normal normal normal 14px/1 FontAwesome;
   background-image: none;
@@ -197,10 +197,10 @@ input {
   .dropdown-menu .divider {
     background: rgba(0, 0, 0, 0.9); }
   .dropdown-menu li a {
-    color: white; }
+    color: #fff; }
     .dropdown-menu li a:hover, .dropdown-menu li a:focus {
       background: rgba(0, 0, 0, 0.3);
-      color: white; }
+      color: #fff; }
 
 @keyframes flip {
   0% {
@@ -208,25 +208,21 @@ input {
     transform: perspective(400px) rotate3d(0, 1, 0, -360deg);
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out; }
-
   40% {
     -webkit-transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);
     transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out; }
-
   50% {
     -webkit-transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);
     transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);
     -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in; }
-
   80% {
     -webkit-transform: perspective(400px) scale3d(0.95, 0.95, 0.95);
     transform: perspective(400px) scale3d(0.95, 0.95, 0.95);
     -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in; }
-
   100% {
     -webkit-transform: perspective(400px);
     transform: perspective(400px);
@@ -252,25 +248,21 @@ input {
     transform: perspective(400px) rotate3d(0, 1, 0, -360deg);
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out; }
-
   40% {
     -webkit-transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);
     transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out; }
-
   50% {
     -webkit-transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);
     transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);
     -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in; }
-
   80% {
     -webkit-transform: perspective(400px) scale3d(0.95, 0.95, 0.95);
     transform: perspective(400px) scale3d(0.95, 0.95, 0.95);
     -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in; }
-
   100% {
     -webkit-transform: perspective(400px);
     transform: perspective(400px);
@@ -282,25 +274,21 @@ input {
     transform: perspective(400px) rotate3d(0, 1, 0, -360deg);
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out; }
-
   40% {
     -webkit-transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);
     transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -190deg);
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out; }
-
   50% {
     -webkit-transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);
     transform: perspective(400px) translate3d(0, 0, 150px) rotate3d(0, 1, 0, -170deg);
     -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in; }
-
   80% {
     -webkit-transform: perspective(400px) scale3d(0.95, 0.95, 0.95);
     transform: perspective(400px) scale3d(0.95, 0.95, 0.95);
     -webkit-animation-timing-function: ease-in;
     animation-timing-function: ease-in; }
-
   100% {
     -webkit-transform: perspective(400px);
     transform: perspective(400px);
@@ -396,7 +384,7 @@ body.show-playlist .content-list {
         #wrapper .content-list .album a.title:hover, #wrapper .content-list .album a.title.active {
           color: #008fd5; }
       #wrapper .content-list .album p {
-        color: #cccccc; }
+        color: #ccc; }
       #wrapper .content-list .album p.tag {
         display: inline-block;
         width: 300px;
@@ -406,7 +394,7 @@ body.show-playlist .content-list {
       #wrapper .content-list .album .number-songs {
         margin-top: 5px; }
       #wrapper .content-list .album p.tag span, #wrapper .content-list .album .number-songs span {
-        color: white; }
+        color: #fff; }
   #wrapper .wrap-song-list .group-song {
     margin-bottom: 20px; }
   #wrapper .wrap-song-list h4 {
@@ -464,7 +452,7 @@ body.show-playlist .content-list {
         -moz-animation: spin 10s linear infinite;
         animation: spin 10s linear infinite; }
     #wrapper .player-zone p.title {
-      color: #cccccc;
+      color: #ccc;
       font-size: 13pt; }
     #wrapper .player-zone .audiojs {
       display: table;
@@ -527,7 +515,7 @@ body.show-playlist .content-list {
       right: 200px;
       top: 0px; }
       #wrapper .player-zone .volume-tune p {
-        color: #cccccc;
+        color: #ccc;
         font-size: 13pt; }
       #wrapper .player-zone .volume-tune .wrap-range {
         cursor: pointer;
@@ -542,7 +530,7 @@ body.show-playlist .content-list {
       position: absolute;
       top: 25px;
       right: 10px;
-      color: #cccccc;
+      color: #ccc;
       font-size: 20px;
       cursor: pointer; }
       #wrapper .player-zone i#next-song:hover, #wrapper .player-zone i#next-song.active, #wrapper .player-zone i#prev-song:hover, #wrapper .player-zone i#prev-song.active, #wrapper .player-zone i#current-list:hover, #wrapper .player-zone i#current-list.active {
@@ -555,7 +543,7 @@ body.show-playlist .content-list {
 .alertify-notifier.ajs-right .ajs-message {
   word-wrap: break-word;
   background: rgba(0, 0, 0, 0.5);
-  color: white; }
+  color: #fff; }
   .alertify-notifier.ajs-right .ajs-message.ajs-success {
     background: rgba(0, 252, 59, 0.7); }
   .alertify-notifier.ajs-right .ajs-message.ajs-error {
@@ -570,14 +558,15 @@ body.show-playlist .content-list {
   right: $wide_pading;
   left: 186px; */
   margin-bottom: 20px;
-  overflow: hidden; }
+  display: inline-block;
+  width: 100%; }
   .quick-buttons .wrap-search {
     position: relative; }
     .quick-buttons .wrap-search input[type="search"] {
       background: transparent;
       border-radius: 0px;
       border: 1px solid rgba(0, 0, 0, 0.1);
-      color: white;
+      color: #fff;
       width: 300px; }
     .quick-buttons .wrap-search i.fa {
       position: absolute;
@@ -627,19 +616,19 @@ body.show-playlist .content-list {
     .tuan-modal .body input, .tuan-modal .body div.tagsinput {
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.8);
-      color: white !important; }
+      color: #fff !important; }
     .tuan-modal .body ol {
       list-style-type: upper-hexadecimal; }
       .tuan-modal .body ol pre {
         margin-top: 10px;
-        background: white;
-        color: black;
+        background: #fff;
+        color: #000;
         border-radius: 0px; }
     .tuan-modal .body div.tagsinput span.tag {
       background: rgba(0, 0, 0, 0.5);
       border-radius: 0px;
-      border: 1px solid #cccccc;
-      color: white; }
+      border: 1px solid #ccc;
+      color: #fff; }
       .tuan-modal .body div.tagsinput span.tag a {
         color: #008fd5; }
     .tuan-modal .body .btn {
@@ -734,3 +723,5 @@ body.show-playlist .wrap-theme {
 
 .tab-vertical > li:last-child {
   border-bottom: 0; }
+
+/*# sourceMappingURL=style.css.map */

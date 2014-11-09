@@ -705,7 +705,9 @@ body.show-playlist{
   right: $wide_pading;
   left: 186px; */
   margin-bottom: 20px;
-  overflow:hidden;
+  display: inline-block;
+  width: 100%;
+  
   .wrap-search{
     position:relative;
     input[type="search"]{
