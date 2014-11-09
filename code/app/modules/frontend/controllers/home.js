@@ -42,7 +42,7 @@ module.exports = function(BaseController){
             public_data.page_description = album.description;
           }
           
-          public_data.page_title = "Listen album: " + album.title;
+          public_data.page_title = "Listen album - " + album.title;
           public_data.public_album_id = id;
 
           if ( album.feature_id ){
