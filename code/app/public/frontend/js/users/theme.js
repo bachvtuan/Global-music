@@ -1,9 +1,89 @@
-usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $location) {
+
+usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $location, $window) {
+
+  var bg_list ={
+    'default':{
+      local:'frontend/images/backgrounds/sunset.jpg',
+      sever:'http://i1105.photobucket.com/albums/h360/bvtuan/background/sunset_zps486cf1d1.jpg'
+    },
+    'brown-wood':{
+      local:'frontend/images/backgrounds/brown-wood.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/brown-wood_zpsbb30d864.jpg'
+    },
+    yellow:{
+      local:'frontend/images/backgrounds/yellow.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/yellow_zps0da7361c.jpg'
+    },
+    violate:{
+      local:'frontend/images/backgrounds/violate.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/yellow_zps0da7361c.jpg'
+    },
+    sunny:{
+      local:'frontend/images/backgrounds/sunny.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/sunny_zps7827daf3.jpg'
+    },
+    sailfish:{
+      local:'frontend/images/backgrounds/sailfish.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/sailfish_zps268c75fc.jpg'
+    },
+    ocean:{
+      local:'frontend/images/backgrounds/ocean.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/ocean_zpsa9f02910.jpg'
+    },
+    night:{
+      local:'frontend/images/backgrounds/night.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/night_zpsb3a6df17.jpg'
+    },
+    nexus:{
+      local:'frontend/images/backgrounds/nexus.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/nexus_zps079a9211.jpg'
+    },
+    lights:{
+      local:'frontend/images/backgrounds/lights.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/lights_zps2e638494.jpg'
+    },
+    kiwi:{
+      local:'frontend/images/backgrounds/kiwi.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/kiwi_zps0e182b28.jpg'
+    },
+    greenish:{
+      local:'frontend/images/backgrounds/greenish.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/greenish_zpsaf4e4548.jpg'
+    },
+    city:{
+      local:'frontend/images/backgrounds/city.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/city_zps184b5d1d.jpg'
+    },
+    chrome:{
+      local:'frontend/images/backgrounds/chrome.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/chrome_zps3c080fc3.jpg'
+    },
+    blue:{
+      local:'frontend/images/backgrounds/blue.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/blue_zpsdfe8c01f.jpg'
+    },
+    tectile:{
+      local:'frontend/images/backgrounds/tectile.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/tectile_zps9e5a5892.png'
+    },
+    cloth:{
+      local:'frontend/images/backgrounds/cloth.jpg',
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/cloth_zps443c66b1.png'
+    }
+
+  }
+
+  var get_full_background = function(_class){
+    var obj = bg_list[_class];
+    return "url('{0}')".format( $window.is_debug ? obj.local : obj.server );
+    
+  }
+
   var list = [{
       name:"Default",
       class:"default",
       preview:'frontend/images/backgrounds/thumb-sunset.jpg',
-      style:{"background-image":'url(frontend/images/backgrounds/sunset.jpg)'}
+      style:{"background-image": get_full_background('default') }
     },
     {
       name:"Brown wood",
@@ -12,7 +92,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       style:{
         "background-attachment":"initial",
         "background-size":"initial",
-        "background-image":'url(frontend/images/backgrounds/brown-wood.jpg)'
+        "background-image":get_full_background('brown-wood')
       }
     },
     {
@@ -20,7 +100,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"yellow",
       preview:'frontend/images/backgrounds/thumb-yellow.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/yellow.jpg)'
+        'background-image':get_full_background('yellow')
       }
     },
     {
@@ -28,7 +108,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"violate",
       preview:'frontend/images/backgrounds/thumb-violate.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/violate.jpg)'
+        'background-image':get_full_background('violate')
       }
     },
     {
@@ -36,7 +116,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"sunny",
       preview:'frontend/images/backgrounds/thumb-sunny.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/sunny.jpg)'
+        'background-image':get_full_background('sunny')
       }
     },
     {
@@ -44,7 +124,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"sailfish",
       preview:'frontend/images/backgrounds/thumb-sailfish.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/sailfish.jpg)'
+        'background-image':get_full_background('sailfish')
       }
     },
     {
@@ -52,7 +132,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"ocean",
       preview:'frontend/images/backgrounds/thumb-ocean.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/ocean.jpg)'
+        'background-image':get_full_background('ocean')
       }
     },
     {
@@ -60,7 +140,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"night",
       preview:'frontend/images/backgrounds/thumb-night.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/night.jpg)'
+        'background-image':get_full_background('night')
       }
     },
     {
@@ -68,7 +148,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"nexus",
       preview:'frontend/images/backgrounds/thumb-nexus.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/nexus.jpg)'
+        'background-image':get_full_background('nexus')
       }
     },
     {
@@ -76,7 +156,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"lights",
       preview:'frontend/images/backgrounds/thumb-lights.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/lights.jpg)'
+        'background-image':get_full_background('lights')
       }
     },
     {
@@ -84,7 +164,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"kiwi",
       preview:'frontend/images/backgrounds/thumb-kiwi.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/kiwi.jpg)'
+        'background-image':get_full_background('kiwi')
       }
     },
     {
@@ -92,7 +172,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"greenish",
       preview:'frontend/images/backgrounds/thumb-greenish.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/greenish.jpg)'
+        'background-image':get_full_background('greenish')
       }
     },
     {
@@ -100,7 +180,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"city",
       preview:'frontend/images/backgrounds/thumb-city.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/city.jpg)'
+        'background-image':get_full_background('city')
       }
     },
     {
@@ -108,7 +188,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"chrome",
       preview:'frontend/images/backgrounds/thumb-chrome.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/chrome.jpg)'
+        'background-image':get_full_background('chrome')
       }
     },
     {
@@ -116,7 +196,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"blue",
       preview:'frontend/images/backgrounds/thumb-blue.jpg',
       style:{
-        'background-image':'url(frontend/images/backgrounds/blue.jpg)'
+        'background-image':get_full_background('blue')
       }
     },
     {
@@ -124,7 +204,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"tectile",
       preview:'frontend/images/backgrounds/tectile.png',
       style:{
-        'background-image':'url(frontend/images/backgrounds/tectile.png)',
+        'background-image':get_full_background('tectile'),
         'background-size' :'inherit'
       }
     },
@@ -133,7 +213,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       class:"cloth",
       preview:'frontend/images/backgrounds/cloth.png',
       style:{
-        'background-image':'url(frontend/images/backgrounds/cloth.png)',
+        'background-image':get_full_background('cloth'),
         'background-size' :'inherit'
       }
     },
