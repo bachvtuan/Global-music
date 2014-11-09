@@ -36,6 +36,8 @@ var albumSchema = mongoose.Schema({
   user_id: mongoose.Schema.ObjectId,
   user_name: String,
   title: String,
+  search_title: String,
+  description:String,
   feature_id: mongoose.Schema.ObjectId,
   song_numbers:{ type: Number, default: 0 },
   tags:{ type: [tagSchema] },

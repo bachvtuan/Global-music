@@ -323,7 +323,7 @@ albumApp.controller('AlbumCtrl',
       return true;
     }
 
-    if (search_result.keyword && album.title.toLowerCase().search(search_result.keyword) == -1){
+    if (search_result.keyword && album.search_title.toLowerCase().search(search_result.keyword) == -1){
       //Skip on this album
       return false;
     }
@@ -402,7 +402,7 @@ albumApp.controller('AlbumCtrl',
       keyword = keyword.substr(0,regex.index -1)  + keyword.substr( regex.index + regex[0].length );
     }
 
-    result.keyword = $.trim(keyword).toLowerCase();
+    result.keyword = removeUnicode($.trim(keyword).toLowerCase());
 
     log("result is", result);
 

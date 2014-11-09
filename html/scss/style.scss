@@ -317,10 +317,10 @@ h3{
         color: $lighter-gray;
         margin: 0px;
         display: inline-block;
-        width: 300px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        width: 100%;
       }
       .number-songs{
         /* margin-bottom:0px; */

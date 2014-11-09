@@ -5,7 +5,9 @@ var Album     = mongoose.model( 'Album' );
 var Media     = mongoose.model( 'Media' );
 var Tag       = mongoose.model( 'Tag' );
 var Song      = mongoose.model( 'Song' );
-var image_tool = require('../../../tools/image');
+
+var image_tool  = require('../../../tools/image');
+var string_tool = require('../../../tools/string');
 
 function validateAlbum(body){
 
@@ -24,6 +26,8 @@ function validateAlbum(body){
 
 function generalAddAlbum(body, res, req){
   
+  body.search_title = string_tool.removeUnicode( body.title );
+
   if ( body.cover ){
 
     image_tool.resizeImageDataFromUrl( body.cover,function(image,base64_data){
@@ -118,6 +122,9 @@ function generalDoTags(tags_string, req, callback){
 }
 
 function generalUpdateAlbum(current_ablum, update_album,req, res){
+
+  current_ablum.search_title = string_tool.removeUnicode( update_album.title );
+
   if ( update_album.cover ){
 
     image_tool.resizeImageDataFromUrl( update_album.cover,function(image,base64_data){
@@ -360,7 +367,7 @@ module.exports = function(BaseController){
       if (query.keyword){
         //search_query.title = {'$regex': query.keyword};
         //search_query.title = {'$search': query.keyword};
-        search_query.title = {'$regex': new RegExp(query.keyword, 'i')};
+        search_query.search_title = {'$regex': new RegExp(query.keyword, 'i')};
          
       }
       if (query.tag){
@@ -371,7 +378,7 @@ module.exports = function(BaseController){
            } 
         } 
       }
-      showLog("search_query",search_query,search_query.tags);
+      showLog("search_query",search_query);
       Album.find(search_query, function (err, albums) {
         return res.json( jsonSucc(albums) );
       });

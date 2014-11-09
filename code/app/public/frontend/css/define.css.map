@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AA8BA,UAIC;EAHG,WAAW,EAAE,kBAAkB;EAC/B,GAAG,EAAE,iCAAiC;EACtC,WAAW,EAAE,IAAI",
+"mappings": "AA+BA,UAIC;EAHG,WAAW,EAAE,kBAAkB;EAC/B,GAAG,EAAE,iCAAiC;EACtC,WAAW,EAAE,IAAI",
 "sources": ["../scss/define.scss"],
 "names": [],
 "file": "define.css"

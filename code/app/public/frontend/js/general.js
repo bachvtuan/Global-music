@@ -122,44 +122,61 @@ function roundNumber(number,decimal_points) {
 };
 
 alertify.defaults = {
-        // dialogs defaults
-        modal:true,
-        movable:true,
-        resizable:true,
-        closable:true,
-        maximizable:true,
-        pinnable:true,
-        pinned:true,
-        padding: true,
-        overflow:true,
-        maintainFocus:true,
-        transition:'pulse',
+  // dialogs defaults
+  modal:true,
+  movable:true,
+  resizable:true,
+  closable:true,
+  maximizable:true,
+  pinnable:true,
+  pinned:true,
+  padding: true,
+  overflow:true,
+  maintainFocus:true,
+  transition:'pulse',
 
-        // notifier defaults
-        notifier:{
-            // auto-dismiss wait time (in seconds)  
-            delay:5,
-            // default position
-            position:'bottom-right'
-        },
+  // notifier defaults
+  notifier:{
+    // auto-dismiss wait time (in seconds)  
+    delay:5,
+    // default position
+    position:'bottom-right'
+  },
 
-        // language resources 
-        glossary:{
-            // dialogs default title
-            title:'Music app',
-            // ok button text
-            ok: 'OK',
-            // cancel button text
-            cancel: 'Cancel'            
-        },
+  // language resources 
+  glossary:{
+    // dialogs default title
+    title:'Music app',
+    // ok button text
+    ok: 'OK',
+    // cancel button text
+    cancel: 'Cancel'            
+  },
 
-        // theme settings
-        theme:{
-            // class name attached to prompt dialog input textbox.
-            input:'ajs-input',
-            // class name attached to ok button
-            ok:'ajs-ok',
-            // class name attached to cancel button 
-            cancel:'ajs-cancel'
-        }
-    };
+  // theme settings
+  theme:{
+    // class name attached to prompt dialog input textbox.
+    input:'ajs-input',
+    // class name attached to ok button
+    ok:'ajs-ok',
+    // class name attached to cancel button 
+    cancel:'ajs-cancel'
+  }
+};
+
+function removeUnicode(str, sepereate){
+  sepereate = (typeof sepereate  === "undefined") ?  " " : sepereate;
+
+  str= str.toLowerCase();
+  str= str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+  str= str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+  str= str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+  str= str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+  str= str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+  str= str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+  str= str.replace(/đ/g,"d");
+  str= str.replace(/!|@|\$|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\'| |\"|\&|\#|\[|\]|~/g, sepereate);
+  str= str.replace(/-+-/g, sepereate ); //thay thế 2- thành 1-
+  str= str.replace(/^\ +|\-+$/g,"");//cắt bỏ ký tự - ở đầu và cuối chuỗi
+  return str;
+}

@@ -27,7 +27,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-7">
         <div class="content-list" >
           <div ng-if="search_albums === null"  >
             <ng-include src="'loading.html'" ng-init="text='Loading your albums'"></ng-include>
@@ -83,7 +83,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-5">
         <div ng-controller="SongCtrl" >
           <ng-include src="song_template" ></ng-include>
         </div>

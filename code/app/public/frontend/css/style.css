@@ -192,7 +192,7 @@ input {
     left: 8px; }
 
 .dropdown-menu {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   border-radius: 0px; }
   .dropdown-menu .divider {
     background: rgba(0, 0, 0, 0.9); }
@@ -387,7 +387,6 @@ body.show-playlist .content-list {
         color: #ccc; }
       #wrapper .content-list .album p.tag {
         display: inline-block;
-        width: 300px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis; }

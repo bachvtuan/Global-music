@@ -187,7 +187,7 @@ input{
 }
 
 .dropdown-menu{
-  background:$very_dark_fade_background;
+  background:$dark1;
   border-radius:0px;
   .divider{
     background:$dark;
@@ -446,7 +446,6 @@ body.show-playlist{
       p.tag{
         
         display: inline-block;
-        width: 300px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
