@@ -1,5 +1,5 @@
 doctype html
-html( ng-app="app" )
+html( ng-app="app",xmlns="http://www.w3.org/1999/xhtml", xmlns:fb="http://ogp.me/ns/fb#" )
   head
     title(ng-bind="page_title")!= page_title
     meta(name="descrition",content=page_description)
@@ -7,8 +7,7 @@ html( ng-app="app" )
     meta( property="og:image", itemprop="thumbnailUrl", content=page_image) 
     meta( content="news", itemprop="genre", name="medium")
     meta( content="vi-VN", itemprop="inLanguage")
-    meta( content=page_description, itemprop="headline", property="og:title")
-    meta( content=page_description, itemprop="keywords", name="keywords")
+    meta( content=page_title, itemprop="headline", property="og:title")
     
     meta( content=page_title, property="og:site_name")
     meta( content=page_description, itemprop="description", property="og:description")
