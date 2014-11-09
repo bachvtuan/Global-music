@@ -428,7 +428,10 @@ module.exports = function(BaseController){
         var first_user = users[0];
 
         var bcrypt = require('bcrypt-nodejs');
-        var reset_password = "foobar";
+        
+        var crypto =  require('crypto');
+        var reset_password = crypto.randomBytes(64).toString('hex').substr(0,6);
+
         bcrypt.hash(reset_password, null, null, function(err, hash) {
           if (err){
             return res.json( jsonErr( err ) );
