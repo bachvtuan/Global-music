@@ -449,7 +449,7 @@ module.exports = function(BaseController){
           html_content += "<p>If that wasn't you, Just ignore this email</p>"
           showLog(html_content);
 
-          sendEmail(config.admin_email,user.email,subject,html_content,config);
+          sendEmail(config.admin_email,first_user.email,subject,html_content,config);
 
           return res.json( jsonSucc("ok"));
 

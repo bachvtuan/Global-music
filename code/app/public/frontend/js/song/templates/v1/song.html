@@ -4,8 +4,10 @@
   <div ng-if="loading_songs"   class="clear">
     <ng-include src="'loading.html'" ng-init="text='Loading songs in the album'"></ng-include>
   </div>
+  <p class="inline">
+    <button type="button" ng-if="song !== null && songs.length == 0" ng-tooltip title="Add new song" class="btn pull-right" ng-click="addSong()"><i class="fa fa-plus"></i> Add song</button> 
+  </p>
   <p  class="clear alert" ng-if="song !== null && songs.length == 0">There is no song in this album, You can add more</p>
-  
   <div ng-if="song !== null && songs.length > 0">
     <h4>
       {{current_album.title}}

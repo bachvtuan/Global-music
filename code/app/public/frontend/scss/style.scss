@@ -43,6 +43,10 @@ button.working, a.working, input.working {
 }
 
 
+.inline{
+  display: inline-block;
+}
+
 .message-box{
   background:$fade_background;
   padding:10px;

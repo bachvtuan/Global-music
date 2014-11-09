@@ -5,8 +5,8 @@ function($resource,$cookies){
   return $resource( 'songs' , {}, {
     query: {method:'GET'},
     post: { method:'POST', headers: {'x-csrf-token': csrf}},
-    update: {method:'PUT'}
-    //, headers: {'x-csrf-token': $cookies.csrftoken , 'UUID':uuid}
+    update: {method:'PUT', headers: {'x-csrf-token': csrf}},
+    remove: {method:'DELETE', headers: {'x-csrf-token': csrf}},
   });
 }]);
 
