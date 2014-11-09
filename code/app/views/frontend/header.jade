@@ -14,16 +14,22 @@ html( ng-app="app" )
     meta( content=page_description, itemprop="description", property="og:description")
 
     link(rel="Shortcut Icon",href="/frontend/images/logo.png",type="image/x-icon")
-    script( src="/frontend/js/dependencies.min.js")
-    script( src="/share/js/alertifyjs/alertify.min.js")
-    script( src="/share/js/audiojs/audio.js")
-    script( src="/share/js/underscore-min.js")
-    script( src="/share/js/angular-1.2.25/angular.min.js")
-    script( src="/share/js/angular-1.2.25/angular-sanitize.min.js")
-    script( src="/share/js/angular-1.2.25/angular-route.min.js")
-    script( src="/share/js/angular-1.2.25/angular-resource.min.js")
-    script( src="/share/js/angular-1.2.25/angular-cookies.min.js")
-    script( src="/share/js/angular-1.2.25/angular-animate.min.js")
+
+    if is_debug
+      script( src="/share/js/jquery.js")
+      script( src="/share/js/bootstrap.js")
+      script( src="/share/js/alertifyjs/alertify.min.js")
+      script( src="/share/js/audiojs/audio.js")
+      script( src="/share/js/underscore-min.js")
+      script( src="/share/js/angular-1.2.25/angular.min.js")
+      script( src="/share/js/angular-1.2.25/angular-sanitize.min.js")
+      script( src="/share/js/angular-1.2.25/angular-route.min.js")
+      script( src="/share/js/angular-1.2.25/angular-resource.min.js")
+      script( src="/share/js/angular-1.2.25/angular-cookies.min.js")
+      script( src="/share/js/angular-1.2.25/angular-animate.min.js")
+    else 
+      script( src="/frontend/js/dependencies.min.js")
+
 
     script(type='text/javascript').
       var is_debug                  = #{is_debug};
@@ -39,23 +45,26 @@ html( ng-app="app" )
         location.href = "/#/album/" + public_album_id;
       }
 
-    script(src="/frontend/js/app.js")
-    script(src="/frontend/js/libraries/factories.js")
-    script(src="/frontend/js/libraries/directives.js")
-    script(src="/frontend/js/general.js")
-    script(src="/frontend/js/users/user.js")
-    script(src="/frontend/js/users/theme.js")
-    script(src="/frontend/js/users/login.js")
-    script(src="/frontend/js/users/logout.js")
-    script(src="/frontend/js/users/register.js")
-    script(src="/frontend/js/users/setting.js")
-    script(src="/frontend/js/users/forgot.js")
+    if is_debug
+      script(src="/frontend/js/app.js")
+      script(src="/frontend/js/libraries/factories.js")
+      script(src="/frontend/js/libraries/directives.js")
+      script(src="/frontend/js/general.js")
+      script(src="/frontend/js/users/user.js")
+      script(src="/frontend/js/users/theme.js")
+      script(src="/frontend/js/users/login.js")
+      script(src="/frontend/js/users/logout.js")
+      script(src="/frontend/js/users/register.js")
+      script(src="/frontend/js/users/setting.js")
+      script(src="/frontend/js/users/forgot.js")
 
-    script(src="/frontend/js/album/album.js")
-    script(src="/frontend/js/player/player.js")
-    script(src="/frontend/js/song/song.js")
-    script(src="/frontend/js/navigation/navigation.js")
-    script(src="/frontend/js/header/header.js")
+      script(src="/frontend/js/album/album.js")
+      script(src="/frontend/js/player/player.js")
+      script(src="/frontend/js/song/song.js")
+      script(src="/frontend/js/navigation/navigation.js")
+      script(src="/frontend/js/header/header.js")
+    else
+      script( src="/frontend/js/custom.min.js")
 
     link(rel="stylesheet", href="/frontend/css/bootstrap.min.css")
     //- link(rel="stylesheet", href="frontend/bootflat/css/bootflat.css")
