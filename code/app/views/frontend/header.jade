@@ -15,6 +15,22 @@ html( ng-app="app" )
 
     link(rel="Shortcut Icon",href="/frontend/images/logo.png",type="image/x-icon")
 
+
+    script(type='text/javascript').
+      var is_debug                  = #{is_debug};
+      var asset_version             = #{asset_version};
+      var maximum_file_upload       = #{maximum_file_upload};
+      var template_version_string   = "v#{template_version}";
+      var public_album_id           = "#{public_album_id}"
+      window.onload = function(){
+        window.csrf = $('input[type="hidden"][name="_csrf"]').val();
+      }
+
+      if ( public_album_id ){
+        location.href = "/#/album/" + public_album_id;
+      }
+
+
     if is_debug
       script( src="/share/js/jquery.js")
       script( src="/share/js/bootstrap.js")
@@ -30,20 +46,6 @@ html( ng-app="app" )
     else 
       script( src="/frontend/js/dependencies.min.js")
 
-
-    script(type='text/javascript').
-      var is_debug                  = #{is_debug};
-      var asset_version             = #{asset_version};
-      var maximum_file_upload       = #{maximum_file_upload};
-      var template_version_string   = "v#{template_version}";
-      var public_album_id           = "#{public_album_id}"
-      $(document).ready(function(){
-        window.csrf = $('input[type="hidden"][name="_csrf"]').val();
-      })
-
-      if ( public_album_id ){
-        location.href = "/#/album/" + public_album_id;
-      }
 
     if is_debug
       script(src="/frontend/js/app.js")
