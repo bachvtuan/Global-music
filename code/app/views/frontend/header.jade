@@ -22,10 +22,7 @@ html( ng-app="app" )
       var maximum_file_upload       = #{maximum_file_upload};
       var template_version_string   = "v#{template_version}";
       var public_album_id           = "#{public_album_id}"
-      window.onload = function(){
-        window.csrf = $('input[type="hidden"][name="_csrf"]').val();
-      }
-
+   
       if ( public_album_id ){
         location.href = "/#/album/" + public_album_id;
       }
@@ -45,6 +42,13 @@ html( ng-app="app" )
       script( src="/share/js/angular-1.2.25/angular-animate.min.js")
     else 
       script( src="/frontend/js/dependencies.min.js")
+
+
+    script(type='text/javascript').
+     
+      $(document).ready(function(){
+        window.csrf = $('input[type="hidden"][name="_csrf"]').val();
+      });
 
 
     if is_debug
