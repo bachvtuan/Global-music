@@ -177,11 +177,12 @@ albumApp.controller('AlbumCtrl',
 
   $scope.resetValue = function(){
 
-    $scope.show_form      = false;
-    $scope.album_title    = "";
-    $scope.album_cover    = "";
-    $scope.album_tags     = "";
-    $scope.is_edit_album  = null;
+    $scope.show_form          = false;
+    $scope.album_title        = "";
+    $scope.album_cover        = "";
+    $scope.album_tags         = "";
+    $scope.album_description  = "";
+    $scope.is_edit_album      = null;
 
   }
 
@@ -202,10 +203,12 @@ albumApp.controller('AlbumCtrl',
 
     log("submit album");
     var post_data = {
-      title:$scope.album_title,
-      cover:$scope.album_cover,
-      tags: $('#album-tags').val()
+      title         : $scope.album_title,
+      cover         : $scope.album_cover,
+      description   : $scope.album_description,
+      tags          : $('#album-tags').val()
     };
+    
     log("post_data", post_data);
 
     if ( $scope.is_edit_album ){
@@ -234,14 +237,16 @@ albumApp.controller('AlbumCtrl',
   }
 
   $scope.editAlbum = function(edit_album){
-    $scope.show_form = true;
-    $scope.is_edit_album = true;
-    $scope.album_title = edit_album.title;
-    $scope.edit_album = angular.copy(edit_album);
-    $scope.album_tags =  _.map( edit_album.tags, function(tag){ return tag.name });
+    $scope.show_form          = true;
+    $scope.is_edit_album      = true;
+    $scope.album_title        = edit_album.title;
+    $scope.edit_album         = angular.copy(edit_album);
+    $scope.album_tags         =  _.map( edit_album.tags, function(tag){ return tag.name });
+    $scope.album_description  = edit_album.description; 
     log( $scope.album_tags );
     //$scope.initTag();
   }
+
   $scope.doEditAlbum = function(post_data){
     log("post_data in editAlbum", post_data );
     var copy_album = angular.copy( $scope.edit_album );

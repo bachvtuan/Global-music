@@ -38,8 +38,8 @@
 
           <div ng-if="search_albums.length > 0">
             <div class="album" ng-repeat="album in search_albums  track by album._id">
-              <img ng-if="!album.feature_id" src="frontend/images/album.png">
-              <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)" ></load-image>
+              <img ng-if="!album.feature_id" src="frontend/images/album.png" >
+              <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)"  ></load-image>
               <div class="right">
                 <a class="title" title="{{album.title}}" ng-tooltip  data-placement="bottom"
                   ng-click="activeAlbum(album)" ng-class="{active:album == current_album}" >
@@ -117,6 +117,11 @@
             <label>Album tags</label>
             <input type="text" id="album-tags" class="form-control tags" ng-model="$parent.album_tags" placeHolder="Album tags"  />
             <small>Seperate by comma(,)</small>
+          </p>
+          <p>
+            <label>Album description</label>
+            <input type="text" class="form-control"  ng-model="$parent.album_description" placeHolder="Description for this album" />
+            <small>To more understanding, You can input some text to describe about this album</small>
           </p>
           <button type="submit" ng-if="!is_edit_album" class="btn btn-default"  ng-disabled="!album_title || pending_add_album"  class="btn btn-default"  ng-class="{'working': pending_add_album}">
             <i class="fa fa-plus"></i> Add

@@ -20,6 +20,11 @@ function validateAlbum(body){
   if ( body.cover && !validator.isURL(body.cover) ){
     return "Please input a valid url for album cover";
   }
+
+  if ( !body.description || !validator.isLength(body.description, 10,100) ){
+    return "Album title must have length from 10 -> 100";
+  }
+
   return true;
 }
 
@@ -335,7 +340,8 @@ module.exports = function(BaseController){
         }
 
 
-        album.title = update_album.title;
+        album.title       = update_album.title;
+        album.description = update_album.description;
 
         if ( update_album.tags && update_album.tags.trim() != "" ){
           generalDoTags(update_album.tags, req, function(arr_tags){
