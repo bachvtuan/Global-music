@@ -377,10 +377,11 @@ module.exports = function(BaseController){
          
       }
       if (query.tag){
+        query.tag = string_tool.removeUnicode( query.tag );
         search_query.tags  = { 
           $elemMatch : 
            { 
-             name : {'$regex': new RegExp(query.tag, 'i')}
+             search_title : {'$regex': new RegExp(query.tag, 'i')}
            } 
         } 
       }

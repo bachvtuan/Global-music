@@ -28,6 +28,11 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
       case 'play-songs':
         $scope.songs = broadcast_data.songs;
         $scope.song_index = broadcast_data.index;
+
+        if ( $scope.song_index >= $scope.songs.length ){
+          return;
+        }
+
         log("broadcast_data", broadcast_data);
         if ( broadcast_data.album_cover_id ){
           $scope.album_cover_id = broadcast_data.album_cover_id

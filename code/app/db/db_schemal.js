@@ -24,6 +24,7 @@ var tagSchema = mongoose.Schema({
   user_id: mongoose.Schema.ObjectId,
   //Store base64
   name:String,
+  search_title:String,
   created_date:{ type: Date, default: Date.now() },
   status:{ type: String, default: 'actived' }
 })

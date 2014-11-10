@@ -188,6 +188,11 @@ albumApp.controller('AlbumCtrl',
 
   $scope.setTagFilter = function(tag_name){
     $scope.filter_album = "#" + tag_name;
+
+    if ( !$scope.user ){
+      $scope.filter_album += " ~public";
+    }
+    
     $scope.doSearch();
   }
 
@@ -337,7 +342,7 @@ albumApp.controller('AlbumCtrl',
 
       var j = 0;
       for ( j=0; j < album.tags.length;j++ ){
-        if (album.tags[j].name.toLowerCase().search( search_result.tag ) != -1){
+        if (album.tags[j].search_title.toLowerCase().search( search_result.tag ) != -1){
           break;
         }
       }
@@ -404,6 +409,7 @@ albumApp.controller('AlbumCtrl',
 
     if ( regex  ){
       result.tag = regex[0].substr(1).toLowerCase();
+      result.tag = removeUnicode($.trim( result.tag ).toLowerCase());
       keyword = keyword.substr(0,regex.index -1)  + keyword.substr( regex.index + regex[0].length );
     }
 

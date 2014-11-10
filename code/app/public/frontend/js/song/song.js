@@ -11,7 +11,7 @@ function($resource,$cookies){
 }]);
 
 songApp.controller('SongCtrl', 
-  function ($scope, $http, $location,$window, $dialogs, Songs, fSharedService) {
+  function ($scope, $http, $location,$window, $dialogs, Songs, fSharedService, $timeout) {
 
   $scope.songs = null;
   $scope.loading_songs = false;
@@ -21,9 +21,13 @@ songApp.controller('SongCtrl',
       $scope.songs = null;
     }
     else{
+
       $scope.loading_songs = true;
+
       Songs.get({album_id:$scope.current_album_id},function(res){
+        
         $scope.loading_songs = false;
+        
         $scope.processRetrieveData(res,function(data){
           $scope.songs = data;
           //Tell to album controller
