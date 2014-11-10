@@ -89,8 +89,10 @@ function generalDoTags(tags_string, req, callback){
       console.log('Processing file ' + tag);
       var tag_data = {
         user_id:user_id,
-        name:tag
+        name:tag,
+        search_title: string_tool.removeUnicode( tag )
       }
+      
       var existing_tag = _.find(user_tags, function(tag_item){ return tag_item.name == tag });
 
       if ( existing_tag ){

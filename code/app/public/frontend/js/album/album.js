@@ -405,7 +405,7 @@ albumApp.controller('AlbumCtrl',
       }
     }
 
-    regex = keyword.match(/#[\w]*/i);
+    regex = keyword.match(/#[\w,á,à,ả,ã,ạ,ă,ắ,ằ,ẳ,ẵ,ặ,â,ầ,ầ,ẩ,ẫ,ậ,é,è,ẻ,ẽ,ẹ,ê,ế,ề,ể,ễ,ệ,í,ì,ỉ,ĩ,ị,ó,ò,ỏ,õ,ọ,ô,ố,ồ,ổ,ỗ,ộ,ơ,ớ,ờ,ở,ỡ,ợ,ú,ù,ủ,ũ,ụ,ư,ứ,ừ,ử,ữ,ự]*/i);
 
     if ( regex  ){
       result.tag = regex[0].substr(1).toLowerCase();
