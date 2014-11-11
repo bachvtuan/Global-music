@@ -187,7 +187,9 @@ albumApp.controller('AlbumCtrl',
   }
 
   $scope.setTagFilter = function(tag_name){
+    tag_name = tag_name.replace(' ','-');
     $scope.filter_album = "#" + tag_name;
+
 
     if ( !$scope.user ){
       $scope.filter_album += " ~public";
@@ -405,11 +407,12 @@ albumApp.controller('AlbumCtrl',
       }
     }
 
-    regex = keyword.match(/#[\w,á,à,ả,ã,ạ,ă,ắ,ằ,ẳ,ẵ,ặ,â,ầ,ầ,ẩ,ẫ,ậ,é,è,ẻ,ẽ,ẹ,ê,ế,ề,ể,ễ,ệ,í,ì,ỉ,ĩ,ị,ó,ò,ỏ,õ,ọ,ô,ố,ồ,ổ,ỗ,ộ,ơ,ớ,ờ,ở,ỡ,ợ,ú,ù,ủ,ũ,ụ,ư,ứ,ừ,ử,ữ,ự]*/i);
+    regex = keyword.match(/#[\w,\-,\_,á,à,ả,ã,ạ,ă,ắ,ằ,ẳ,ẵ,ặ,â,ầ,ầ,ẩ,ẫ,ậ,é,è,ẻ,ẽ,ẹ,ê,ế,ề,ể,ễ,ệ,í,ì,ỉ,ĩ,ị,ó,ò,ỏ,õ,ọ,ô,ố,ồ,ổ,ỗ,ộ,ơ,ớ,ờ,ở,ỡ,ợ,ú,ù,ủ,ũ,ụ,ư,ứ,ừ,ử,ữ,ự]*/i);
 
     if ( regex  ){
       result.tag = regex[0].substr(1).toLowerCase();
       result.tag = removeUnicode($.trim( result.tag ).toLowerCase());
+      result.tag = result.tag.replace('-',' ');
       keyword = keyword.substr(0,regex.index -1)  + keyword.substr( regex.index + regex[0].length );
     }
 
