@@ -1,6 +1,6 @@
 
 usersApp.controller('UserSettingCtrl', 
-  function ($scope, $rootScope, $http, $location,$window, Users, $dialogs, $userStyle, Page) {
+  function ($scope, $rootScope, $http, $location,$window, Users, $dialogs, $userStyle, Page, Net) {
 
     $scope.init = function(){
 
@@ -92,6 +92,15 @@ usersApp.controller('UserSettingCtrl',
       //$('#current-avatar').attr('src', avatar_src);
     }
 
+    $scope.updatePreview = function(){
+      
+      Net.isImage($scope.new_avatar_url).then(function(result){
+        if ( result ){
+          log("updatePreview", $scope.new_avatar_url);
+          $('#preview-avatar').attr('src',  $scope.new_avatar_url);
+        }
+      });
+    }
 
 
     $scope.readURL = function(input){
@@ -147,6 +156,8 @@ usersApp.controller('UserSettingCtrl',
         $scope.processRetrieveData(res,function(data){
           $userStyle.setUser(data);
           $scope.user = data;
+          $scope.new_avatar_url = "";
+          $('#preview-avatar').removeAttr('src');
           $dialogs.success("Success",'Your avatar is updated');
         });
       });

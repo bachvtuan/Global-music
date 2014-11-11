@@ -276,6 +276,10 @@ module.exports = function(BaseController){
       if ( src.length > global.config.maximum_file_upload ){
         return res.json( jsonErr("Maxium file size") );
       }
+
+      if ( validator.isURL( src) ){
+        return this.generalUpdateAvatar( req, res, current_user, body, src);
+      }
       
       var parse_result = image_tool.parseBase64(src);
 
@@ -283,41 +287,55 @@ module.exports = function(BaseController){
         return res.json( jsonErr(parse_result) );
       }
 
-      if (current_user.avatar_id){
-        var Media     = mongoose.model( 'Media' );
-        Media.findById( current_user.avatar_id, function(err, media){
-          media.remove();
-          showLog("removed old media");
-        });
-      }
 
       image_tool.convertBase64ToFile( parse_result.data, parse_result.extension, null, function(image_path){
         showLog("Call back", image_path);
+        _this.generalUpdateAvatar( req, res, current_user, body, image_path, parse_result);
 
-        image_tool.resizeImageDataFromUrl( image_path,function(image,base64_data){
+      });
+    },
+    generalUpdateAvatar:function( req, res, current_user, body, image_path, parse_result){
+      var _this = this;
 
-          if ( image == null ){
-            return res.json( jsonErr("Album image is error, Please try other") );
+
+      if (current_user.avatar_id){
+        var Media     = mongoose.model( 'Media' );
+        Media.findById( current_user.avatar_id, function(err, media){
+          if (media){
+            media.remove();
+            showLog("removed old media");            
           }
-          var media_data = {
-            user_id: body.user_id,
-            data:base64_data,
-            mime_type :parse_result.image_type
-          }
+        });
+      }
 
+      image_tool.resizeImageDataFromUrl( image_path,function(image,base64_data){
+
+        if ( image == null ){
+          return res.json( jsonErr("Album image is error, Please try other") );
+        }
+        var media_data = {
+          user_id: body.user_id,
+          data:base64_data
+        }
+
+        media_data.mime_type  = "image/" + image.type.toLowerCase();
+
+        if ( parse_result ){
           //Remove temp file
           require('fs').unlink(image_path);
+        }
 
-          var Media     = mongoose.model( 'Media' );
+        showLog("image", image);
 
-          new Media( media_data ).save( function( err, media, count ){
-            showLog("media is created");
-            current_user.avatar_id = media._id;
-            current_user.save();
-            var short_user = _this.removeSecretFields(current_user.toObject());
-            req.session.user = short_user;
-            return res.json( jsonSucc( short_user ) );
-          });
+        var Media     = mongoose.model( 'Media' );
+
+        new Media( media_data ).save( function( err, media, count ){
+          showLog("media is created");
+          current_user.avatar_id = media._id;
+          current_user.save();
+          var short_user = _this.removeSecretFields(current_user.toObject());
+          req.session.user = short_user;
+          return res.json( jsonSucc( short_user ) );
         });
       });
     },

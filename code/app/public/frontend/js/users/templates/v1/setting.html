@@ -87,9 +87,13 @@
             </div>
             <p>&nbsp;</p>
             <input type="file"   onchange="angular.element(this).scope().readURL(this)" />
-            <hr/>
             <p>Allow types: <strong>(JPEG,PNG,GIF) </strong> 
             Maximum size: <strong>{{convertToSizeString(maximum_file_upload)}}</strong>
+            </p>
+            <hr/>
+            <p>Or paste from image url</p>
+            <p>
+              <input type="link" ng-change="updatePreview()" class="form-control" ng-model="new_avatar_url" />
             </p>
             <p>
             <button type="button" ng-click="uploadAvatar()" ng-class="{'working': working_avatar}" 
@@ -97,6 +101,7 @@
             </p>
           </div>
           <div class="col-md-6">
+            <strong>Preview new avatar</strong>
             <img id="preview-avatar" />
           </div>
         </div>

@@ -18,6 +18,10 @@ module.exports = function(BaseController){
             return res.json( jsonErr("not found file") );
           }
 
+          if (!media){
+            return "not found";
+          }
+
           var img = new Buffer(media.data, 'base64');
 
           res.writeHead(200, {
