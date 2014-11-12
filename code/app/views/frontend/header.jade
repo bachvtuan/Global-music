@@ -14,17 +14,20 @@ html( ng-app="app",xmlns="http://www.w3.org/1999/xhtml", xmlns:fb="http://ogp.me
 
     link(rel="Shortcut Icon",href="/frontend/images/logo.png",type="image/x-icon")
 
+    if public_album_id
+
+      script(type='text/javascript').
+        var public_album_id           = "#{public_album_id}"
+     
+        if ( public_album_id ){
+          location.href = "/#/album/" + public_album_id;
+        }
 
     script(type='text/javascript').
       var is_debug                  = #{is_debug};
       var asset_version             = #{asset_version};
       var maximum_file_upload       = #{maximum_file_upload};
       var template_version_string   = "v#{template_version}";
-      var public_album_id           = "#{public_album_id}"
-   
-      if ( public_album_id ){
-        location.href = "/#/album/" + public_album_id;
-      }
 
 
     if is_debug
