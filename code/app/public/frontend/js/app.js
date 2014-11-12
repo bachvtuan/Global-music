@@ -36,6 +36,18 @@ app.run(function($rootScope, $window,$http, $cookies, $dialogs, $location, $temp
     return "/media/" + media_id;
   }
 
+  $rootScope.addContextClass = function( $event ){
+    var parent = $($event.target).parents('.wrap-context');
+    log( $event );
+    log( $($event.target) );
+    if ($( window ).height() - $event.pageY < 420){
+      parent.addClass('dropup');
+    }
+    else{
+      parent.removeClass('dropup');
+    }        
+  }
+
   $rootScope.convertToSizeString = function( byte_number ){
     var mega_byte = byte_number / 1024/ 1024;
     var return_string = mega_byte * 1000;

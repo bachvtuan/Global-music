@@ -18,8 +18,8 @@
         <li ng-repeat="song in songs">
           <span>{{ $index +1 }}.</span> <a ng-click="playSong($index)">{{song.title}}</a>
           <!-- Single button -->
-          <div class="btn-group">
-            <button type="button" class="btn btn-default transparent dropdown-toggle" data-toggle="dropdown">
+          <div class="btn-group wrap-context">
+            <button type="button" class="btn btn-default transparent dropdown-toggle" data-toggle="dropdown" ng-click="addContextClass($event)">
               <i class="fa fa-gear fa-lg"></i>
             </button>
             <ul class="dropdown-menu pull-right" role="menu">

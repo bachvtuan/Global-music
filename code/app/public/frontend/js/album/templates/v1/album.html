@@ -57,8 +57,8 @@
                   <a ng-click="setUserFilter(album.user_name)" ng-if="!isOwn(album.user_id)">{{album.user_name}}</a>
                 </p>
               </div>
-              <div class="btn-group" ng-if="isOwn(album.user_id)">
-                <button type="button" class="btn btn-default transparent dropdown-toggle" data-toggle="dropdown">
+              <div class="btn-group wrap-context" ng-if="isOwn(album.user_id)">
+                <button type="button" class="btn btn-default transparent dropdown-toggle" data-toggle="dropdown" ng-click="addContextClass($event)">
                   <i class="fa fa-gear fa-lg"></i>
                 </button>
                 <ul class="dropdown-menu pull-right" role="menu">
@@ -177,6 +177,6 @@
     <i class="fa fa-close" ng-click="$parent.show_public_link = false;" ></i>
     <h3>Public link for album : {{share_album.title}}</h3>
     <hr/>
-    <p>Please copy link below: <a>{{public_link}}</a></p>
+    <p>Please copy link below: <a ng-href="{{public_link}}" target="_blank">{{public_link}}</a></p>
   </div>
 </div>
