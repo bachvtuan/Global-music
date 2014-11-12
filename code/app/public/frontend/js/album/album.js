@@ -172,7 +172,7 @@ albumApp.controller('AlbumCtrl',
     $scope.show_public_link = true;
     log($scope.show_public_link);
     $scope.share_album = album;
-    $scope.public_link = document.location.origin +"/album/"+album._id;
+    $scope.public_link = document.location.origin +"/album/"+album.slug;
   }
 
   $scope.resetValue = function(){

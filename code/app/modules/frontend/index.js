@@ -15,7 +15,7 @@ module.exports = function( app ){
     HomeController.index( req, res, next );
   });
 
-  app.get('/album/:id', attachDB, function (req, res,next) {
+  app.get('/album/:slug', attachDB, function (req, res,next) {
     HomeController.index( req, res, next );
   });
 

@@ -27,14 +27,19 @@ module.exports = function(BaseController){
 
       var _this = this;
 
-      if ( req.params.id  ){
+      if ( req.params.slug  ){
         //Request album
-        var id = req.params.id;
+        var slug = req.params.slug;
+        showLog("Album slug is "+ slug);
 
-        Album.findById(id, function(err, album){
-          if (err || !album){
+        var filter = {slug:slug};
+
+        Album.find(filter, function(err, albums){
+          if (err || !albums || albums.length == 0){
             return _this.render( res,'index', public_data );
           }
+
+          var album = albums[0];
 
           showLog("description", album.description);
           
@@ -43,7 +48,7 @@ module.exports = function(BaseController){
           }
           
           public_data.page_title = "Listen album - " + album.title;
-          public_data.public_album_id = id;
+          public_data.public_album_id = album._id;
 
           if ( album.feature_id ){
             public_data.page_image =  pre_url + "/media/" + album.feature_id;
