@@ -37,6 +37,7 @@ var albumSchema = mongoose.Schema({
   user_id: mongoose.Schema.ObjectId,
   user_name: String,
   title: String,
+  slug:String,
   search_title: String,
   description:String,
   feature_id: mongoose.Schema.ObjectId,

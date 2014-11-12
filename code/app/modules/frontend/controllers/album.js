@@ -1,6 +1,7 @@
 var async     = require('async');
-var _     = require('underscore');
+var _         = require('underscore');
 var mongoose  = require('mongoose');
+var slug      = require('slug')
 var Album     = mongoose.model( 'Album' );
 var Media     = mongoose.model( 'Media' );
 var Tag       = mongoose.model( 'Tag' );
@@ -32,6 +33,7 @@ function validateAlbum(body){
 function generalAddAlbum(body, res, req){
   
   body.search_title = string_tool.removeUnicode( body.title );
+  body.slug = slug( body.search_title );
 
   if ( body.cover ){
 
@@ -131,6 +133,7 @@ function generalDoTags(tags_string, req, callback){
 function generalUpdateAlbum(current_ablum, update_album,req, res){
 
   current_ablum.search_title = string_tool.removeUnicode( update_album.title );
+  current_ablum.slug = slug( current_ablum.search_title);
 
   if ( update_album.cover ){
 
