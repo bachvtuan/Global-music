@@ -35,35 +35,41 @@ function generalAddAlbum(body, res, req){
   body.search_title = string_tool.removeUnicode( body.title );
   body.slug = slug( body.search_title );
 
-  if ( body.cover ){
+  checkExistingSlug(body.slug, null, function( new_slug, is_existing ){
+    body.slug = new_slug;
+    showLog("is_existing",is_existing);
+    if ( body.cover ){
 
-    image_tool.resizeImageDataFromUrl( body.cover,function(image,base64_data){
+      image_tool.resizeImageDataFromUrl( body.cover,function(image,base64_data){
 
-      if ( image == null ){
-        return res.json( jsonErr("Album image is error, Please try other") );
-      }
-      var media_data = {
-        user_id: body.user_id,
-        data:base64_data,
-        mime_type :"image/" + image.type.toLowerCase()
-      }
-      new Media( media_data ).save( function( err, media, count ){
+        if ( image == null ){
+          return res.json( jsonErr("Album image is error, Please try other") );
+        }
+        var media_data = {
+          user_id: body.user_id,
+          data:base64_data,
+          mime_type :"image/" + image.type.toLowerCase()
+        }
+        new Media( media_data ).save( function( err, media, count ){
 
-        body.feature_id = mongoose.Types.ObjectId(media._id);
+          body.feature_id = mongoose.Types.ObjectId(media._id);
 
-        new Album( body ).save( function( err, album, count ){
-          return res.json( jsonSucc(album) );
+          new Album( body ).save( function( err, album, count ){
+            return res.json( jsonSucc(album) );
+          });  
+
         });  
+      });
+    }
+    else{
+      showLog("Added new album withot cover", body);
+      new Album( body ).save( function( err, album, count ){
+        return res.json( jsonSucc(album) );
+      });          
+    }
+  });
+  //End checkExistingSlug
 
-      });  
-    });
-  }
-  else{
-    showLog("Added new album withot cover", body);
-    new Album( body ).save( function( err, album, count ){
-      return res.json( jsonSucc(album) );
-    });          
-  }
 }
 
 
@@ -130,11 +136,55 @@ function generalDoTags(tags_string, req, callback){
   });
 }
 
-function generalUpdateAlbum(current_ablum, update_album,req, res){
+function checkExistingSlug( slug, album_id , callback, inc_number ){
 
-  current_ablum.search_title = string_tool.removeUnicode( update_album.title );
-  current_ablum.slug = slug( current_ablum.search_title);
+  var working_slug = slug;
 
+  if (  inc_number ){
+    //Append inc to slug
+    working_slug += inc_number.toString();
+  }
+
+  var filter = {slug:working_slug};
+
+  if ( album_id != null ){
+    //not equal
+    filter._id =  { $ne: album_id };
+  }
+  
+  Album.find(filter, function(err, albums){
+    if ( albums && albums.length > 0 ){
+      //Loop again with new inc_number
+      if (  !inc_number ){
+        //Begin from 1
+        return checkExistingSlug( slug, album_id, callback, 1 );
+      }
+      else{
+        //Run 10 loop
+        if ( inc_number == 10 ){
+          //Just use temporate method
+          return callback( slug + new Date().getTime().toString(), true )
+        }
+
+        return checkExistingSlug( slug, album_id, callback, inc_number + 1 );
+      }
+      //callback( slug, true );
+    }
+    else{
+      if ( inc_number ){
+        callback( working_slug, true );
+      }
+      else{
+        callback( working_slug, false );
+      }
+      
+    }
+
+  });
+}
+
+
+function generalFinalUpdateAlbum(current_ablum, update_album,req, res){
   if ( update_album.cover ){
 
     image_tool.resizeImageDataFromUrl( update_album.cover,function(image,base64_data){
@@ -158,6 +208,25 @@ function generalUpdateAlbum(current_ablum, update_album,req, res){
   else{
     current_ablum.save();
     return res.json(jsonSucc(current_ablum));
+  }
+}
+
+function generalUpdateAlbum(current_ablum, update_album,req, res){
+
+  current_ablum.search_title = string_tool.removeUnicode( update_album.title );
+  var temp_slug = slug( current_ablum.search_title);
+
+  if ( current_ablum.slug && current_ablum.slug != temp_slug ){
+    showLog("Slug change", current_ablum.slug, temp_slug );
+    //Check new slug
+    checkExistingSlug( temp_slug, current_ablum._id, function( new_slug, is_existing ){
+      current_ablum.slug = new_slug;
+      generalFinalUpdateAlbum(current_ablum, update_album,req, res);
+    });
+  }
+  else{
+    showLog("Slug doesn't change");
+    generalFinalUpdateAlbum(current_ablum, update_album,req, res);
   }
 }
 
