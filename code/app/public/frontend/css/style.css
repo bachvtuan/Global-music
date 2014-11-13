@@ -63,6 +63,9 @@
 ul[html-sortable] .handle, div[html-sortable] .handle {
   cursor: pointer; }
 
+span.required {
+  color: #ff1717; }
+
 button.working, a.working, input.working {
   padding-right: 23px; }
   button.working:after, a.working:after, input.working:after {

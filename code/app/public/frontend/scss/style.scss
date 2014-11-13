@@ -21,7 +21,11 @@ ul[html-sortable],div[html-sortable]{
   .handle{
     cursor: pointer;
   }
-} 
+}
+
+span.required{
+  color: $red;
+}
 
 button.working, a.working, input.working {
   padding-right: 23px;
