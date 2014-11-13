@@ -2,14 +2,31 @@ var app = angular.module('app');
 
 app.factory('$dialogs', function($rootScope, $window){
   return {
-    message:function(message){
-      alertify.message(message);
+    notify:function(message, type, delay){
+
+      //Default is 10 seconds
+      delay = !angular.isDefined(delay) ? 10 : delay;
+
+      var org_delay = $window.alertify.get('notifier','delay');
+
+      $window.alertify.set('notifier','delay', delay);
+      $window.alertify.notify( message, type );
+
+      $window.alertify.set('notifier','delay', org_delay);
+      
     },
-    success:function(message){
-      alertify.success(message);
+    message:function(message, delay){
+      //alertify.message(message);
+      return this.notify( message, 'notify', delay );
     },
-    error:function(message){
-      alertify.error(message);
+    success:function(message, delay){
+      return this.notify( message, 'success', delay );
+    },
+    error:function(message, delay){
+      return this.notify( message, 'error', delay );
+    },
+    dismissAll:function(){
+      $window.alertify.dismissAll();
     },
     confirm:function(title, callback){
       $window.alertify.confirm( title ).setting('onok', function(){

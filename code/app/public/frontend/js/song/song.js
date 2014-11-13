@@ -54,16 +54,18 @@ songApp.controller('SongCtrl',
   }
 
   $scope.resetValue = function(){
-    $scope.song_title = "";
-    $scope.song_link = "";
-    $scope.is_edit_song = false;
+    $scope.song_title       = "";
+    $scope.song_link        = "";
+    $scope.song_emotion = "";
+    $scope.is_edit_song     = false;
   }
 
   $scope.submitSong = function(){
 
     var post_data = {
-      title:$scope.song_title,
+      title :$scope.song_title,
       link:$scope.song_link,
+      emotion: $scope.song_emotion,
       album_id: $scope.current_album_id
     };
 
@@ -113,6 +115,7 @@ songApp.controller('SongCtrl',
     $scope.edit_song = angular.copy(song);
     $scope.song_title = song.title;
     $scope.song_link = song.link;
+    $scope.song_emotion = song.emotion;
     $scope.show_song_form = true;
   }
 
@@ -126,6 +129,11 @@ songApp.controller('SongCtrl',
         });
       })
     });
+  }
+
+  $scope.isPlaying = function(song){
+    return angular.isDefined( $scope.playing_song ) && $scope.playing_song._id == song._id;
+      
   }
 
   $scope.playSong = function( song_index ){

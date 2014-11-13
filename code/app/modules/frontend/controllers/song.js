@@ -16,6 +16,11 @@ function validateSong(body){
   if ( body.link && !validator.isURL(body.link) ){
     return "Please input a valid url for song";
   }
+
+  if ( body.emotion && !validator.isLength(body.emotion, 10,300)  ){
+    return "The emotion must have length from 10 -> 100";
+  }
+
   return true;
 }
 
@@ -106,6 +111,7 @@ module.exports = function(BaseController){
 
         song.title = update_song.title;
         song.link = update_song.link;
+        song.emotion = update_song.emotion;
         song.save();
         return res.json( jsonSucc(song) );
       });

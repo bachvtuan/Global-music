@@ -1,6 +1,6 @@
 var playerApp = angular.module('playerApp', []);
 
-playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $dialogs,$timeout, fSharedService) {
+playerApp.controller('PlayerCtrl', function ($scope, $rootScope, $http, $location,$window, $dialogs,$timeout, fSharedService) {
 
   $scope.range_style = {
     width:'80%'
@@ -120,7 +120,7 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
   }
 
   $scope.init = function(){
-    $scope.current_song = $scope.songs[ $scope.song_index ];
+    $rootScope.playing_song = $scope.songs[ $scope.song_index ];
     $scope.album_cover_id = null;
     $scope.audiojs_setting = {
       callbackError:function(error){
@@ -148,13 +148,6 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
         })
       }
     };  
-
-    /*$timeout(function(){
-      var as = audiojs.createAll($scope.audiojs_setting);
-      $scope.audio =  as[0];
-      $scope.audio.play();
-
-    },500);*/
 
   }
 
@@ -199,12 +192,20 @@ playerApp.controller('PlayerCtrl', function ($scope, $http, $location,$window, $
 
     $scope.animateLogo();
     $scope.song_index == typeof(index) != "undefined" ? index: $scope.song_index;
-    $scope.current_song = $scope.songs[ $scope.song_index ];
+    $rootScope.playing_song = $scope.songs[ $scope.song_index ];
     $scope.removeError();
 //    $scope.removeOld();
     //var as = audiojs.createAll($scope.audiojs_setting);
   //  $scope.audio =  as[0];
-    $scope.audio.load( $scope.current_song.link );
+    $scope.audio.load( $rootScope.playing_song.link );
+
+    //just make sure clear all alertify
+    $dialogs.dismissAll();
+    if ( $rootScope.playing_song.emotion && $rootScope.playing_song.emotion.length > 0 ){
+      var message = "<strong>{0}</strong>: {1}".format($rootScope.playing_song.title, $rootScope.playing_song.emotion);
+      //Deplay previous song if has
+      $dialogs.message( message, 0);
+    }
 
     $timeout(function(){
       $scope.audio.play();

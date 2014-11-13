@@ -496,23 +496,28 @@ body.show-playlist{
 
       > ul{
         > li{
-            padding:6px 0px;
-            position:relative;
-            margin-bottom: 5px;
-            span{
-              min-width: 20px;
-              display: inline-block;
+          &.active{
+            > a{
+              color: $blue;
             }
-            &.playing{
-              a{
-                color: $blue;
-              }
+          }
+          padding:6px 0px;
+          position:relative;
+          margin-bottom: 5px;
+          span{
+            min-width: 20px;
+            display: inline-block;
+          }
+          &.playing{
+            a{
+              color: $blue;
             }
-            .btn-group{
-              position:absolute;
-              right: 0px;
-              top:0px;
-            }
+          }
+          .btn-group{
+            position:absolute;
+            right: 0px;
+            top:0px;
+          }
         }
       }
     }    
@@ -788,7 +793,7 @@ body.show-playlist{
     padding: $wide_pading;
     position:relative;
 
-    input,div.tagsinput{
+    textarea,input,div.tagsinput{
       background:$fade_background;
       border:1px solid $fade_bright;
       color: $white !important;

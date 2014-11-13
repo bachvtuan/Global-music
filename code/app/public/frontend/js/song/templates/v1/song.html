@@ -15,7 +15,7 @@
     </h4>
     <div class="song-list">
       <ul  type="1">
-        <li ng-repeat="song in songs">
+        <li ng-repeat="song in songs" ng-class="{active:isPlaying(song)}">
           <span>{{ $index +1 }}.</span> <a ng-click="playSong($index)">{{song.title}}</a>
           <!-- Single button -->
           <div class="btn-group wrap-context">
@@ -51,6 +51,10 @@
             <label>Song link</label>
             <input type="url" class="form-control"  ng-model="$parent.$parent.song_link" placeHolder="The url for song" />
             <small>Begin with http(s)</small>
+          </p>
+          <p>
+            <label>Your emotion</label>
+            <textarea  class="form-control" ng-model="$parent.$parent.song_emotion" placeHolder="Song emotion"  ></textarea>
           </p>
           
           <button type="submit" class="btn btn-default"  ng-disabled="!song_title || !song_link || pending_add_song"  class="btn btn-default"  ng-class="{'working': pending_add_song || pending_edit_song}">

@@ -4,8 +4,8 @@
       
       <img class="cover" ng-if="album_cover_id == null" src="frontend/images/album.jpg">
       <load-image ng-if="album_cover_id != null" source="mediaLink(album_cover_id)" extra-class="cover" ></load-image>
-      <p class="title">{{ current_song.title }}</p>
-      <load-audio source="current_song.link" ></load-audio>
+      <p class="title">{{ playing_song.title }}</p>
+      <load-audio source="playing_song.link" ></load-audio>
       <div class="volume-tune">
         <p>Volume</p>
         <div class="wrap-range" ng-click="changeVolume($event)" >

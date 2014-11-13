@@ -421,6 +421,8 @@ body.show-playlist .content-list {
       padding: 6px 0px;
       position: relative;
       margin-bottom: 5px; }
+      #wrapper .wrap-song-list .song-list > ul > li.active > a {
+        color: #008fd5; }
       #wrapper .wrap-song-list .song-list > ul > li span {
         min-width: 20px;
         display: inline-block; }
@@ -623,7 +625,7 @@ body.show-playlist .content-list {
      */
     padding: 35px;
     position: relative; }
-    .tuan-modal .body input, .tuan-modal .body div.tagsinput {
+    .tuan-modal .body textarea, .tuan-modal .body input, .tuan-modal .body div.tagsinput {
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.8);
       color: #fff !important; }

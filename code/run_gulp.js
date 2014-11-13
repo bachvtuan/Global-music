@@ -6,7 +6,7 @@ var notify = require("gulp-notify");
 var depend_scripts = [
   'app/public/share/js/jquery.js',
   'app/public/share/js/bootstrap.js',
-  'app/public/share/js/alertifyjs/alertify.min.js',
+  'app/public/share/js/alertifyjs/alertify.js',
   'app/public/share/js/audiojs/audio.js',
   'app/public/share/js/underscore-min.js',
   'app/public/share/js/angular-1.2.25/angular.min.js',

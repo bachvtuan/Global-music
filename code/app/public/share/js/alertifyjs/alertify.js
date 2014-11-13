@@ -7,7 +7,7 @@
  * @license MIT <http://opensource.org/licenses/mit-license.php>
  * @link http://alertifyjs.com
  * @module AlertifyJS
- * @version 0.6.1
+ * @version 0.10.2
  */
 ( function ( window ) {
     'use strict';
@@ -20,7 +20,9 @@
         ENTER: 13,
         ESC: 27,
         F1: 112,
-        F12: 123
+        F12: 123,
+        LEFT: 37,
+        RIGHT: 39
     };
     /**
      * Default options 
@@ -28,10 +30,13 @@
      */
     var defaults = {
         modal:true,
+        basic:false,
+        frameless:false,
         movable:true,
         resizable:true,
         closable:true,
         maximizable:true,
+        startMaximized:false,
         pinnable:true,
         pinned:true,
         padding: true,
@@ -61,6 +66,9 @@
         }
     };
     
+    //holds open dialogs instances
+    var openDialogs = [];
+
     /**
      * [Helper]  Adds the specified class(es) to the element.
      *
@@ -239,9 +247,7 @@
      * @return {Object}		base dialog prototype
      */
     var dialog = (function () {
-        //holds open dialogs instances
-        var openInstances = [],
-            //holds the list of used keys.
+        var //holds the list of used keys.
             usedKeys = [],
             //dummy variable, used to trigger dom reflow.
             reflow = null,
@@ -253,7 +259,7 @@
                 /*tab index required to fire click event before body focus*/
                 modal: '<div class="ajs-modal" tabindex="0"></div>',
                 dialog: '<div class="ajs-dialog" tabindex="0"></div>',
-                reset: '<a class="ajs-reset" href="#"></a>',
+                reset: '<button class="ajs-reset"></button>',
                 commands: '<div class="ajs-commands"><button class="ajs-pin"></button><button class="ajs-maximize"></button><button class="ajs-close"></button></div>',
                 header: '<div class="ajs-header"></div>',
                 body: '<div class="ajs-body"></div>',
@@ -285,7 +291,9 @@
                 maximized: 'ajs-maximized',
                 animationIn: 'ajs-in',
                 animationOut: 'ajs-out',
-                shake:'ajs-shake'
+                shake:'ajs-shake',
+                basic:'ajs-basic',
+                frameless:'ajs-frameless'
             };
 			
         /**
@@ -343,16 +351,19 @@
                     activeElement:document.body,
                     timerIn:undefined,
                     timerOut:undefined,
-                    buttons: setup.buttons,
+                    buttons: setup.buttons || [],
                     focus: setup.focus,
                     options: {
                         title: undefined,
                         modal: undefined,
+                        basic:undefined,
+                        frameless:undefined,
                         pinned: undefined,
                         movable: undefined,
                         resizable: undefined,
                         closable: undefined,
                         maximizable: undefined,
+                        startMaximized: undefined,
                         pinnable: undefined,
                         transition: undefined,
                         padding:undefined,
@@ -388,7 +399,7 @@
                 elements.modal = elements.root.lastChild;
                 elements.modal.innerHTML = templates.dialog;
                 elements.dialog = elements.modal.firstChild;
-                elements.dialog.innerHTML = templates.reset + templates.commands + templates.header + templates.body + templates.footer + templates.reset;
+                elements.dialog.innerHTML = templates.reset + templates.commands + templates.header + templates.body + templates.footer + templates.resizeHandle + templates.reset;
 
                 //reset links
                 elements.reset = [];
@@ -412,8 +423,10 @@
 
                 //footer
                 elements.footer = elements.body.nextSibling;
-                elements.footer.innerHTML = templates.buttons.auxiliary + templates.buttons.primary + templates.resizeHandle;
-                elements.resizeHandle = elements.footer.lastChild;
+                elements.footer.innerHTML = templates.buttons.auxiliary + templates.buttons.primary;
+                
+                //resize handle
+                elements.resizeHandle = elements.footer.nextSibling;
 
                 //buttons
                 elements.buttons = {};
@@ -464,33 +477,35 @@
 
                 
                 //settings
-                instance.setting('title', setup.options.title === undefined ? alertify.defaults.glossary.title : setup.options.title);
+                instance.set('title', setup.options.title === undefined ? alertify.defaults.glossary.title : setup.options.title);
 				
-                instance.setting('modal', setup.options.modal === undefined ? alertify.defaults.modal : setup.options.modal);
+                instance.set('modal', setup.options.modal === undefined ? alertify.defaults.modal : setup.options.modal);
+                instance.set('basic', setup.options.basic === undefined ? alertify.defaults.basic : setup.options.basic);
+                instance.set('frameless', setup.options.frameless === undefined ? alertify.defaults.frameless : setup.options.frameless);
 							
-                instance.setting('movable', setup.options.movable === undefined ? alertify.defaults.movable : setup.options.movable);
-                instance.setting('resizable', setup.options.resizable === undefined ? alertify.defaults.resizable : setup.options.resizable);
+                instance.set('movable', setup.options.movable === undefined ? alertify.defaults.movable : setup.options.movable);
+                instance.set('resizable', setup.options.resizable === undefined ? alertify.defaults.resizable : setup.options.resizable);
 				
-                instance.setting('closable', setup.options.closable === undefined ? alertify.defaults.closable : setup.options.closable);
-                instance.setting('maximizable', setup.options.maximizable === undefined ? alertify.defaults.maximizable : setup.options.maximizable);
+                instance.set('closable', setup.options.closable === undefined ? alertify.defaults.closable : setup.options.closable);
+                instance.set('maximizable', setup.options.maximizable === undefined ? alertify.defaults.maximizable : setup.options.maximizable);
+                instance.set('startMaximized', setup.options.startMaximized === undefined ? alertify.defaults.startMaximized : setup.options.startMaximized);
 				
-                instance.setting('pinnable', setup.options.pinnable === undefined ? alertify.defaults.pinnable : setup.options.pinnable);
-                instance.setting('pinned', setup.options.pinned === undefined ? alertify.defaults.pinned : setup.options.pinned);
+                instance.set('pinnable', setup.options.pinnable === undefined ? alertify.defaults.pinnable : setup.options.pinnable);
+                instance.set('pinned', setup.options.pinned === undefined ? alertify.defaults.pinned : setup.options.pinned);
 				
-                instance.setting('transition', setup.options.transition === undefined ? alertify.defaults.transition : setup.options.transition);
+                instance.set('transition', setup.options.transition === undefined ? alertify.defaults.transition : setup.options.transition);
 
-                instance.setting('padding', setup.options.padding === undefined ? alertify.defaults.padding : setup.options.padding);
-                instance.setting('overflow', setup.options.overflow === undefined ? alertify.defaults.overflow : setup.options.overflow);
+                instance.set('padding', setup.options.padding === undefined ? alertify.defaults.padding : setup.options.padding);
+                instance.set('overflow', setup.options.overflow === undefined ? alertify.defaults.overflow : setup.options.overflow);
 				
 
                 // allow dom customization
                 if(typeof instance.build === 'function'){
                     instance.build();
                 }
-				
             }
             
-            //add to DOM tree.
+            //add to the end of the DOM tree.
             document.body.appendChild(instance.elements.root);
         }
 
@@ -500,8 +515,8 @@
          */
         function ensureNoOverflow(){
             var requiresNoOverflow = 0;
-            for(var x=0;x<openInstances.length;x+=1){
-                var instance = openInstances[x];
+            for(var x=0;x<openDialogs.length;x+=1){
+                var instance = openDialogs[x];
                 if(instance.isModal() || instance.isMaximized()){
                     requiresNoOverflow+=1;
                 }
@@ -533,12 +548,11 @@
          * Toggles the dialog display mode
          *
          * @param {Object} instance The dilog instance.
-         * @param {Boolean} on True to make it modal, false otherwise.
          *
          * @return {undefined}
          */
         function updateDisplayMode(instance){
-            if(instance.setting('modal')){
+            if(instance.get('modal')){
 
                 //make modal
                 removeClass(instance.elements.root, classes.modeless);
@@ -567,6 +581,40 @@
                 }
             }
         }
+
+        /**
+         * Toggles the dialog basic view mode 
+         *
+         * @param {Object} instance The dilog instance.
+         *
+         * @return {undefined}
+         */
+        function updateBasicMode(instance){
+            if (instance.get('basic')) {
+                // add class
+                addClass(instance.elements.root, classes.basic);
+            } else {
+                // remove class
+                removeClass(instance.elements.root, classes.basic);
+            }
+        }
+
+        /**
+         * Toggles the dialog frameless view mode 
+         *
+         * @param {Object} instance The dilog instance.
+         *
+         * @return {undefined}
+         */
+        function updateFramelessMode(instance){
+            if (instance.get('frameless')) {
+                // add class
+                addClass(instance.elements.root, classes.frameless);
+            } else {
+                // remove class
+                removeClass(instance.elements.root, classes.frameless);
+            }
+        }
 		
         /**
          * Helper: Brings the modeless dialog to front, attached to modeless dialogs.
@@ -579,9 +627,9 @@
         function bringToFront(event, instance){
             
             // Do not bring to front if preceeded by an open modal
-            var index = openInstances.indexOf(instance);
-            for(var x=index+1;x<openInstances.length;x+=1){
-                if(openInstances[x].isModal()){
+            var index = openDialogs.indexOf(instance);
+            for(var x=index+1;x<openDialogs.length;x+=1){
+                if(openDialogs[x].isModal()){
                     return;
                 }
             }
@@ -589,6 +637,9 @@
             // Bring to front by making it the last child.
             if(document.body.lastChild !== instance.elements.root){
                 document.body.appendChild(instance.elements.root);
+                //also make sure its at the end of the list
+                openDialogs.splice(openDialogs.indexOf(instance),1);
+                openDialogs.push(instance);
                 setFocus(instance);
             }
 			
@@ -610,6 +661,12 @@
                 break;
             case 'modal':
                 updateDisplayMode(instance);
+                break;
+            case 'basic':
+                updateBasicMode(instance);
+                break;
+            case 'frameless':
+                updateFramelessMode(instance);
                 break;
             case 'pinned':
                 updatePinned(instance);
@@ -789,7 +846,7 @@
          */
         function pin(instance) {
             //pin the dialog
-            instance.setting('pinned', true);
+            instance.set('pinned', true);
         }
 
         /**
@@ -801,7 +858,7 @@
          */
         function unpin(instance) {
             //unpin the dialog 
-            instance.setting('pinned', false);
+            instance.set('pinned', false);
         }
 
 
@@ -844,7 +901,7 @@
          * @return {undefined}
          */
         function updatePinnable(instance) {
-            if (instance.setting('pinnable')) {
+            if (instance.get('pinnable')) {
                 // add class
                 addClass(instance.elements.root, classes.pinnable);
             } else {
@@ -905,7 +962,7 @@
          */
         function updateAbsPositionFix(instance) {
             // if modeless and unpinned add fix
-            if (!instance.setting('modal') && !instance.setting('pinned')) {
+            if (!instance.get('modal') && !instance.get('pinned')) {
                 addAbsPositionFix(instance);
             } else {
                 removeAbsPositionFix(instance);
@@ -920,7 +977,7 @@
          * @return {undefined}
          */
         function updatePinned(instance) {
-            if (instance.setting('pinned')) {
+            if (instance.get('pinned')) {
                 removeClass(instance.elements.root, classes.unpinned);
                 if (instance.isOpen()) {
                     removeAbsPositionFix(instance);
@@ -942,7 +999,7 @@
          * @return {undefined}
          */
         function updateMaximizable(instance) {
-            if (instance.setting('maximizable')) {
+            if (instance.get('maximizable')) {
                 // add class
                 addClass(instance.elements.root, classes.maximizable);
             } else {
@@ -960,7 +1017,7 @@
          * @return {undefined}
          */
         function updateClosable(instance) {
-            if (instance.setting('closable')) {
+            if (instance.get('closable')) {
                 // add class
                 addClass(instance.elements.root, classes.closable);
                 bindClosableEvents(instance);
@@ -1049,9 +1106,12 @@
                 cancelKeyup = false;
                 return;
             }
-            var instance = openInstances[openInstances.length - 1];
+            var instance = openDialogs[openDialogs.length - 1];
             var keyCode = event.keyCode;
-            if (usedKeys.indexOf(keyCode) > -1) {
+            if (instance.__internal.buttons.length === 0 && keyCode === keys.ESC && instance.get('closable') === true) {
+                triggerClose(instance);
+                return false;
+            }else if (usedKeys.indexOf(keyCode) > -1) {
                 triggerCallback(instance, function (button) {
                     return button.key === keyCode;
                 });
@@ -1067,9 +1127,23 @@
         * @return {undefined}
         */
         function keydownHandler(event) {
-            var instance = openInstances[openInstances.length - 1];
+            var instance = openDialogs[openDialogs.length - 1];
             var keyCode = event.keyCode;
-            if (keyCode < keys.F12 + 1 && keyCode > keys.F1 - 1 && usedKeys.indexOf(keyCode) > -1) {
+            if (keyCode === keys.LEFT || keyCode === keys.RIGHT) {
+                var buttons = instance.__internal.buttons;
+                for (var x = 0; x < buttons.length; x += 1) {
+                    if (document.activeElement === buttons[x].element) {
+                        switch (keyCode) {
+                        case keys.LEFT:
+                            buttons[(x || buttons.length) - 1].element.focus();
+                            return;
+                        case keys.RIGHT:
+                            buttons[(x + 1) % buttons.length].element.focus();
+                            return;
+                        }
+                    }
+                }
+            }else if (keyCode < keys.F12 + 1 && keyCode > keys.F1 - 1 && usedKeys.indexOf(keyCode) > -1) {
                 event.preventDefault();
                 event.stopPropagation();
                 triggerCallback(instance, function (button) {
@@ -1097,9 +1171,32 @@
                 var focus = instance.__internal.focus;
                 // the focus element.
                 var element = focus.element;
+
+                switch (typeof focus.element) {
                 // a number means a button index
-                if (typeof focus.element === 'number') {
-                    element = instance.__internal.buttons[focus.element].element;
+                case 'number':
+                    if (instance.__internal.buttons.length > focus.element) {
+                        //in basic view, skip focusing the buttons.
+                        if (instance.get('basic') === true) {
+                            element = instance.elements.reset[0];
+                        } else {
+                            element = instance.__internal.buttons[focus.element].element;
+                        }
+                    }
+                    break;
+                // a string means querySelector to select from dialog body contents.
+                case 'string':
+                    element = instance.elements.body.querySelector(focus.element);
+                    break;
+                // a function should return the focus element.
+                case 'function':
+                    element = focus.element.call(instance);
+                    break;
+                }
+                
+                // if no focus element, default to first reset element.
+                if ((typeof element === 'undefined' || element === null) && instance.__internal.buttons.length === 0) {
+                    element = instance.elements.reset[0];
                 }
                 // focus
                 if (element && element.focus) {
@@ -1125,9 +1222,9 @@
 
             // should work on last modal if triggered from document.body 
             if (!instance) {
-                for (var x = openInstances.length - 1; x > -1; x -= 1) {
-                    if (openInstances[x].isModal()) {
-                        instance = openInstances[x];
+                for (var x = openDialogs.length - 1; x > -1; x -= 1) {
+                    if (openDialogs[x].isModal()) {
+                        instance = openDialogs[x];
                         break;
                     }
                 }
@@ -1136,13 +1233,13 @@
             if (instance && instance.isModal()) {
                 // determine reset target to enable forward/backward tab cycle.
                 var resetTarget, target = event.srcElement || event.target;
-                var lastResetLink = target === instance.elements.reset[1];
+                var lastResetElement = target === instance.elements.reset[1] || (instance.__internal.buttons.length === 0 && target === document.body);
 
                 // if last reset link, then go to maximize or close
-                if (lastResetLink) {
-                    if (instance.setting('maximizable')) {
+                if (lastResetElement) {
+                    if (instance.get('maximizable')) {
                         resetTarget = instance.elements.commands.maximize;
-                    } else if (instance.setting('closable')) {
+                    } else if (instance.get('closable')) {
                         resetTarget = instance.elements.commands.close;
                     }
                 }
@@ -1152,7 +1249,7 @@
                         // button focus element, go to first available button
                         if (target === instance.elements.reset[0]) {
                             resetTarget = instance.elements.buttons.auxiliary.firstChild || instance.elements.buttons.primary.firstChild;
-                        } else if (lastResetLink) {
+                        } else if (lastResetElement) {
                             //restart the cycle by going to first reset link
                             resetTarget = instance.elements.reset[0];
                         }
@@ -1187,8 +1284,8 @@
             cancelKeyup = false;
 
             // allow custom `onfocus` method
-            if (typeof instance.setting('onfocus') === 'function') {
-                instance.setting('onfocus')();
+            if (typeof instance.get('onfocus') === 'function') {
+                instance.get('onfocus')();
             }
 
             // unbind the event
@@ -1217,7 +1314,7 @@
             resetResize(instance);
 
             // restore if maximized
-            if (instance.isMaximized()) {
+            if (instance.isMaximized() && !instance.get('startMaximized')) {
                 restore(instance);
             }
 
@@ -1261,7 +1358,7 @@
          * @return {Boolean} false
          */
         function beginMove(event, instance) {
-            if (resizable === null && !instance.isMaximized() && instance.setting('movable')) {
+            if (resizable === null && !instance.isMaximized() && instance.get('movable')) {
                 var eventSrc;
                 if (event.type === 'touchstart') {
                     event.preventDefault();
@@ -1352,7 +1449,7 @@
          * @return {undefined}
          */
         function updateMovable(instance) {
-            if (instance.setting('movable')) {
+            if (instance.get('movable')) {
                 // add class
                 addClass(instance.elements.root, classes.movable);
                 if (instance.isOpen()) {
@@ -1501,7 +1598,7 @@
                     eventSrc = event;
                 }
                 if (eventSrc) {
-                    resizeElement(eventSrc, resizable.elements.dialog, !resizable.setting('modal') && !resizable.setting('pinned'));
+                    resizeElement(eventSrc, resizable.elements.dialog, !resizable.get('modal') && !resizable.get('pinned'));
                 }
             }
         }
@@ -1549,7 +1646,7 @@
          * @return {undefined}
          */
         function updateResizable(instance) {
-            if (instance.setting('resizable')) {
+            if (instance.get('resizable')) {
                 // add class
                 addClass(instance.elements.root, classes.resizable);
                 if (instance.isOpen()) {
@@ -1574,8 +1671,8 @@
          * @return {undefined}
          */
         function windowResize(/*event*/) {
-            for (var x = 0; x < openInstances.length; x += 1) {
-                var instance = openInstances[x];
+            for (var x = 0; x < openDialogs.length; x += 1) {
+                var instance = openDialogs[x];
                 resetMove(instance);
                 resetResize(instance);
             }
@@ -1588,8 +1685,8 @@
          * @return {undefined}
          */
         function bindEvents(instance) {
-            // if first dialog, hook body handlers
-            if (openInstances.length === 1) {
+            // if first dialog, hook global handlers
+            if (openDialogs.length === 1) {
                 //global
                 on(window, 'resize', windowResize);
                 on(document.body, 'keyup', keyupHandler);
@@ -1597,15 +1694,15 @@
                 on(document.body, 'focus', onReset);
 
                 //move
-                on(document.body, 'mousemove', move);
-                on(document.body, 'touchmove', move);
-                on(document.body, 'mouseup', endMove);
-                on(document.body, 'touchend', endMove);
+                on(document.documentElement, 'mousemove', move);
+                on(document.documentElement, 'touchmove', move);
+                on(document.documentElement, 'mouseup', endMove);
+                on(document.documentElement, 'touchend', endMove);
                 //resize
-                on(document.body, 'mousemove', resize);
-                on(document.body, 'touchmove', resize);
-                on(document.body, 'mouseup', endResize);
-                on(document.body, 'touchend', endResize);
+                on(document.documentElement, 'mousemove', resize);
+                on(document.documentElement, 'touchmove', resize);
+                on(document.documentElement, 'mouseup', endResize);
+                on(document.documentElement, 'touchend', endResize);
             }
 
             // common events
@@ -1620,17 +1717,17 @@
             on(instance.elements.dialog, transition.type, instance.__internal.transitionInHandler);
 
             // modelss only events
-            if (!instance.setting('modal')) {
+            if (!instance.get('modal')) {
                 bindModelessEvents(instance);
             }
 
             // resizable
-            if (instance.setting('resizable')) {
+            if (instance.get('resizable')) {
                 bindResizableEvents(instance);
             }
 
             // movable
-            if (instance.setting('movable')) {
+            if (instance.get('movable')) {
                 bindMovableEvents(instance);
             }
         }
@@ -1643,19 +1740,19 @@
          * @return {undefined}
          */
         function unbindEvents(instance) {
-            // if last dialog, remove body handlers
-            if (openInstances.length === 1) {
+            // if last dialog, remove global handlers
+            if (openDialogs.length === 1) {
                 //global
                 off(window, 'resize', windowResize);
                 off(document.body, 'keyup', keyupHandler);
                 off(document.body, 'keydown', keydownHandler);
                 off(document.body, 'focus', onReset);
                 //move
-                off(document.body, 'mousemove', move);
-                off(document.body, 'mouseup', endMove);
+                off(document.documentElement, 'mousemove', move);
+                off(document.documentElement, 'mouseup', endMove);
                 //resize
-                off(document.body, 'mousemove', resize);
-                off(document.body, 'mouseup', endResize);
+                off(document.documentElement, 'mousemove', resize);
+                off(document.documentElement, 'mouseup', endResize);
             }
 
             // common events
@@ -1668,17 +1765,17 @@
             on(instance.elements.dialog, transition.type, instance.__internal.transitionOutHandler);
 
             // modelss only events
-            if (!instance.setting('modal')) {
+            if (!instance.get('modal')) {
                 unbindModelessEvents(instance);
             }
 
             // movable
-            if (instance.setting('movable')) {
+            if (instance.get('movable')) {
                 unbindMovableEvents(instance);
             }
 
             // resizable
-            if (instance.setting('resizable')) {
+            if (instance.get('resizable')) {
                 unbindResizableEvents(instance);
             }
 
@@ -1824,6 +1921,73 @@
                 return this;
             },
             /**
+             * Move the dialog to a specific x/y coordinates
+             *
+             * @param {Number} x    The new dialog x coordinate in pixels.
+             * @param {Number} y    The new dialog y coordinate in pixels.
+             *
+             * @return {Object} The dialog instance.
+             */
+            moveTo:function(x,y){
+                if(!isNaN(x) && !isNaN(y)){
+                    var element = this.elements.dialog,
+                        current = element,
+                        offsetLeft = 0,
+                        offsetTop = 0;
+                    
+                    //subtract existing left,top
+                    if (element.style.left) {
+                        offsetLeft -= parseInt(element.style.left, 10);
+                    }
+                    if (element.style.top) {
+                        offsetTop -= parseInt(element.style.top, 10);
+                    }
+                    //calc offset
+                    do {
+                        offsetLeft += current.offsetLeft;
+                        offsetTop += current.offsetTop;
+                    } while (current = current.offsetParent);
+
+                    //calc left, top
+                    var left = (x - offsetLeft);
+                    var top  = (y - offsetTop);
+
+                    //// rtl handling
+                    if (isRightToLeft()) {
+                        left *= -1;
+                    }
+
+                    element.style.left = left + 'px';
+                    element.style.top = top + 'px';
+                }
+                return this;
+            },
+            /**
+             * Resize the dialog to a specific width/height (the dialog must be 'resizable').
+             * The dialog can be resized to:
+             *  A minimum width equal to the initial display width
+             *  A minimum height equal to the sum of header/footer heights.
+             *
+             *
+             * @param {Number} width    The new dialog width in pixels.
+             * @param {Number} height   The new dialog height in pixels.
+             *
+             * @return {Object} The dialog instance.
+             */
+            resizeTo:function(width,height){
+                if(!isNaN(width) && !isNaN(height) && this.get('resizable') === true){
+                    var element = this.elements.dialog;
+                    if (element.style.maxWidth !== 'none') {
+                        element.style.minWidth = (minWidth = element.offsetWidth) + 'px';
+                    }
+                    element.style.maxWidth = 'none';
+                    element.style.minHeight = this.elements.header.offsetHeight + this.elements.footer.offsetHeight + 'px';
+                    element.style.width = width + 'px';
+                    element.style.height = height + 'px';
+                }
+                return this;
+            },
+            /**
              * Gets or Sets dialog settings/options 
              *
              * @param {String|Object} key A string specifying a propery name or a collection of key/value pairs.
@@ -1920,7 +2084,7 @@
 					
                     // add to open dialogs
                     this.__internal.isOpen = true;
-                    openInstances.push(this);
+                    openDialogs.push(this);
 
                     // save last focused element
                     if(alertify.defaults.maintainFocus){
@@ -1935,7 +2099,7 @@
                     bindEvents(this);
 
                     if(modal !== undefined){
-                        this.setting('modal', modal);
+                        this.set('modal', modal);
                     }
 					
                     ensureNoOverflow();
@@ -1944,6 +2108,13 @@
                     if(typeof className === 'string' && className !== ''){
                         this.__internal.className = className;
                         addClass(this.elements.root, className);
+                    }
+
+                    // maximize if start maximized
+                    if ( this.get('startMaximized')) {
+                        this.maximize();
+                    }else if(this.isMaximized()){
+                        restore(this);
                     }
 					
                     updateAbsPositionFix(this);
@@ -1969,9 +2140,10 @@
                     removeClass(this.elements.root, classes.hidden);
 
                     // allow custom `onshow` method
-                    if ( typeof this.setting('onshow') === 'function' ) {
-                        this.setting('onshow')();
+                    if ( typeof this.get('onshow') === 'function' ) {
+                        this.get('onshow')();
                     }
+
                 }else{
                     // reset move updates
                     resetMove(this);
@@ -1989,7 +2161,7 @@
             /**
              * Close the dialog
              *
-             * @return {undefined}
+             * @return {Object} The dialog instance
              */
             close: function () {
                 if (this.__internal.isOpen ) {
@@ -2013,12 +2185,12 @@
                     }
 
                     // allow custom `onclose` method
-                    if ( typeof this.setting('onclose') === 'function' ) {
-                        this.setting('onclose')();
+                    if ( typeof this.get('onclose') === 'function' ) {
+                        this.get('onclose')();
                     }
 					
                     //remove from open dialogs               
-                    openInstances.splice(openInstances.indexOf(this),1);
+                    openDialogs.splice(openDialogs.indexOf(this),1);
                     this.__internal.isOpen = false;
 					
                     ensureNoOverflow();
@@ -2026,11 +2198,21 @@
                 }
                 return this;
             },
+            /**
+             * Close all open dialogs except this.
+             *
+             * @return {undefined}
+             */
+            closeOthers:function(){
+                alertify.closeAll(this);
+                return this;
+            }
         };
 	} () );
     var notifier = (function () {
         var reflow,
             element,
+            openInstances = [],
             classes = {
                 base: 'alertify-notifier',
                 message: 'ajs-message',
@@ -2061,7 +2243,15 @@
                 document.body.appendChild(element);
             }
         }
-
+        
+        function pushInstance(instance) {
+            instance.__internal.pushed = true;
+            openInstances.push(instance);
+        }
+        function popInstance(instance) {
+            openInstances.splice(openInstances.indexOf(instance), 1);
+            instance.__internal.pushed = false;
+        }
         /**
          * Helper: update the notifier instance position
          * 
@@ -2139,7 +2329,7 @@
                 push: function (_content, _wait) {
                     if (!this.__internal.pushed) {
 
-                        this.__internal.pushed = true;
+                        pushInstance(this);
                         clearTimers(this);
 
                         var content, wait;
@@ -2211,7 +2401,7 @@
                                     this.callback.call(this, clicked);
                                 }
                             }
-                            this.__internal.pushed = false;
+                            popInstance(this);
                         }
                     }
                     return this;
@@ -2241,6 +2431,14 @@
                     } else {
                         this.element.appendChild(content);
                     }
+                    return this;
+                },
+                /*
+                 * Dismisses all open notifications except this.
+                 * 
+                 */
+                dismissOthers: function () {
+                    notifier.dismissAll(this);
                     return this;
                 }
             });
@@ -2305,6 +2503,21 @@
                 var div = document.createElement('div');
                 div.className = classes.message + ((typeof type === 'string' && type !== '') ? ' ajs-' + type : '');
                 return create(div, callback);
+            },
+            /**
+             * Dismisses all open notifications.
+             *
+             * @param {Object} excpet [optional] The notification object to exclude from dismissal.
+             *
+             */
+            dismissAll: function (except) {
+                var clone = openInstances.slice(0);
+                for (var x = 0; x < clone.length; x += 1) {
+                    var  instance = clone[x];
+                    if (except === undefined || except !== instance) {
+                        instance.dismiss();
+                    }
+                }
             }
         };
     })();
@@ -2451,6 +2664,22 @@
                 }
             },
             /**
+             * Close all open dialogs.
+             *
+             * @param {Object} excpet [optional] The dialog object to exclude from closing.
+             *
+             * @return {undefined}
+             */
+            closeAll: function (except) {
+                var clone = openDialogs.slice(0);
+                for (var x = 0; x < clone.length; x += 1) {
+                    var instance = clone[x];
+                    if (except === undefined || except !== instance) {
+                        instance.close();
+                    }
+                }
+            },
+            /**
              * Gets or Sets dialog settings/options. if the dialog is transient, this call does nothing.
              *
              * @param {string} name The dialog name.
@@ -2544,8 +2773,15 @@
              */
             warning: function (message, wait, callback) {
                 return notifier.create('warning', callback).push(message, wait);
+            },
+            /**
+             * Dismisses all open notifications
+             *
+             * @return {undefined}
+             */
+            dismissAll: function () {
+                notifier.dismissAll();
             }
-
         };
     }
     var alertify = new Alertify();
@@ -2582,9 +2818,9 @@
                     onok = _onok;
                     break;
                 }
-                this.setting('title', title);
-                this.setting('message', message);
-                this.setting('onok', onok);
+                this.set('title', title);
+                this.set('message', message);
+                this.set('onok', onok);
                 return this;
             },
             setup: function () {
@@ -2634,8 +2870,8 @@
                 }
             },
             callback: function (closeEvent) {
-                if (typeof this.settings.onok === 'function') {
-                    var returnValue = this.settings.onok.call(undefined, closeEvent);
+                if (typeof this.get('onok') === 'function') {
+                    var returnValue = this.get('onok').call(undefined, closeEvent);
                     if (typeof returnValue !== 'undefined') {
                         closeEvent.cancel = !returnValue;
                     }
@@ -2722,10 +2958,10 @@
                     oncancel = _oncancel;
                     break;
                 }
-                this.setting('title', title);
-                this.setting('message', message);
-                this.setting('onok', onok);
-                this.setting('oncancel', oncancel);
+                this.set('title', title);
+                this.set('message', message);
+                this.set('onok', onok);
+                this.set('oncancel', oncancel);
                 return this;
             },
             setup: function () {
@@ -2802,16 +3038,16 @@
                 var returnValue;
                 switch (closeEvent.index) {
                 case 0:
-                    if (typeof this.settings.onok === 'function') {
-                        returnValue = this.settings.onok.call(undefined, closeEvent);
+                    if (typeof this.get('onok') === 'function') {
+                        returnValue = this.get('onok').call(undefined, closeEvent);
                         if (typeof returnValue !== 'undefined') {
                             closeEvent.cancel = !returnValue;
                         }
                     }
                     break;
                 case 1:
-                    if (typeof this.settings.oncancel === 'function') {
-                        returnValue = this.settings.oncancel.call(undefined, closeEvent);
+                    if (typeof this.get('oncancel') === 'function') {
+                        returnValue = this.get('oncancel').call(undefined, closeEvent);
                         if (typeof returnValue !== 'undefined') {
                             closeEvent.cancel = !returnValue;
                         }
@@ -2864,7 +3100,7 @@
                     onok = _value;
                     oncancel = _onok;
                     break;
-                case 4:
+                case 5:
                     title = _title;
                     message = _message;
                     value = _value;
@@ -2872,11 +3108,11 @@
                     oncancel = _oncancel;
                     break;
                 }
-                this.setting('title', title);
-                this.setting('message', message);
-                this.setting('value', value);
-                this.setting('onok', onok);
-                this.setting('oncancel', oncancel);
+                this.set('title', title);
+                this.set('message', message);
+                this.set('value', value);
+                this.set('onok', onok);
+                this.set('oncancel', oncancel);
                 return this;
             },
             setup: function () {
@@ -2907,7 +3143,7 @@
             build: function () {
                 input.className = alertify.defaults.theme.input;
                 input.setAttribute('type', 'text');
-                input.value = this.settings.value;
+                input.value = this.get('value');
                 this.elements.content.appendChild(p);
                 this.elements.content.appendChild(input);
             },
@@ -2960,16 +3196,16 @@
                 switch (closeEvent.index) {
                 case 0:
                     this.value = input.value;
-                    if (typeof this.settings.onok === 'function') {
-                        returnValue = this.settings.onok.call(undefined, closeEvent, this.value);
+                    if (typeof this.get('onok') === 'function') {
+                        returnValue = this.get('onok').call(undefined, closeEvent, this.value);
                         if (typeof returnValue !== 'undefined') {
                             closeEvent.cancel = !returnValue;
                         }
                     }
                     break;
                 case 1:
-                    if (typeof this.settings.oncancel === 'function') {
-                        returnValue = this.settings.oncancel.call(undefined, closeEvent);
+                    if (typeof this.get('oncancel') === 'function') {
+                        returnValue = this.get('oncancel').call(undefined, closeEvent);
                         if (typeof returnValue !== 'undefined') {
                             closeEvent.cancel = !returnValue;
                         }
@@ -2979,6 +3215,7 @@
             }
         };
     });
+
     // AMD and window support
     if ( typeof define === 'function' ) {
         define( [], function () {

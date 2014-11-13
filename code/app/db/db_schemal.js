@@ -69,6 +69,7 @@ mongoose.model('Media', mediaSchema)
 var songSchema = mongoose.Schema({
   user_id: mongoose.Schema.ObjectId,
   title: String,
+  emotion:String,
   position:{ type: Number, default: 0 },
   album_id:mongoose.Schema.ObjectId,
   link:{ type: String, default: '' },
