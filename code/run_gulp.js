@@ -18,7 +18,7 @@ var depend_scripts = [
 ];
 
 var custom_scripts = [
-  'app/public/share/js/html5-sortable.js'
+  'app/public/share/js/html5-sortable.js',
   'app/public/frontend/js/app.js',
   'app/public/frontend/js/libraries/factories.js',
   'app/public/frontend/js/libraries/directives.js',
