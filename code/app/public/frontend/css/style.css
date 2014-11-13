@@ -47,6 +47,22 @@
 .clear {
   clear: both; }
 
+/* Prevent the text contents of draggable elements from being selectable. */
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element; }
+
+.html5-sortable .over, .droppable.over {
+  background: #65bd10; }
+
+ul[html-sortable] .handle, div[html-sortable] .handle {
+  cursor: pointer; }
+
 button.working, a.working, input.working {
   padding-right: 23px; }
   button.working:after, a.working:after, input.working:after {
@@ -422,7 +438,9 @@ body.show-playlist .content-list {
       position: relative;
       margin-bottom: 5px; }
       #wrapper .wrap-song-list .song-list > ul > li.active > a {
-        color: #008fd5; }
+        color: #65bd10; }
+      #wrapper .wrap-song-list .song-list > ul > li .handle {
+        margin-right: 5px; }
       #wrapper .wrap-song-list .song-list > ul > li span {
         min-width: 20px;
         display: inline-block; }
@@ -555,7 +573,8 @@ body.show-playlist .content-list {
 .alertify-notifier.ajs-right .ajs-message {
   word-wrap: break-word;
   background: rgba(0, 0, 0, 0.5);
-  color: #fff; }
+  color: #fff;
+  line-height: 2em; }
   .alertify-notifier.ajs-right .ajs-message.ajs-success {
     background: rgba(0, 252, 59, 0.7); }
   .alertify-notifier.ajs-right .ajs-message.ajs-error {

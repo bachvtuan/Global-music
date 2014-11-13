@@ -11,11 +11,12 @@
   <div ng-if="!loading_songs && song !== null && songs.length > 0">
     <h4>
       {{current_album.title}}
-      <button type="button" ng-tooltip title="Add new song" class="btn pull-right" ng-click="addSong()"><i class="fa fa-plus"></i></button> 
+      <button ng-if="isOwn(current_album.user_id)" type="button" ng-tooltip title="Add new song" class="btn pull-right" ng-click="addSong()"><i class="fa fa-plus"></i></button> 
     </h4>
     <div class="song-list">
-      <ul  type="1">
-        <li ng-repeat="song in songs" ng-class="{active:isPlaying(song)}">
+      <ul  type="1" html-sortable="sortable_songs" ng-model="songs"  >
+        <li ng-repeat="song in songs " ng-class="{active:isPlaying(song)}">
+          <i class="fa fa-sort handle"></i>
           <span>{{ $index +1 }}.</span> <a ng-click="playSong($index)">{{song.title}}</a>
           <!-- Single button -->
           <div class="btn-group wrap-context">

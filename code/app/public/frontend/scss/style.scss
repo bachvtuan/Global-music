@@ -2,6 +2,27 @@
 @import 'animate';
 @import 'reset';
 
+
+/* Prevent the text contents of draggable elements from being selectable. */
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+.html5-sortable .over, .droppable.over{
+  background:$green;
+}
+
+ul[html-sortable],div[html-sortable]{
+  .handle{
+    cursor: pointer;
+  }
+} 
+
 button.working, a.working, input.working {
   padding-right: 23px;
   &:after {
@@ -498,12 +519,16 @@ body.show-playlist{
         > li{
           &.active{
             > a{
-              color: $blue;
+              color: $green;
             }
           }
           padding:6px 0px;
           position:relative;
           margin-bottom: 5px;
+          
+          .handle{
+            margin-right: 5px;
+          }
           span{
             min-width: 20px;
             display: inline-block;
@@ -707,6 +732,7 @@ body.show-playlist{
   word-wrap: break-word;
   background: $very_dark_fade_background;
   color: $white;
+  line-height: 2em;
   &.ajs-success{
     background:rgba(0, 252, 59, 0.7);
   }

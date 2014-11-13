@@ -82,7 +82,77 @@ module.exports = function(BaseController){
       });
       
     },
+    sortSongs: function(req, res, next){
+      var list_song_sort = req.body;
+      //res.json( jsonSucc( req.body ) );
+      var user_id = req.session.user._id;
+      showLog("list_song_sort", list_song_sort);
+
+      if ( !list_song_sort  || list_song_sort.length < 2 ){
+        return res.json( jsonErr("Invalid sort request") );
+      }
+
+
+      var callback_loop = function(message){
+        if ( typeof message != undefined){
+          showLog("loop message ", message);
+        }
+      }
+
+
+      async.each(list_song_sort, function( song_sort, callback_loop) {
+
+        var song_id = song_sort._id;
+        var position = song_sort.position;
+
+
+
+        if ( typeof( position ) != "number" ){
+          return callback_loop("Invalid position");
+        }
+
+        Song.findById(song_id, function(err, song){
+
+          if (err){
+            return callback_loop("error while update "+ song_id);
+          }
+
+          if ( !song ){
+            return callback_loop("Not found your song for update");
+          }
+
+          if ( song.user_id != user_id ){
+            return callback_loop("You can't update this song");
+          }
+
+          song.position = position;
+          song.save();
+          callback_loop();
+
+        });
+
+      }, function(err){
+          // if any of the file processing produced an error, err would equal that error
+          if( err ) {
+            // One of the iterations produced an error.
+            // All processing will now stop.
+            showLog(err);
+            console.log('A tag failed to process');
+            return res.json( jsonErr(err)  );
+          } else {
+            console.log('All are updated sort');
+            return res.json( jsonSucc('ok')  );
+          }
+      });
+    },
     update:function( req, res, next ){
+
+      var action = req.query.action;
+
+      if ( action == "sort_songs" ){
+        return this.sortSongs( req, res, next );
+      }
+
       var update_song = req.body;
       //res.json( jsonSucc( req.body ) );
       var user_id = req.session.user._id;

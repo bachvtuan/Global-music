@@ -74,6 +74,7 @@ var songSchema = mongoose.Schema({
   album_id:mongoose.Schema.ObjectId,
   link:{ type: String, default: '' },
   count_download:{ type: Number, default: 0 },
+  position:{ type: Number, default: 0 },
   created_date:{ type: Date, default: Date.now() },
   status:{ type: String, default: 'actived' }
 })

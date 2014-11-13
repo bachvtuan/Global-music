@@ -1,4 +1,4 @@
-var songApp = angular.module('songApp', []);
+var songApp = angular.module('songApp', ['html5.sortable']);
 
 songApp.factory('Songs', ['$resource','$cookies',
 function($resource,$cookies){
@@ -15,6 +15,7 @@ songApp.controller('SongCtrl',
 
   $scope.songs = null;
   $scope.loading_songs = false;
+  $scope.song_predicate= ['-position'];
 
   $scope.$watch('current_album_id', function() {
     if ( !$scope.current_album_id ){
@@ -29,6 +30,7 @@ songApp.controller('SongCtrl',
         $scope.loading_songs = false;
         
         $scope.processRetrieveData(res,function(data){
+          data = _.sortBy( data, function(song){ return song.position; });
           $scope.songs = data;
           //Tell to album controller
           var broadcast_data = {
@@ -58,6 +60,40 @@ songApp.controller('SongCtrl',
     $scope.song_link        = "";
     $scope.song_emotion = "";
     $scope.is_edit_song     = false;
+  }
+
+  $scope.sortable_songs = {
+    handle:'.handle',
+    stop:function(list,dropped_index){
+      log("list after sort is ", list);
+      var first_song = list[0];
+
+      if ( $scope.isOwn( first_song.user_id ) ){
+        log("update data to server");
+
+        var dropped_song = list[dropped_index];
+        
+        var arr_post_update = [];
+        for ( var i =0; i< list.length; i++ ){
+          var song = list[i];
+          song.position = i;
+          arr_post_update.push({
+            _id: song._id,
+            title: song.title,
+            position:song.position
+          });
+        }
+        log(arr_post_update);
+        Songs.update({action:'sort_songs'}, arr_post_update, function(res){
+          $scope.processRetrieveData( res, function(data){
+
+          });
+        });
+      }
+      else{
+        log("only local");
+      }
+    }
   }
 
   $scope.submitSong = function(){
