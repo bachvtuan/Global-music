@@ -529,9 +529,15 @@ body.show-playlist{
           padding:6px 0px;
           position:relative;
           margin-bottom: 5px;
-          
+          &:hover{
+            .handle{
+              visibility: visible;
+            }
+          }
           .handle{
             margin-right: 5px;
+            visibility: hidden;
+
           }
           span{
             min-width: 20px;

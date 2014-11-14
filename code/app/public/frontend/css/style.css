@@ -442,8 +442,11 @@ body.show-playlist .content-list {
       margin-bottom: 5px; }
       #wrapper .wrap-song-list .song-list > ul > li.active > a {
         color: #65bd10; }
+      #wrapper .wrap-song-list .song-list > ul > li:hover .handle {
+        visibility: visible; }
       #wrapper .wrap-song-list .song-list > ul > li .handle {
-        margin-right: 5px; }
+        margin-right: 5px;
+        visibility: hidden; }
       #wrapper .wrap-song-list .song-list > ul > li span {
         min-width: 20px;
         display: inline-block; }
