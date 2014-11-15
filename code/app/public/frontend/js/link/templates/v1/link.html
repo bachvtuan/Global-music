@@ -8,8 +8,7 @@
     <div class="quick-buttons">
       <div class="pull-left">
         <div class="wrap-search">
-          <input type="search" class="search-box form-control" placeHolder="Search link" ng-model="filter_link" />
-          <i class="fa fa-question-circle cursor" ng-tooltip title="Help for searching" data-placement="right"  ng-click="show_help_search=true"></i>
+          <input type="search" class="search-box form-control" placeHolder="Search link" ng-model="filter_link.$" />
           <i class="fa fa-spinner fa-spin" disable-animate ng-hide="!do_searching_online"></i>
         </div>
       </div>
@@ -32,7 +31,7 @@
 
           <div class="link-list ">
             <ul class="listview" >
-              <li ng-repeat="link in links" class="media">
+              <li ng-repeat="link in links | filter:filter_link" class="media">
 
                 <p><span>{{ $index +1 }}.</span> <a ng-href="{{link.url}}" target="_blank">{{link.title}}</a></p>
                 <p><i>{{link.url}}</i></p>
