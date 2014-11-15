@@ -5,6 +5,7 @@ var app = angular.module('app', [
     'ngAnimate',
     'usersApp',
     'albumApp',
+    'linkApp',
     'playerApp',
     'songApp',
     'navigationApp',

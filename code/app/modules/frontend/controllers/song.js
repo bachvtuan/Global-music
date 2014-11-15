@@ -13,7 +13,7 @@ function validateSong(body){
     return "Song title must have length from 3 -> 30";
   }
 
-  if ( body.link && !validator.isURL(body.link) ){
+  if ( !body.link || !validator.isURL(body.link) ){
     return "Please input a valid url for song";
   }
 

@@ -74,9 +74,20 @@ var songSchema = mongoose.Schema({
   album_id:mongoose.Schema.ObjectId,
   link:{ type: String, default: '' },
   count_download:{ type: Number, default: 0 },
-  position:{ type: Number, default: 0 },
   created_date:{ type: Date, default: Date.now() },
   status:{ type: String, default: 'actived' }
 })
 
 mongoose.model('Song', songSchema)
+/*end song*/
+
+var linkSchema = mongoose.Schema({
+  user_id: mongoose.Schema.ObjectId,
+  title: String,
+  position:{ type: Number, default: 0 },
+  url:{ type: String, default: '' },
+  created_date:{ type: Date, default: Date.now() },
+  status:{ type: String, default: 'actived' }
+})
+
+mongoose.model('Link', linkSchema)

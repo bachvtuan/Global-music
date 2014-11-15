@@ -130,6 +130,17 @@ button[disabled] {
 .cursor {
   cursor: pointer; }
 
+.listview .media:not(.listview-header) {
+  overflow: inherit;
+  margin-top: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  padding: 10px 15px; }
+  .listview .media:not(.listview-header) .wrap-context {
+    position: absolute;
+    top: 10px;
+    right: 10px; }
+
 h1, h2, h3, h4 {
   color: #ccc; }
 

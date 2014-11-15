@@ -8,6 +8,7 @@ module.exports = function( app ){
   var MediaController =  require('./controllers/media')(BaseController);
   var TagController =  require('./controllers/tag')(BaseController);
   var SongController =  require('./controllers/song')(BaseController);
+  var LinkController =  require('./controllers/link')(BaseController);
 
   
 
@@ -98,6 +99,24 @@ module.exports = function( app ){
 
   app.delete('/songs', checkUser, function (req, res,next) {
     SongController.delete( req, res, next );
+  });
+
+  /* end song */
+
+  app.get('/links', attachDB, function (req, res,next) {
+    LinkController.index(req, res, next );
+  });
+
+  app.post('/links', checkUser, function (req, res,next) {
+    LinkController.add( req, res, next );
+  });
+
+  app.put('/links', checkUser, function (req, res,next) {
+    LinkController.update( req, res, next );
+  });
+
+  app.delete('/links', checkUser, function (req, res,next) {
+    LinkController.delete( req, res, next );
   });
 
   /* end song */
