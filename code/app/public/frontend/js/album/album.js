@@ -39,6 +39,7 @@ albumApp.controller('AlbumCtrl',
     $scope.albums = null;
     $scope.current_album_id = null;
     $scope.type = $routeParams.type;
+    $scope.search_albums = null;
 
     var get_params = {};
 
