@@ -31,6 +31,7 @@ var custom_scripts = [
   'app/public/frontend/js/users/setting.js',
   'app/public/frontend/js/users/forgot.js',
   'app/public/frontend/js/album/album.js',
+  'app/public/frontend/js/link/link.js',
   'app/public/frontend/js/player/player.js',
   'app/public/frontend/js/song/song.js',
   'app/public/frontend/js/navigation/navigation.js',
