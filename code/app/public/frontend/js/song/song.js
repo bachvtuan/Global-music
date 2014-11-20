@@ -146,10 +146,20 @@ songApp.controller('SongCtrl',
       
       $scope.pending_add_multi_song = true;
       Songs.post({}, post_data, function(res){
+
         $scope.pending_add_multi_song = false;
+
         $scope.processRetrieveData(res,function(data){
+
           $scope.songs = $scope.songs.concat(data.songs);
-          $dialogs.success("You added {0} songs". format( data.songs.length ));
+
+          var message = "You added {0} songs". format( data.songs.length );
+          if ( data.duplicated_songs > 0 ){
+            message += " and there are {0} song are duplicated the link".format( data.duplicated_songs );
+          }
+          
+          $dialogs.success( message );
+
           $scope.updateScopeObject( $scope.current_album, data.album );
           $scope.show_multi_song_form = false;
           $scope.list_add_song = "";

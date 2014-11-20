@@ -89,18 +89,32 @@ module.exports = function(BaseController){
         }
 
         var added_songs = [];
+        var duplicated_songs = 0;
 
         async.each(list_song, function( song_body, callback_loop) {
 
-          Song( song_body ).save( function( err, song, count ){
-            if (err){
-              return callback_loop("error while add song ");
+
+          var filter = {link: song_body.link};
+          
+          Song.find(filter, function(err, find_songs){
+            if (  find_songs.length && find_songs.length > 0  ){
+              showLog("The song link is duplicated :" + song_body.link );
+              duplicated_songs++;
+              //just going on with inform the error
+              callback_loop();
             }
-            album.song_numbers++;
-            
-            added_songs.push( song );
-            callback_loop();
-          });  
+            else{
+              Song( song_body ).save( function( err, song, count ){
+                if (err){
+                  return callback_loop("error while add song ");
+                }
+                album.song_numbers++;
+                
+                added_songs.push( song );
+                callback_loop();
+              });  
+            }
+          });
 
         }, function(err){
             // if any of the file processing produced an error, err would equal that error
@@ -114,7 +128,7 @@ module.exports = function(BaseController){
               //Save count song number
               album.save();
               console.log('All songs are added');
-              return res.json( jsonSucc({songs:added_songs, album:album}) );
+              return res.json( jsonSucc({songs:added_songs, album:album, duplicated_songs:duplicated_songs}) );
             }
         });
 
