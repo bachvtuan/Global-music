@@ -16,6 +16,7 @@ songApp.controller('SongCtrl',
   $scope.songs = null;
   $scope.loading_songs = false;
   $scope.song_predicate= ['-position'];
+  $scope.show_multi_song_help = false;
 
   $scope.$watch('current_album_id', function() {
     if ( !$scope.current_album_id ){
@@ -53,6 +54,10 @@ songApp.controller('SongCtrl',
   $scope.addSong = function(){
     $scope.resetValue();
     $scope.show_song_form = true;
+  }
+
+  $scope.addMultiSong = function(){
+    $scope.show_multi_song_form = true;
   }
 
   $scope.resetValue = function(){
@@ -97,11 +102,13 @@ songApp.controller('SongCtrl',
   }
 
   $scope.submitSong = function(){
-
-    var post_data = {
+    var song_item = {
       title :$scope.song_title,
       link:$scope.song_link,
-      emotion: $scope.song_emotion,
+      emotion: $scope.song_emotion      
+    }
+    var post_data = {
+      list: [ song_item ],
       album_id: $scope.current_album_id
     };
 
@@ -115,14 +122,48 @@ songApp.controller('SongCtrl',
     Songs.post({}, post_data, function(res){
       $scope.pending_add_song = false;
       $scope.processRetrieveData(res,function(data){
-        $scope.songs.push(data.song);
-        $dialogs.success("You added new song");
+        $scope.songs = $scope.songs.concat(data.songs);
+        if ( data.songs.length ==  1 ){
+          $dialogs.success("You added new song");
+        }
+        else{
+          $dialogs.success("You added {0} songs". format( data.songs.length ));
+        }
         $scope.updateScopeObject( $scope.current_album, data.album );
         $scope.resetValue();
       });
     });
   }
   //End submit song
+
+  $scope.submitMultiSong = function(){
+    try{
+      var post_data = {
+        list: JSON.parse($scope.list_add_song),
+        album_id:$scope.current_album_id
+      }
+      log(post_data);
+      
+      $scope.pending_add_multi_song = true;
+      Songs.post({}, post_data, function(res){
+        $scope.pending_add_multi_song = false;
+        $scope.processRetrieveData(res,function(data){
+          $scope.songs = $scope.songs.concat(data.songs);
+          $dialogs.success("You added {0} songs". format( data.songs.length ));
+          $scope.updateScopeObject( $scope.current_album, data.album );
+          $scope.show_multi_song_form = false;
+          $scope.list_add_song = "";
+          $scope.resetValue();
+        });
+      });
+
+    }
+    catch ( e ){
+      log(e);
+      $dialogs.error("Please check your json format, it's not valid");
+    }
+
+  }
 
   $scope.doUpdateSong = function(update_song_data){
     log("update_song_data", update_song_data);

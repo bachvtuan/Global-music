@@ -9,8 +9,8 @@ function validateSong(body){
 
   var validator = require('validator');
 
-  if ( !body.title || !validator.isLength(body.title, 3,30) ){
-    return "Song title must have length from 3 -> 30";
+  if ( !body.title || !validator.isLength(body.title, 2,30) ){
+    return "Song title must have length from 2 -> 30";
   }
 
   if ( !body.link || !validator.isURL(body.link) ){
@@ -51,14 +51,25 @@ module.exports = function(BaseController){
     add: function(req, res, next){
       var body = req.body;
 
-      var validator_error = validateSong( body );
+      var list_song = body.list;
+      var user_id = req.session.user._id;
 
-      if ( typeof(validator_error) == "string" ){
-        return res.json( jsonErr(validator_error) );
+      if ( !list_song || list_song.length < 1 || !body.album_id ){
+        return res.json( jsonErr("Invalid request") );
       }
 
-      
-      var user_id = req.session.user._id;
+      for ( var i =0; i < list_song.length; i++ ){
+
+        var song_item = list_song[i];
+        var validator_error = validateSong( song_item );
+
+        if ( typeof(validator_error) == "string" ){
+          return res.json( jsonErr(validator_error) );
+        }
+        song_item.album_id = body.album_id;
+        song_item.user_id = user_id;
+      }
+
       
       Album.findById(body.album_id, function(err, album){
         if ( !album ){
@@ -69,16 +80,44 @@ module.exports = function(BaseController){
           return res.json( jsonErr("You can not add song to this album") );
         }
         showLog(album.user_id,user_id);
-        body.user_id = user_id;
+        
 
-        Song( body ).save( function( err, song, count ){
-          if (err){
-            return showError("Error while add new song");
+        var callback_loop = function(message){
+          if ( typeof message != undefined){
+            showLog("loop message ", message);
           }
-          album.song_numbers++;
-          album.save();
-          return res.json( jsonSucc({song:song,album:album}) );
-        });          
+        }
+
+        var added_songs = [];
+
+        async.each(list_song, function( song_body, callback_loop) {
+
+          Song( song_body ).save( function( err, song, count ){
+            if (err){
+              return callback_loop("error while add song ");
+            }
+            album.song_numbers++;
+            
+            added_songs.push( song );
+            callback_loop();
+          });  
+
+        }, function(err){
+            // if any of the file processing produced an error, err would equal that error
+            if( err ) {
+              // One of the iterations produced an error.
+              // All processing will now stop.
+              showLog(err);
+              console.log('list songs failed while add new');
+              return res.json( jsonErr(err)  );
+            } else {
+              //Save count song number
+              album.save();
+              console.log('All songs are added');
+              return res.json( jsonSucc({songs:added_songs, album:album}) );
+            }
+        });
+
       });
       
     },

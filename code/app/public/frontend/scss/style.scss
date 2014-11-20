@@ -511,6 +511,11 @@ body.show-playlist{
     }
   }
   .wrap-song-list{
+    .context-songs{
+      position: absolute;
+      top: 0px;
+      right: 20px;
+    }
     .group-song{
       margin-bottom: 20px;
     }
@@ -829,7 +834,7 @@ body.show-playlist{
 
   .body{
 
-    width: 600px;
+    width: 700px;
     margin: 30px auto;
 
     /* background:$dark; */
@@ -848,6 +853,9 @@ body.show-playlist{
       background:$fade_background;
       border:1px solid $fade_bright;
       color: $white !important;
+      &textarea{
+        width: 100%;
+      }
     }
     ol{
       list-style-type:upper-hexadecimal;

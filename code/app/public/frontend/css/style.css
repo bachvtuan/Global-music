@@ -430,6 +430,10 @@ body.show-playlist .content-list {
         margin-top: 5px; }
       #wrapper .content-list .album p.tag span, #wrapper .content-list .album .number-songs span {
         color: #fff; }
+  #wrapper .wrap-song-list .context-songs {
+    position: absolute;
+    top: 0px;
+    right: 20px; }
   #wrapper .wrap-song-list .group-song {
     margin-bottom: 20px; }
   #wrapper .wrap-song-list h4 {
@@ -648,7 +652,7 @@ body.show-playlist .content-list {
   background: rgba(0, 0, 0, 0.5);
   overflow-y: auto; }
   .tuan-modal .body {
-    width: 600px;
+    width: 700px;
     margin: 30px auto;
     /* background:$dark; */
     background: rgba(0, 0, 0, 0.9);
@@ -665,6 +669,8 @@ body.show-playlist .content-list {
       background: rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.8);
       color: #fff !important; }
+      .tuan-modal .body textareatextarea, .tuan-modal .body inputtextarea, .tuan-modal .body div.tagsinputtextarea {
+        width: 100%; }
     .tuan-modal .body ol {
       list-style-type: upper-hexadecimal; }
       .tuan-modal .body ol pre {
