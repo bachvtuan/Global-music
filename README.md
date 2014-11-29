@@ -79,7 +79,8 @@ if you want to run on the real domain, try *config_production.json* by cd to fol
 ln -s config_production.json config.json
 ```
 
-** Note ** :
+** Note ** 
+
 You can edit config file to appropriate with your case such as change "smtp_host" , "smtp_port", "admin_email", etc.
 
 ### Run
@@ -89,7 +90,7 @@ if you define port in config.json( which created from above section ) is 3000. J
 nodejs run.js
 ```
 
-and visit http://localhost:3000
+and visit [http://localhost:3000](http://localhost:3000)
 
 ## Working on nginx
 
