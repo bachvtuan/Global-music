@@ -1,23 +1,24 @@
 
 ## Demo link
 
-You can click [here](http://audio.dethoima.com/album/merry-christmas) to listen my  public album 
+You can click [here](http://audio.dethoima.com/album/merry-christmas) to listen to my  public album
 
 ## Introduce
 
-This's a website to manage users's albums, songs, bookmark which implemented by Nodejs, Mongodb, Angularjs
+This's a website to manage yours albums, songs, bookmark which implemented by Nodejs, Mongodb, Angularjs
 
 ### Features
+
 - Manage album ( custom background, tags, public or private, cover )
 - Manage songs ( download, display emotion, add song to current playlist, sortable )
 - Mail functionalities such as send mail for active account, forgot password.
 - User can change avatar, theme, background, personal information
-- Elegant music player, You can pause, adjust volume, change to next or previous, display song list.
+- Flexible music player, You can pause, adjust volume, change to next or previous song, display song list.
 - It also offer to you save your favorite external albums.
 
 ## Requirement
 
-Make sure you installed nodejs and mongdb. Next, you should intall below addiontional modules
+Make sure you installed nodejs and mongdb. Next, you intall below additional modules
 
 ### System
 
@@ -28,9 +29,9 @@ Install imagemagic to process image
 apt-get install imagemagick
 ```
 
-### Nodejs package
+### Nodejs packages
 
-Run below command to install all dependencies packages which are defined in package.json
+Run below command to install all dependency packages which are defined in package.json
 
 ```
 npm install
@@ -46,7 +47,7 @@ sudo npm install supervisor -g
 
 ### Install forever
 
-This package keep your nodejs alway run, it will automatic restart nodejs instance if your application is crashed, so it's good for production site.
+This package keep nodejs instance alway run, it will automatic restart nodejs instance if your application is crashed, so it's good for production site.
 
 ```
 sudo npm install forever -g
