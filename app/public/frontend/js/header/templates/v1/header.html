@@ -1,0 +1,10 @@
+<div id="header" class="row">
+  <div class="col-md-2">
+    <a id="logo" >
+      <avatar ng-if="!user_album" ng-tooltip title="{{user.user_name}}"  extra-id="user.avatar_id" extra-class="flip"></avatar>
+      <avatar ng-if="user_album"  ng-tooltip title="{{user.user_name}}" extra-id="user_album.avatar_id" extra-class="flip"></avatar>
+    </a>
+  </div>
+
+</div>
+

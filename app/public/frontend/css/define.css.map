@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAgCA,UAIC;EAHG,WAAW,EAAE,kBAAkB;EAC/B,GAAG,EAAE,iCAAiC;EACtC,WAAW,EAAE,IAAI",
+"sources": ["../scss/define.scss"],
+"names": [],
+"file": "define.css"
+}

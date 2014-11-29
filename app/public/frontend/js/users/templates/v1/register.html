@@ -1,0 +1,32 @@
+<div class="row" ng-init="init()">
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-8">
+    <h3>Register new account</h3>
+    <p>&nbsp;</p>
+    <form class="form" ng-submit="submit()">
+      <div class="form-group">
+        <label>user name</label>
+        <input type="text" class="form-control" ng-model="user_name" placeHolder="User name" required focus-me="{{true}}"  />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="form-control" ng-model="email" placeHolder="Your email" required/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" ng-model="password" placeHolder="Your password" required/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" ng-model="repeat_password" placeHolder="Comfirm your password" required/>
+      </div>
+      <div class="form-group">
+        <button type="submit" ng-disabled="!checkValid() || pending_register"  class="btn"  ng-class="{'working': pending_register}">Register</button>
+        <a class="pull-right" href="#/login">Login</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2">
+  </div>
+</div>

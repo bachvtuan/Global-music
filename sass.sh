@@ -1,1 +1,1 @@
-sass --watch html/scss:html/css
+sass --watch app/public/frontend/scss:app/public/frontend/css

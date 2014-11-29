@@ -1,0 +1,182 @@
+
+<div class="main row album-page" ng-init="init()">
+  <div class="col-md-2" ng-controller="NavigationCtrl" ng-if="navigation_name">
+    <ng-include src="navigation_template" ng-init="init(navigation_name)"></ng-include>
+  </div>
+  <div class="col-md-10">
+
+    <div class="quick-buttons">
+      <div class="pull-left">
+        <div class="wrap-search">
+          <input type="search" class="search-box form-control" placeHolder="Search album" ng-model="filter_album" ng-change="doSearch()"  />
+          <i class="fa fa-question-circle cursor" ng-tooltip title="Help for searching" data-placement="right"  ng-click="show_help_search=true"></i>
+          <i class="fa fa-spinner fa-spin" disable-animate ng-hide="!do_searching_online"></i>
+        </div>
+      </div>
+      <div class="pull-right">
+        <button class="btn" ng-if="current_album && isOwn(current_album.user_id)" ng-click="editAlbum(current_album)">
+          <i class="fa fa-pencil"></i> Edit 
+        </button>
+        <button class="btn" ng-if="current_album && isOwn(current_album.user_id)" ng-click="removeAlbum(current_album)">
+          <i class="fa fa-remove"></i> Delete
+        </button>
+        <button class="btn" ng-click="showAddModel()">
+          <i class="fa fa-plus"></i> New album
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-7">
+        <div class="content-list" >
+          <div ng-if="search_albums === null"  >
+            <ng-include src="'loading.html'" ng-init="text='Loading your albums'"></ng-include>
+          </div>
+          <div ng-if="search_albums.length == 0">
+            <p>You don't have any album, You can add more by clicking the button at the top right corner</p>
+          </div>
+
+          <div ng-if="search_albums.length > 0">
+            <div class="album" ng-repeat="album in search_albums  track by album._id">
+              <img ng-if="!album.feature_id" src="frontend/images/album.jpg" >
+              <load-image ng-if="album.feature_id" source="mediaLink(album.feature_id)"  ></load-image>
+              <div class="right">
+                <a class="title" title="{{album.title}}" ng-tooltip  data-placement="bottom"
+                  ng-click="activeAlbum(album)" ng-class="{active:album == current_album}" >
+                  {{album.title}}
+                </a>
+                <p class="number-songs">Songs: <span>{{album.song_numbers}}</span></p>
+
+                <p class="tag" ng-if="album.tags.length > 0 ">Tags: 
+                  <span>
+                    <a ng-repeat="tag in album.tags track by tag._id" ng-click="setTagFilter(tag.name)">{{tag.name}}&nbsp;</a>
+                  </span>
+                </p>
+                <p ng-if="album.is_public">
+                  <i class="fa fa-globe fa-lg cursor" ng-click="showPublicLink(album)" ng-tooltip title="Click here to the show public link" ></i> 
+                  <a ng-click="setUserFilter(album.user_name)" ng-if="!isOwn(album.user_id)">{{album.user_name}}</a>
+                </p>
+              </div>
+              <div class="btn-group wrap-context" ng-if="isOwn(album.user_id)">
+                <button type="button" class="btn btn-default transparent dropdown-toggle" data-toggle="dropdown" ng-click="addContextClass($event)">
+                  <i class="fa fa-gear fa-lg"></i>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                  <li>
+                    <a ng-click="editAlbum(album)"><i class="fa fa-pencil"></i> Edit</a>
+                  </li>
+                  <li>
+                    <a ng-click="removeAlbum(album)"><i class="fa fa-remove"></i> Delete</a>
+                  </li>
+                  <li ng-if="album.is_public">
+                    <a ng-click="unShareAlbum(album)"><i class="fa fa-globe"></i> Unshare</a>
+                  </li>
+                  <li ng-if="!album.is_public">
+                    <a ng-click="shareAlbum(album)"><i class="fa fa-globe"></i> Share</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div ng-if="search_albums.length ==0">
+              <p>Not found appropriate album</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div ng-controller="SongCtrl" >
+          <ng-include src="song_template" ></ng-include>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="tuan-modal animate-if" ng-if="show_form">
+  <div class="body">
+      <i class="fa fa-close" ng-hide="pending_add_album || pending_edit_album" ng-click="$parent.show_form = false;" ></i>
+      <h3>Add new album</h3>
+      <hr/>
+      <div class="content">
+        <form class="form" ng-submit="submitAlbum()">
+          <p>
+            <label>Album title <span class="required">*</span></label>
+            <input type="text" class="form-control" ng-model="$parent.album_title" placeHolder="Album title" ng-required focus-me="{{true}}" />
+          </p>
+          <p>
+            <label>Album cover</label>
+            <input type="url" class="form-control"  ng-model="$parent.album_cover" placeHolder="The cover from url" />
+            <small>Begin with http(s), Empty value will use the default cover</small>
+          </p>
+          <p ng-if="album_cover" class="preview-image">
+            <label>Preview:</label><br/>
+            <load-image source="album_cover" width="100px" height="100px" />
+          </p>
+          <p>
+            <label>Album tags</label>
+            <input type="text" id="album-tags" class="form-control tags" ng-model="$parent.album_tags" placeHolder="Album tags"  />
+            <small>Seperate by comma(,)</small>
+          </p>
+          <p>
+            <label>Album description</label>
+            <input type="text" class="form-control"  ng-model="$parent.album_description" placeHolder="Description for this album" />
+            <small>To more understanding, You can input some text to describe about this album</small>
+          </p>
+          <button type="submit" ng-if="!is_edit_album" class="btn btn-default"  ng-disabled="!album_title || pending_add_album"  class="btn btn-default"  ng-class="{'working': pending_add_album}">
+            <i class="fa fa-plus"></i> Add
+          </button>
+
+          <button type="submit" ng-if="is_edit_album" class="btn btn-default"  ng-disabled="!album_title || pending_edit_album"  class="btn btn-default"  ng-class="{'working': pending_edit_album}">
+            <i class="fa fa-pencil"></i> Update
+          </button>
+        </form>
+      </div>
+  </div>
+</div>
+
+<div class="tuan-modal animate-if" ng-if="show_help_search">
+  <div class="body">
+    <i class="fa fa-close" ng-click="$parent.show_help_search = false;" ></i>
+    <h3>Search an album</h3>
+    <hr/>
+    <div class="content">
+      <p>There are some rules that you should know about</p>
+      <ol>
+        <li>
+          Search your album that has the string "foo"
+          <pre>foo</pre> 
+        </li>
+        <li>
+          Search all public album from user john
+          <pre>@john</pre> 
+        </li>
+        <li>
+          Search your album that has tag is Pop
+          <pre>#Pop</pre> 
+        </li>
+        <li>
+          Search all public albums
+          <pre> ~public</pre>
+        </li>
+        <li>
+          You can combine them, such as Search all public album from user john that has tag is Pop
+          <pre>@john #Pop</pre>
+        </li>
+        <li>
+          Or search all public album that has foo in the title
+          <pre> ~public @foo</pre>
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="tuan-modal animate-if" ng-if="show_public_link">
+  <div class="body">
+    <i class="fa fa-close" ng-click="$parent.show_public_link = false;" ></i>
+    <h3>Public link for album : {{share_album.title}}</h3>
+    <hr/>
+    <p>Please copy link below: <a ng-href="{{public_link}}" target="_blank">{{public_link}}</a></p>
+  </div>
+</div>

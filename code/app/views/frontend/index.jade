@@ -1,8 +1,0 @@
-extend header
-block content
-  input(type="hidden",name="_csrf",value=csrfToken)
-  div#wrapper
-    div(ng-view, id="main-view")
-    div(ng-controller='PlayerCtrl')
-      ng-include(src="templateVersion('frontend/js/player/player.html')",ng-init="init()")
-    

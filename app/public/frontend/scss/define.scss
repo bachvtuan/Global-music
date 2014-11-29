@@ -1,0 +1,37 @@
+
+$body_font: "Myriad Pro" ,"Helvetica Neue", Arial, sans-serif;
+$header_font: "Segoe UI", "Myriad Pro", $body-font;
+$body_color : #34495e;
+$blue:#008fd5;
+$white:#fff;
+$ligth_white:#eee;
+$gray : #ccc;
+$lighter-gray: #ddd;
+$font-gray: #aaa;
+$border:#cacaca;
+$bubble:#eee;
+$fade_gray : #f5f5f5;
+$green:#65bd10;
+$red:rgba(255, 23, 23, 1);
+$fade_blue :#d9edf7;
+$border_radius:2px;
+$very_fast_animate : all .1s ease-in-out;
+$fast_animate : all .2s ease-in-out;
+$bootstrap_blue: #3a89a3;
+$orange: #f0ad4e;
+$horizontal_height:400px;
+$wide_pading:35px;
+$very_fade_background : rgba(0,0,0,0.1);
+$fade_background : rgba(0,0,0,0.3);
+$dark_fade_background : rgba(0,0,0,0.35);
+$very_dark_fade_background : rgba(0,0,0,0.5);
+$dark1 : rgba(0,0,0,0.7);
+$dark : rgba(0,0,0,0.9);
+$fade_bright : rgba(255,255,255,0.8);
+$blue_transparent:rgba(12, 151, 219, 0.9);
+$black:#000;
+@font-face {
+    font-family: "Myriad Pro Light";
+    src: url(../fonts/MyriadPro-Light.ttf);
+    font-weight: bold;
+}
