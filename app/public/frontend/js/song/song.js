@@ -18,15 +18,15 @@ songApp.controller('SongCtrl',
   $scope.song_predicate= ['-position'];
   $scope.show_multi_song_help = false;
 
-  $scope.$watch('current_album_id', function() {
-    if ( !$scope.current_album_id ){
+  $scope.$watch('select_album_id', function() {
+    if ( !$scope.select_album_id ){
       $scope.songs = null;
     }
     else{
 
       $scope.loading_songs = true;
 
-      Songs.get({album_id:$scope.current_album_id},function(res){
+      Songs.get({album_id:$scope.select_album_id},function(res){
         
         $scope.loading_songs = false;
         
@@ -35,7 +35,7 @@ songApp.controller('SongCtrl',
           $scope.songs = data;
           //Tell to album controller
           var broadcast_data = {
-            album_id:$scope.current_album_id,
+            album_id:$scope.select_album_id,
             index: 0,
             songs: angular.copy( $scope.songs )
           }
@@ -47,7 +47,7 @@ songApp.controller('SongCtrl',
       });
     };
 
-    log("current_album is changed", $scope.current_album_id);
+    log("current_album is changed", $scope.select_album_id);
   },true);
 
 
@@ -109,7 +109,7 @@ songApp.controller('SongCtrl',
     }
     var post_data = {
       list: [ song_item ],
-      album_id: $scope.current_album_id
+      album_id: $scope.select_album_id
     };
 
     log("post_data", post_data);
@@ -140,7 +140,7 @@ songApp.controller('SongCtrl',
     try{
       var post_data = {
         list: JSON.parse($scope.list_add_song),
-        album_id:$scope.current_album_id
+        album_id:$scope.select_album_id
       }
       log(post_data);
       
@@ -234,6 +234,13 @@ songApp.controller('SongCtrl',
     
     log("pre data", broadcast_data);
     fSharedService.prepForBroadcast({cmd:'play-songs',data: broadcast_data });
+  }
+
+  $scope.showEmotion = function( song ){
+    $dialogs.dismissAll();
+    var message = "<strong>{0}</strong>: {1}".format(song.title, song.emotion);
+    $dialogs.message( message, 0);
+
   }
 
   $scope.addToQueue = function(song){

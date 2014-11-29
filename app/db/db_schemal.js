@@ -45,7 +45,8 @@ var albumSchema = mongoose.Schema({
   tags:{ type: [tagSchema] },
   is_public:Boolean,
   created_date:{ type: Date, default: Date.now() },
-  status:{ type: String, default: 'actived' }
+  status:{ type: String, default: 'actived' },
+  wallpaper_url:{ type: String, default: '' },
 })
 
 mongoose.model('Album', albumSchema)

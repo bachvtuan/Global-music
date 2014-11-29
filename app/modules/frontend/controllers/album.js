@@ -26,6 +26,12 @@ function validateAlbum(body){
     return "Album description must have length from 10 -> 100";
   }
 
+
+  if ( body.wallpaper_url && !validator.isURL(body.wallpaper_url)  ){
+    return "Please input a valid url for album wallpaper";
+  }
+
+
   return true;
 }
 
@@ -81,7 +87,6 @@ function generalDoTags(tags_string, req, callback){
   var filter = {user_id:user_id};
   
   Tag.find(filter, function(err, user_tags){
-    showLog("user tags", user_tags);
 
     var arr_tags = [];
     var callback_loop = function(message){
@@ -414,8 +419,9 @@ module.exports = function(BaseController){
         }
 
 
-        album.title       = update_album.title;
-        album.description = update_album.description;
+        album.title         = update_album.title;
+        album.description   = update_album.description;
+        album.wallpaper_url = update_album.wallpaper_url;
 
         if ( update_album.tags && update_album.tags.trim() != "" ){
           generalDoTags(update_album.tags, req, function(arr_tags){

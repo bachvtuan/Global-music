@@ -293,13 +293,17 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
       });
     },
     getBodyStyle:function(){
-      var style = this.getUserStyle();
+      var style = angular.copy( this.getUserStyle() ) ;
+
+      //Set custom wallpaper from album
+      if ( $rootScope.current_album &&  $rootScope.current_album.wallpaper_url ){
+        style.style['background-image'] ="url('{0}')".format($rootScope.current_album.wallpaper_url);
+      }
+
       return style.style;
     },
     setBodyStyle:function(){
       $rootScope.body_style = this.getBodyStyle();
-      log("$rootScope.user",$rootScope.user);
-      log("$rootScope.body_style",$rootScope.body_style);
     }
   };
 });

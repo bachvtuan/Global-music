@@ -123,6 +123,11 @@
             <input type="text" class="form-control"  ng-model="$parent.album_description" placeHolder="Description for this album" />
             <small>To more understanding, You can input some text to describe about this album</small>
           </p>
+          <p>
+            <label>Album wallpaper</label>
+            <input type="url" class="form-control"  ng-model="$parent.album_wallpaper" placeHolder="The custom wallpaper" />
+            <small>You can set specific wallpaper when listen this album</small>
+          </p>
           <button type="submit" ng-if="!is_edit_album" class="btn btn-default"  ng-disabled="!album_title || pending_add_album"  class="btn btn-default"  ng-class="{'working': pending_add_album}">
             <i class="fa fa-plus"></i> Add
           </button>

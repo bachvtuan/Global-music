@@ -44,6 +44,7 @@
               <li><a ng-click="playSong($index)"><i class="fa fa-play"></i> Play</a></li>
               <li><a ng-click="addToQueue(song)"><i class="fa fa-play"></i> Add to queue</a></li>
               <li><a ng-click="downloadSong(song)"><i class="fa fa-download"></i> Download</a></li>
+              <li ng-if="song.emotion" ><a ng-click="showEmotion(song)"><i class="fa fa-comment"></i> Show emotion</a></li>
             </ul>
           </div>
         </li>

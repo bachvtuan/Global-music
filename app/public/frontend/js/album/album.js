@@ -37,7 +37,7 @@ albumApp.controller('AlbumCtrl',
     $scope.pending_add_album = false;
     $scope.resetValue();
     $scope.albums = null;
-    $scope.current_album_id = null;
+    $scope.select_album_id = null;
     $scope.type = $routeParams.type;
     $scope.search_albums = null;
 
@@ -73,8 +73,11 @@ albumApp.controller('AlbumCtrl',
           var current_user = $userStyle.getUser(false);
           if (!current_user){
             $userStyle.setUserAlbum($scope.albums[0].user);
-            $userStyle.setBodyStyle();
+            
           }
+
+          $userStyle.setBodyStyle();
+
 
           if ( !$rootScope.share_album_id || $rootScope.share_album_id != get_params.id){
             $rootScope.share_album_id = get_params.id;
@@ -86,8 +89,13 @@ albumApp.controller('AlbumCtrl',
       });
     });
   }
+  $scope.$on('$destroy', function(event){
+    //Unset current album and refresh background
+    $rootScope.current_album = null;
+    $userStyle.setBodyStyle();
+  });
 
- $scope.$on('handleBroadcast', function() {
+  $scope.$on('handleBroadcast', function() {
 
     log("listen broad cast on player page");
 
@@ -108,8 +116,11 @@ albumApp.controller('AlbumCtrl',
   });
 
   $scope.activeAlbum = function(album){
-    $scope.current_album = album;
-    $scope.current_album_id = $scope.current_album._id;
+    $rootScope.current_album = album;
+    $scope.select_album_id = $rootScope.current_album._id;
+    $userStyle.setBodyStyle();
+
+
   }
 
   $scope.showAddModel = function(){
@@ -138,9 +149,9 @@ albumApp.controller('AlbumCtrl',
           $scope.removeItemInList( $scope.albums, remove_album._id );
           $scope.removeItemInList( $scope.search_albums, remove_album._id );
 
-          if ( $scope.current_album && $scope.current_album._id == remove_album._id ){
-            $scope.current_album_id = null;
-            $scope.current_album = null;            
+          if ( $rootScope.current_album && $rootScope.current_album._id == remove_album._id ){
+            $scope.select_album_id = null;
+            $rootScope.current_album = null;            
           }
         });
       })
@@ -183,6 +194,7 @@ albumApp.controller('AlbumCtrl',
     $scope.album_cover        = "";
     $scope.album_tags         = "";
     $scope.album_description  = "";
+    $scope.album_wallpaper    = "";
     $scope.is_edit_album      = null;
 
   }
@@ -214,6 +226,7 @@ albumApp.controller('AlbumCtrl',
       title         : $scope.album_title,
       cover         : $scope.album_cover,
       description   : $scope.album_description,
+      wallpaper_url : $scope.album_wallpaper,
       tags          : $('#album-tags').val()
     };
     
@@ -251,7 +264,8 @@ albumApp.controller('AlbumCtrl',
     $scope.edit_album         = angular.copy(edit_album);
     $scope.album_tags         =  _.map( edit_album.tags, function(tag){ return tag.name });
     $scope.album_description  = edit_album.description; 
-    log( $scope.album_tags );
+    $scope.album_wallpaper    = edit_album.wallpaper_url;
+    //log( $scope.album_tags );
     //$scope.initTag();
   }
 
@@ -269,10 +283,16 @@ albumApp.controller('AlbumCtrl',
       $scope.processRetrieveData(res,function(data){
         $scope.updateItemInList( $scope.albums, data );
         $scope.updateItemInList( $scope.search_albums, data );
-        //$scope.current_album = data;
+        //$rootScope.current_album = data;
         $dialogs.success("The album is updated");
         log( $scope.albums );
         $scope.resetValue();
+
+        if ( $rootScope.current_album && $rootScope.current_album._id == data._id ){
+          $rootScope.current_album = data;
+          $userStyle.setBodyStyle();
+        }
+
       });
     });
   }

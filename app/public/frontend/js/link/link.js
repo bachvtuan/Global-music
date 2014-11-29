@@ -29,7 +29,7 @@ linkApp.controller('LinkCtrl',
     $scope.pending_add_link = false;
     $scope.resetValue();
     $scope.albums = null;
-    $scope.current_album_id = null;
+    $scope.select_album_id = null;
     $scope.type = $routeParams.type;
 
     var get_params = {};
@@ -134,7 +134,7 @@ linkApp.controller('LinkCtrl',
       $scope.pending_edit_link = false;
       $scope.processRetrieveData(res,function(data){
         $scope.updateItemInList( $scope.links, data );
-        //$scope.current_album = data;
+        //$rootScope.current_album = data;
         $dialogs.success("The link is updated");
         $scope.resetValue();
       });
