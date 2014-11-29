@@ -40,7 +40,7 @@ linkApp.controller('LinkCtrl',
     }
 
     $scope.navigation_name ="link"; 
-    Page.setTitle("Outside album links from internet");
+    Page.setTitle("Bookmark your favorite links");
 
     Links.get(get_params, function(res){
       $scope.processRetrieveData(res,function(data){
