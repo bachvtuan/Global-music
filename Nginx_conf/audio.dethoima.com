@@ -1,3 +1,4 @@
+# test at local
 server {
   listen 80;
 
@@ -14,12 +15,12 @@ server {
   }
 
   location /frontend {
-    alias /home/geek/Desktop/Bitbucket/global-music/code/app/public/frontend;
+    alias /home/geek/Desktop/GITHUB/Global-music/app/public/frontend;
     expires 24h;
   }
 
   location /share {
-    alias /home/geek/Desktop/Bitbucket/global-music/code/app/public/share;
+    alias /home/geek/Desktop/GITHUB/Global-music/app/public/share;
     expires 24h;
   }
 }

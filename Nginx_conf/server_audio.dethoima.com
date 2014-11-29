@@ -15,12 +15,12 @@ server {
   }
 
   location /frontend {
-    alias /var/www/music-global/code/app/public/frontend;
+    alias /var/www/Global-music/app/public/frontend;
     expires 24h;
   }
 
   location /share {
-    alias /var/www/music-global/code/app/public/share;
+    alias /var/www/Global-music/app/public/share;
     expires 24h;
   }
 }
