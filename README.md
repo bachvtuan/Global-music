@@ -94,7 +94,13 @@ and visit [http://localhost:3000](http://localhost:3000)
 
 ## Working on nginx
 
-*Create short link*
+*Create short link* to /etc/nginx/sites-enabled
+
+```
+ln -s /your/nginx/configuration/file /etc/nginx/sites-enabled
+```
+
+Example 
 
 ```
 ln -s /home/geek/Desktop/GITHUB/Global-music/Nginx_conf/server_audio.dethoima.com /etc/nginx/sites-enabled
