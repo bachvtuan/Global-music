@@ -5,13 +5,15 @@ You can click [here](http://audio.dethoima.com/album/merry-christmas) to listen 
 
 ## Introduce
 
-This's a website to manage users's albums, song, links which implemented by Nodejs, Mongodb, Angularjs
+This's a website to manage users's albums, songs, bookmark which implemented by Nodejs, Mongodb, Angularjs
 
 ### Features
 - Manage album ( custom background, tags, public or private, cover )
 - Manage songs ( download, display emotion, add song to current playlist, sortable )
 - Mail functionalities such as send mail for active account, forgot password.
 - User can change avatar, theme, background, personal information
+- Elegant music player, You can pause, adjust volume, change to next or previous, display song list.
+- It also offer to you save your favorite external albums.
 
 ## Requirement
 
@@ -62,6 +64,32 @@ You can try login with below account:
 **username :** bvtuan
 
 **password :** foo_bar
+
+## Config file
+
+There are 2 config files on configs folder. 
+if you want to try on localhost, try *config_local.json* by cd to folder "configs" and run below command
+
+```
+ln -s config_local.json config.json
+```
+
+if you want to run on the real domain, try *config_production.json* by cd to folder "configs" and run below command
+```
+ln -s config_production.json config.json
+```
+
+** Note ** :
+You can edit config file to appropriate with your case such as change "smtp_host" , "smtp_port", "admin_email", etc.
+
+### Run
+if you define port in config.json( which created from above section ) is 3000. Just run below command
+
+```
+nodejs run.js
+```
+
+and visit http://localhost:3000
 
 ## Working on nginx
 
