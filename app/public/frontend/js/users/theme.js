@@ -4,7 +4,7 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
   var bg_list ={
     'default':{
       local:'frontend/images/backgrounds/sunset.jpg',
-      sever:'http://i1105.photobucket.com/albums/h360/bvtuan/background/sunset_zps486cf1d1.jpg'
+      server:'http://i1105.photobucket.com/albums/h360/bvtuan/background/sunset_zps486cf1d1.jpg'
     },
     'brown-wood':{
       local:'frontend/images/backgrounds/brown-wood.jpg',
@@ -76,7 +76,6 @@ usersApp.factory('$userStyle', function($rootScope, $cookieStore, Users, $locati
   var get_full_background = function(_class){
     var obj = bg_list[_class];
     return "url('{0}')".format( $window.is_debug ? obj.local : obj.server );
-    
   }
 
   var list = [{
