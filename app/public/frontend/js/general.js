@@ -40,12 +40,17 @@ path  = static/js/base/workspaces/list.html
 return static/js/base/workspaces/templates/v1/list.html?v=23
 */
 function templateVersion(path){
+  //Tweak alway get root
+  if (  path[0] != "/" ){
+    path = "/" + path;
+  }
   var seperate_arr = path.split("/");
   if (seperate_arr.length > 2){
     //Add "templates" before the end item of array
     seperate_arr.splice(seperate_arr.length - 1,0,"templates",template_version_string);
     path = seperate_arr.join("/");
   }
+  console.log(path);
   return path + timeStampParam();
 }
 

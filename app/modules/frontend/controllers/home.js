@@ -36,6 +36,8 @@ module.exports = function(BaseController){
 
         Album.find(filter, function(err, albums){
           if (err || !albums || albums.length == 0){
+            showLog("not found album");
+            public_data.full_url = pre_url;
             return _this.render( res,'index', public_data );
           }
 
